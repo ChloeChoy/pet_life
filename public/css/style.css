@@ -1,0 +1,84 @@
+/* style sign in page*/
+section.main-nav {
+    background: #2bbbad;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 9999;
+    width: 100%;
+    box-shadow: 0 2px 5px 0 rgba(0,0,0,0.16),0 2px 10px 0 rgba(0,0,0,0.12);
+}
+.main-nav .row {
+    margin-bottom: 0;
+}
+.main-nav nav.main-menu {
+    background: inherit !important;
+    box-shadow: none !important;
+}
+section.main-signin {
+    margin-top: 120px;
+}
+.main-signin .col-signin {
+    box-shadow: 0 2px 5px 0 rgba(0,0,0,0.3);
+    padding: 20px 10px;
+}
+.col-signin form.signin-form {
+    margin-bottom: 40px;
+}
+.col-signin .signin-title {
+    font-size: 18px;
+    color: #0089ec;
+    display: block;
+    text-align: center;
+}
+.signin-form button.btn {
+    width: 100%;
+}
+.col-signin span.signin-divide {
+    display: block;
+    text-align: center;
+    font-size: 13px;
+    margin-bottom: 30px;
+}
+.col-signin .social-signin {
+    padding-bottom: 20px;
+}
+.social-signin a.btn {
+    display: block;
+    margin-top: 10px;
+}
+a#signin-fb {
+    background: #3b5998;
+}
+a#signin-gg {
+    background: #ee6e73;
+}
+a#signin-twt {
+    background: #489cdf;
+}
+
+/* style sign in page*/
+
+/* fallback */
+@font-face {
+  font-family: 'Material Icons';
+  font-style: normal;
+  font-weight: 400;
+  src: local('Material Icons'), local('MaterialIcons-Regular'), url(http://fonts.gstatic.com/s/materialicons/v18/2fcrYFNaTjcS6g4U3t-Y5ZjZjT5FdEJ140U2DJYC3mY.woff2) format('woff2');
+}
+
+.material-icons {
+  font-family: 'Material Icons';
+  font-weight: normal;
+  font-style: normal;
+  font-size: 24px;
+  line-height: 1;
+  letter-spacing: normal;
+  text-transform: none;
+  display: inline-block;
+  white-space: nowrap;
+  word-wrap: normal;
+  direction: ltr;
+  -webkit-font-feature-settings: 'liga';
+  -webkit-font-smoothing: antialiased;
+}

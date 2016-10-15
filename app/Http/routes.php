@@ -22,3 +22,5 @@ Route::controllers([
 Route::get('timview',function(){
 return view('extend');
 });
+
+Route::get('signin', 'SigninController@index');
