@@ -1,9 +1,9 @@
 <!DOCTYPE HTML>
 <html>
 	<head>
-		<!-- <link rel="stylesheet" type="text/css" href="../laravel/resources/assets/less/app.less"> -->
 		<link rel="stylesheet" type="text/css" href="../laravel/public/css/style.css">
 		<link rel="stylesheet" type="text/css" href="../laravel/public/css/materialize.min.css">
+		<link rel="stylesheet" type="text/css" href="../laravel/public/css/font-awesome.min.css">
 	</head>
 	<body>
 		
@@ -24,8 +24,20 @@
 				<div class="row">
 					<div class="col s12 m8 l6">
 						<div class="col-signin">
+							<div class="social-signin row">
+								<span class="signin-title">Sign in with</span>
+								<div class="col s4">
+									<a id="signin-fb" class="waves-effect waves-light btn"><i class="fa fa-facebook"></i></a>
+								</div>
+								<div class="col s4">
+									<a id="signin-gg" class="waves-effect waves-light btn" title="Sign in with google+"><i class="fa fa-google-plus"></i></a>
+								</div>
+								<div class="col s4">
+									<a id="signin-twt" class="waves-effect waves-light btn"><i class="fa fa-twitter"></i></a>
+								</div>
+							</div>
 							<form class="signin-form" action="#" method="post">
-								<span class="signin-title">Sign in</span>
+								<h5>Sign in</h5>
 							    <div class="input-field">
 							    	<i class="material-icons prefix">email</i>
 							        <input id="signin-email" type="email" class="validate">
@@ -36,17 +48,18 @@
 								    <input id="signin-pwd" type="password" class="validate">
 							        <label for="signin-pwd">Password</label>
 							    </div>
+							    <div class="field-small">
+							    	<p>
+								      <input type="checkbox" class="filled-in" id="filled-in-box" checked="checked" />
+								      <label for="filled-in-box">Remember me</label>
+								    </p>
+								    <a id="forgot-pass" href="#">Forgot password</a>
+							    </div>
 							    <div class="input-field">
 							    	<button class="waves-effect waves-light btn">Sign in</button>
 							    </div>
 							</form>
-							<span class="signin-divide">OR</span>
-							<div class="social-signin">
-								<span class="signin-title">Sign in with</span>
-								<a id="signin-fb" class="waves-effect waves-light btn">Sign in with facebook</a>
-								<a id="signin-gg" class="waves-effect waves-light btn">Sign in with google+</a>
-								<a id="signin-twt" class="waves-effect waves-light btn">Sign in with Twitter</a>
-							</div>
+							<a class="create-acc" href="#0">Create account here</a>
 						</div>
 					</div>
 				</div>

@@ -20,19 +20,20 @@ section.main-signin {
 }
 .main-signin .col-signin {
     box-shadow: 0 2px 5px 0 rgba(0,0,0,0.3);
-    padding: 20px 10px;
+    padding: 20px 20px;
 }
 .col-signin form.signin-form {
-    margin-bottom: 40px;
+    margin-bottom: 30px;
 }
 .col-signin .signin-title {
-    font-size: 18px;
-    color: #0089ec;
+    font-size: 15px;
     display: block;
     text-align: center;
+    margin-bottom: 10px;
 }
 .signin-form button.btn {
     width: 100%;
+    margin-top: 10px;
 }
 .col-signin span.signin-divide {
     display: block;
@@ -42,6 +43,7 @@ section.main-signin {
 }
 .col-signin .social-signin {
     padding-bottom: 20px;
+    border-bottom: 1px solid #eee;
 }
 .social-signin a.btn {
     display: block;
@@ -49,12 +51,56 @@ section.main-signin {
 }
 a#signin-fb {
     background: #3b5998;
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
+    padding: 0;
+    margin: auto;
 }
 a#signin-gg {
     background: #ee6e73;
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
+    padding: 0;
+    margin: auto;
 }
 a#signin-twt {
     background: #489cdf;
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
+    padding: 0;
+    margin: auto;
+}
+.social-signin i.fa {
+    margin-top: 7px;
+}
+.signin-form h5 {
+    text-align: center;
+    margin-bottom: 25px;
+}
+.signin-form .field-small{
+  margin-top: 0;
+}
+.field-small p {
+    display: inline;
+    margin-left: 5px;
+}
+a#forgot-pass {
+    float: right;
+    margin-right: 5px;
+}
+a#forgot-pass:hover{
+  text-decoration: underline !important;
+}
+.col-signin a.create-acc {
+    text-align: right;
+    display: block;
+    margin-right: 5px;
+}
+.col-signin a.create-acc:hover {
+    text-decoration: underline !important;
 }
 
 /* style sign in page*/
