@@ -25,3 +25,4 @@ return view('extend');
 
 Route::get('signin', 'SigninController@index');
 Route::get('signup', 'SignupController@index');
+Route::get('home', 'HomeController@index');

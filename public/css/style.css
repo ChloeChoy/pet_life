@@ -103,7 +103,57 @@ a#forgot-pass:hover{
     text-decoration: underline !important;
 }
 
-/* style sign in page*/
+/* end style sign in page*/
+
+/* style home page*/
+@media only screen and (max-width: 992px){
+    nav .brand-logo {
+        left: 150px !important;
+    }
+}
+@media (min-width: 993px){
+    form.search-form{
+        display: none;
+    }
+}
+@media (max-width: 992px){
+    form.search-form{
+        display: block;
+        float: right !important;
+    }
+}
+input#pl-search {
+    background: #fff;
+    border-radius: 20px;
+    height: 38px;
+    margin-top: 13px;
+}
+label[for=pl-search] {
+    height: 38px;
+}
+label[for=pl-search] i {
+    height: 100% !important;
+    line-height: 38px !important;
+    color: #9e9e9e !important;
+}
+.search-form button.reset-search {
+    width: 28px;
+    height: 38px;
+    position: absolute;
+    top: 0;
+    /*left: 92%;*/
+    background: none;
+    border: none;
+    padding: 0;
+}
+.reset-search i {
+    height: 100% !important;
+    line-height: 38px !important;
+    color: #757575 !important;
+}
+
+
+/* end style home page*/
 
 /* fallback */
 @font-face {
