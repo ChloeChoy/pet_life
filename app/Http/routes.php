@@ -24,3 +24,4 @@ return view('extend');
 });
 
 Route::get('signin', 'SigninController@index');
+Route::get('signup', 'SignupController@index');
