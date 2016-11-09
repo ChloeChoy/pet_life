@@ -7,7 +7,7 @@
     <link rel="stylesheet" href="{{ URL::to('src/css/font-awesome.min.css') }}">
 </head>
 <body>
-    @include('includes.header-signin')
+    @include('includes.header')
     <!-- <div class="container"> -->
         @yield('content')
     <!-- </div> -->
