@@ -26,4 +26,17 @@ $(document).ready(function(){
 	}).blur(function(){
 		$('.reset-search').hide();
 	});
+
+	//show menu edit/delete post
+	$('.popup-post-menu').click(function(e){
+		$(this).next().show();
+		e.stopPropagation();
+	});
+});
+
+//click on body
+$(document).ready(function(){
+	$('body').click(function(){
+		$('.post-menu-act').hide();
+	});
 });

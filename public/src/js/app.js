@@ -32,12 +32,12 @@ $('.like').on('click', function(event) {
         url: urlLike,
         data: {isLike: isLike, postId: postId, _token: token}
     })
-        .done(function() {
-            event.target.innerText = isLike ? event.target.innerText == 'Like' ? 'You like this post' : 'Like' : event.target.innerText == 'Dislike' ? 'You don\'t like this post' : 'Dislike';
-            if (isLike) {
-                event.target.nextElementSibling.innerText = 'Dislike';
-            } else {
-                event.target.previousElementSibling.innerText = 'Like';
-            }
-        });
+        // .done(function() {
+        //     event.target.innerText = isLike ? event.target.innerText == 'Like' ? 'You like this post' : 'Like' : event.target.innerText == 'Dislike' ? 'You don\'t like this post' : 'Dislike';
+        //     // if (isLike) {
+        //     //     event.target.nextElementSibling.innerText = 'Dislike';
+        //     // } else {
+        //     //     event.target.previousElementSibling.innerText = 'Like';
+        //     // }
+        // });
 });

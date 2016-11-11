@@ -5,10 +5,21 @@
     <section class="main-content">
         <div class="container">
             <div class="row">
-                <div class="col l2">
-                    <!-- link -->
+                <div class="col l2 col-left-link">
+                    <div class="link-profile">
+                        <img class="responsive-img" alt="avatar" src="{{ URL::to('src/images/boa_hancock_wallpaper_blue_red_by_gian519.png') }}">
+                        <a href="{{ route('account')}}"><i class="material-icons">mode_edit</i> Update profile</a>
+                    </div>
+                    <ul class="menu-left">
+                        <li><a href="#"><i class="material-icons">wallpaper</i> News</a></li>
+                        <li><a href="#"><i class="material-icons">message</i> Messages</a></li>
+                        <li><a href="#"><i class="fa fa-globe" aria-hidden="true"></i> Notifications</a></li>
+                        <li><a href="#"><i class="material-icons">photo_library</i> Photos</a></li>
+                        <li><a href="#"><i class="material-icons">video_library</i> Videos</a></li>
+                        <li><a href="#"><i class="material-icons">settings</i> Settings</a></li>
+                    </ul>
                 </div>
-                <div class="col s12 l6">
+                <div class="col m12 l6">
                     <form class="post-form" action="{{ route('post.create') }}" method="post">
                         <div class="attach-files">
                             <a class="att-btn"><i class="material-icons">videocam</i> Upload videos</a>
@@ -29,22 +40,28 @@
                         <div class="post-row" data-postid="{{ $post->id }}">
                             <div class="post-info">
                                 <div class="user-avatar">
-                                    <img src="{{ URL::to('src/images/boa_hancock_wallpaper_blue_red_by_gian519.png') }}" class="responsive-img">
+                                    <a href="#"><img alt="avatar" src="{{ URL::to('src/images/boa_hancock_wallpaper_blue_red_by_gian519.png') }}" class="responsive-img"></a>
                                 </div>
                                 <div class="user-post">
-                                    <span class="post-username">{{ $post->user->first_name }}</span>
+                                    <span class="post-username"><a href="#">{{ $post->user->first_name }}</a></span>
                                     <span class="post-on">posted on {{ $post->created_at }}</span>
                                 </div>
+                                @if(Auth::user() == $post->user)
+                                <div class="post-act">
+                                    <a class="popup-post-menu"><i class="material-icons"><i class="material-icons">keyboard_arrow_down</i></i></a>
+                                    <div class="post-menu-act" style="display:none;">
+                                        <a class="edit-post"><i class="material-icons">mode_edit</i> Edit</a>
+                                        <a class="delete-post" href="{{ route('post.delete', ['post_id' => $post->id]) }}"><i class="material-icons">delete</i> Delete</a>
+                                    </div>
+                                </div>
+                                @endif
                             </div>
                             <div class="post-content">
                                 <p>{{ $post->body }}</p>
                             </div>
                             <div class="interaction">
-                                <a href="#" class="like">{{ Auth::user()->likes()->where('post_id', $post->id)->first() ? Auth::user()->likes()->where('post_id', $post->id)->first()->like == 1 ? 'You like this post' : 'Like' : 'Like'  }}</a> |
-                                @if(Auth::user() == $post->user)
-                                    <a href="#" class="edit">Edit</a> |
-                                    <a href="{{ route('post.delete', ['post_id' => $post->id]) }}">Delete</a>
-                                @endif
+                                <a href="#" class="like"><i class="material-icons">thumb_up</i> {{ Auth::user()->likes()->where('post_id', $post->id)->first() ? Auth::user()->likes()->where('post_id', $post->id)->first()->like == 1 ? 'You like this post' : 'Like' : 'Like'  }}</a>
+                                <a href="#" class="share-post"><i class="material-icons">share</i> Share</a>
                             </div>
                         </div>
                     @endforeach

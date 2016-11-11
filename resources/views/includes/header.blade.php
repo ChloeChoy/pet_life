@@ -6,7 +6,7 @@
             <nav class="main-menu">
                 <div class="nav-wrapper row">
                     <div class="col l2">
-                        <a href="#" class="brand-logo" href="{{ route('dashboard') }}">Pets Life</a>
+                        <a class="brand-logo" href="{{ route('dashboard') }}">Pets Life</a>
                         <a href="#" data-activates="mobile-navbar" class="button-collapse"><i class="material-icons">menu</i></a>
                     </div>
                     <ul class="right">
@@ -17,7 +17,7 @@
                         <li class="main-menu-items"><a href="#">News</a></li>
                         <li class="main-menu-items"><a href="#">Home</a></li>
                         <li id="link-sub-menu" class="main-menu-items">
-                            <a href="#">Account</a>
+                            <a href="#"><img class="responsive-img" src="{{ URL::to('src/images/boa_hancock_wallpaper_blue_red_by_gian519.png') }}"></a>
                             <ul id="sub-menu-account">
                                <li><a href="{{ route('account') }}">Profile</a></li> 
                                <li><a href="#">Settings</a></li> 
