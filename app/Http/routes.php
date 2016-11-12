@@ -90,3 +90,4 @@ Route::post('/like', [
     'as' => 'like'
 ]);
 
+Route::get('/administrator', 'AdminController@index');
