@@ -413,6 +413,60 @@ textarea#new-post {
 
 /* end style home page*/
 
+/* style profile page */
+section.profile-image {
+    margin-top: 50px;
+}
+.col.s12.wall {
+    box-shadow: 0 2px 5px 0 rgba(0,0,0,0.16),0 2px 10px 0 rgba(0,0,0,0.12);
+    padding: 0;
+    background: #fff;
+    height: 430px;
+}
+.cover-img {
+    height: 350px;
+    overflow: hidden;
+    position: relative;
+}
+.cover-img:hover a.edit-wall-img{
+    display: block;
+}
+.cover-img a.edit-wall-img {
+    position: absolute;
+    top: 35px;
+    color: #fff;
+    margin-left: 10px;
+    display: none;
+    cursor: pointer;
+}
+.account-avatar {
+    width: 100px;
+    position: absolute;
+    top: 350px;
+}
+.account-avatar img {
+    border-radius: 50%;
+    height: 100px !important;
+}
+.account-avatar a.edit-avatar {
+    position: relative;
+    top: -30px;
+    text-align: center;
+    cursor: pointer;
+    color: #fff;
+    display: none;
+    margin: 0 auto;
+    border-radius: 10px;
+    height: 24px;
+}
+.account-avatar:hover a{
+    display: block;
+    background: #777;
+}
+
+
+/* end style profile page */
+
 /* fallback */
 @font-face {
   font-family: 'Material Icons';

@@ -32,6 +32,15 @@ $(document).ready(function(){
 		$(this).next().show();
 		e.stopPropagation();
 	});
+
+	//position of account avatar
+	if($('.cover-img img').height() < 350){
+		$('.account-avatar').css({'left' : ($(window).width()/2 - 30).toString() + 'px', 'top' : $('.cover-img img').height().toString() + 'px'});
+	}else{
+		$('.account-avatar').css({'left' : ($(window).width()/2 - 30).toString() + 'px', 'top' : '350px'});
+	}
+
+	
 });
 
 //click on body
