@@ -2,6 +2,7 @@
 namespace App\Http\Controllers;
 
 use App\User;
+use App\Post;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Auth;
@@ -55,7 +56,8 @@ class UserController extends Controller
 
     public function getAccount()
     {
-        return view('account', ['user' => Auth::user()]);
+        $posts = Post::orderBy('created_at', 'desc')->get();
+        return view('account', ['user' => Auth::user()], ['posts' => $posts]);
     }
 
     public function postSaveAccount(Request $request)
@@ -91,4 +93,13 @@ class UserController extends Controller
         $file = Storage::disk('local')->get($filename);
         return new Response($file, 200);
     }
+
+    /**
+    * get all post of one account
+    */
+    // public function getUserPost()
+    // {
+    //     $posts = Post::orderBy('created_at', 'desc')->get();
+    //     return view('account', ['posts' => $posts]);
+    // }
 }
