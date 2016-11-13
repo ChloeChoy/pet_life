@@ -4,6 +4,8 @@ $( document ).ready(function(){
 	$(".button-collapse").sideNav();
 	//auto resize of textarea
 	$('#new-post').trigger('autoresize');
+	//modal edit post
+	// $('.modal').modal();
 });
 
 
@@ -49,3 +51,10 @@ $(document).ready(function(){
 		$('.post-menu-act').hide();
 	});
 });
+
+//function edit post
+function editPost(){
+	$('.edit-post').click(function(){
+
+	});
+}

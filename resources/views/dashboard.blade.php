@@ -50,7 +50,7 @@
                                 <div class="post-act">
                                     <a class="popup-post-menu"><i class="material-icons"><i class="material-icons">keyboard_arrow_down</i></i></a>
                                     <div class="post-menu-act" style="display:none;">
-                                        <a class="edit-post"><i class="material-icons">mode_edit</i> Edit</a>
+                                        <a class="edit-post" data-toggle="modal" href="#modal-edit-post"><i class="material-icons">mode_edit</i> Edit</a>
                                         <a class="delete-post" href="{{ route('post.delete', ['post_id' => $post->id]) }}"><i class="material-icons">delete</i> Delete</a>
                                     </div>
                                 </div>
@@ -76,28 +76,28 @@
     </section>
     
     <!-- modal edit post    -->
-    <div class="modal fade" tabindex="-1" role="dialog" id="edit-modal">
+    <!-- Modal Structure -->
+    <div id="modal-edit-post" class="modal fade" role="dialog">
         <div class="modal-dialog">
+        <!-- Modal content-->
             <div class="modal-content">
                 <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                    <h4 class="modal-title">Edit Post</h4>
+                  <h4 class="modal-title">Edit post</h4>
                 </div>
                 <div class="modal-body">
                     <form>
-                        <div class="form-group">
-                            <label for="post-body">Edit the Post</label>
-                            <textarea class="form-control" name="post-body" id="post-body" rows="5"></textarea>
+                        <div class="input-field col s12">
+                            <textarea id="post-body" class="materialize-textarea"  name="body" autofocus></textarea>
                         </div>
                     </form>
                 </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-primary" id="modal-save">Save changes</button>
+            <div class="modal-footer">
+                <a class="btn" data-dismiss="modal">Cancel</a>
+                <button id="modal-save" type="button" class="btn btn-default" data-dismiss="modal">Save</button>
                 </div>
-            </div><!-- /.modal-content -->
-        </div><!-- /.modal-dialog -->
-    </div><!-- /.modal -->
+            </div>
+        </div>
+    </div>
 
     <script>
         var token = '{{ Session::token() }}';

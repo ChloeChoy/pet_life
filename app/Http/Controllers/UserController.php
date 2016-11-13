@@ -56,6 +56,7 @@ class UserController extends Controller
 
     public function getAccount()
     {
+
         $posts = Post::orderBy('created_at', 'desc')->get();
         return view('account', ['user' => Auth::user()], ['posts' => $posts]);
     }
@@ -95,11 +96,19 @@ class UserController extends Controller
     }
 
     /**
-    * get all post of one account
+    * user post in profile page
     */
-    // public function getUserPost()
-    // {
-    //     $posts = Post::orderBy('created_at', 'desc')->get();
-    //     return view('account', ['posts' => $posts]);
-    // }
+    public function postInProfile(Request $request)
+    {
+        $this->validate($request, [
+            'body' => 'required|max:1000'
+        ]);
+        $post = new Post();
+        $post->body = $request['body'];
+        $message = 'There was an error';
+        if ($request->user()->posts()->save($post)) {
+            $message = 'Post successfully created!';
+        }
+        return view('account', ['message' => $message]);
+    }
 }

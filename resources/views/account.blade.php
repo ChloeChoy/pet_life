@@ -80,7 +80,7 @@
                     </div>
                 </div>
                 <div class="col l8 s12 col-user-post">
-                    <form class="post-form" action="{{ route('post.create') }}" method="post">
+                    <form class="post-form" action="{{ route('account') }}" method="post">
                         <div class="attach-files">
                             <a class="att-btn"><i class="material-icons">videocam</i> Upload videos</a>
                             <a class="att-btn"><i class="material-icons">image</i> Upload images</a>
