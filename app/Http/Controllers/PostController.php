@@ -23,11 +23,21 @@ class PostController extends Controller
         ]);
         $post = new Post();
         $post->body = $request['body'];
-        $message = 'There was an error';
+        $message = '';
         if ($request->user()->posts()->save($post)) {
-            $message = 'Post successfully created!';
+            return response()->json(
+                [
+                    'post_id'   => $post->id,
+                    'post_user' => $post->user->first_name,
+                    'post_body' => $post->body,
+                    'create_at' => date_format(date_create($post->created_at), 'D M Y')
+                ],
+                200
+            );
+            // $message = 'Post successfully created!';
+        }else{
+            $message = 'An error occur when create post. Please try again!';
         }
-        return redirect()->route('dashboard')->with(['message' => $message]);
     }
 
     public function getDeletePost($post_id)

@@ -1,7 +1,7 @@
 @extends('layouts.content-layout')
 
 @section('content')
-    @include('includes.message-block')
+    <!-- @include('includes.message-block') -->
     <section class="main-content">
         <div class="container">
             <div class="row">
@@ -19,20 +19,20 @@
                         <li><a href="#"><i class="material-icons">settings</i> Settings</a></li>
                     </ul>
                 </div>
-                <div class="col m12 l6">
-                    <form class="post-form" action="{{ route('post.create') }}" method="post">
+                <div class="col m12 l7 s12">
+                    <form class="post-form">
                         <div class="attach-files">
                             <a class="att-btn"><i class="material-icons">videocam</i> Upload videos</a>
                             <a class="att-btn"><i class="material-icons">image</i> Upload images</a>
                         </div>
                         <div class="input-field col s12">
-                            <textarea id="new-post" class="materialize-textarea"  name="body"></textarea>
+                            <textarea id="new-post" class="materialize-textarea"  name="body" required></textarea>
                             <label for="textarea1">What's your status</label>
                         </div>
                         <div class="field-submit">
-                            <button type="submit" class="waves-effect waves-light btn">Post</button>
+                            <button id="create-post" type="submit" class="waves-effect waves-light btn">Post</button>
                         </div>
-                        <input type="hidden" value="{{ Session::token() }}" name="_token">
+                        <input id="post-token" type="hidden" value="{{ Session::token() }}" name="_token">
                     </form>
 
                     <!-- post -->
@@ -44,7 +44,7 @@
                                 </div>
                                 <div class="user-post">
                                     <span class="post-username"><a href="#">{{ $post->user->first_name }}</a></span>
-                                    <span class="post-on">posted on {{ $post->created_at }}</span>
+                                    <span class="post-on">Posted on {{  date_format($post->created_at, 'D M Y') }}</span>
                                 </div>
                                 @if(Auth::user() == $post->user)
                                 <div class="post-act">
@@ -68,8 +68,50 @@
                     <!-- end post -->
 
                 </div>
-                <div class="col l4">
+                <div class="col l3 trending hide-on-med-and-down">
                     <!-- trending post -->
+                    <h5 class="title">Trending posts</h5>
+                    <div class="posts">
+                        <a class="trend-row" href="#" data-postid="{{ $post->id }}">
+                            <div class="post-info">
+                                <div class="user-avatar">
+                                    <img alt="avatar" src="{{ URL::to('src/images/boa_hancock_wallpaper_blue_red_by_gian519.png') }}" class="responsive-img">
+                                </div>
+                                <div class="user-post">
+                                    <span class="post-username">{{ $post->user->first_name }}</span>
+                                </div>
+                            </div>
+                            <div class="post-content">
+                                <p>{{ $post->body }}</p>
+                            </div>
+                        </a>
+                        <a class="trend-row" href="#" data-postid="{{ $post->id }}">
+                            <div class="post-info">
+                                <div class="user-avatar">
+                                    <img alt="avatar" src="{{ URL::to('src/images/boa_hancock_wallpaper_blue_red_by_gian519.png') }}" class="responsive-img">
+                                </div>
+                                <div class="user-post">
+                                    <span class="post-username">{{ $post->user->first_name }}</span>
+                                </div>
+                            </div>
+                            <div class="post-content">
+                                <p>{{ $post->body }}</p>
+                            </div>
+                        </a>
+                        <a class="trend-row" href="#" data-postid="{{ $post->id }}">
+                            <div class="post-info">
+                                <div class="user-avatar">
+                                    <img alt="avatar" src="{{ URL::to('src/images/boa_hancock_wallpaper_blue_red_by_gian519.png') }}" class="responsive-img">
+                                </div>
+                                <div class="user-post">
+                                    <span class="post-username">{{ $post->user->first_name }}</span>
+                                </div>
+                            </div>
+                            <div class="post-content">
+                                <p>{{ $post->body }}</p>
+                            </div>
+                        </a>
+                    </div>
                 </div>
             </div>
         </div>
@@ -103,5 +145,10 @@
         var token = '{{ Session::token() }}';
         var urlEdit = '{{ route('edit') }}';
         var urlLike = '{{ route('like') }}';
+
+        var routePost = "{{ route('post.create') }}";
+        var id;
+        var routeDelete = "{{ route('post.delete', ['post_id' => "+id+"]) }}";
+        var userAvatar = '{{ URL::to('src/images/boa_hancock_wallpaper_blue_red_by_gian519.png') }}';
     </script>
 @endsection
