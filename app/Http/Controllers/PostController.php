@@ -3,25 +3,37 @@ namespace App\Http\Controllers;
 
 use App\Like;
 use App\Post;
+use App\User;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Facades\Storage;
 
 
 class PostController extends Controller
 {
     public function getDashboard()
     {
+       $user = User::orderBy('created_at', 'desc')->get();
         $posts = Post::orderBy('created_at', 'desc')->get();
-        return view('dashboard', ['posts' => $posts]);
+        return view('dashboard', ['posts' => $posts, 'user' => Auth::user()]);
     }
 
     public function postCreatePost(Request $request)
     {
-        $this->validate($request, [
-            'body' => 'required|max:1000'
-        ]);
+        // $this->validate($request, [
+        //     'body' => 'required|max:1000'
+        // ]);
         $post = new Post();
+        $user = Auth::user();
+        $file = $request->file('image');
+        $extension = $file->getClientOriginalExtension();
+        Storage::disk('local')->put($file->getFilename().'.'.$extension,  File::get($file));
+        $post->mime = $file->getClientMimeType();
+        $post->original_filename = $file->getClientOriginalName();
+        $post->filename = $file->getFilename().'.'.$extension;
+
         $post->body = $request['body'];
         $message = 'There was an error';
         if ($request->user()->posts()->save($post)) {
