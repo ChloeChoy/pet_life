@@ -1,11 +1,20 @@
 
+//function show edit/delete post
+function interActivePost(){
+	//show menu edit/delete post
+	$('.popup-post-menu').click(function(e){
+		$(this).next().show();
+		e.stopPropagation();
+	});
+}
+
 $( document ).ready(function(){
 	//side nav based on screen
 	$(".button-collapse").sideNav();
 	//auto resize of textarea
 	$('#new-post').trigger('autoresize');
-	//modal edit post
-	// $('.modal').modal();
+	
+	interActivePost();
 });
 
 
@@ -29,11 +38,7 @@ $(document).ready(function(){
 		$('.reset-search').hide();
 	});
 
-	//show menu edit/delete post
-	$('.popup-post-menu').click(function(e){
-		$(this).next().show();
-		e.stopPropagation();
-	});
+	
 
 	//position of account avatar
 	if($('.cover-img img').height() < 350){
@@ -42,6 +47,11 @@ $(document).ready(function(){
 		$('.account-avatar').css({'left' : ($(window).width()/2 - 30).toString() + 'px', 'top' : '350px'});
 	}
 
+	//submit post
+	$('.post-form').submit(function(){
+		if($('#new-post').val() == '')
+			return false;
+	});
 	
 });
 
@@ -52,9 +62,11 @@ $(document).ready(function(){
 	});
 });
 
-//function edit post
-function editPost(){
-	$('.edit-post').click(function(){
 
-	});
-}
+
+//function edit post
+// function editPost(){
+// 	$('.edit-post').click(function(){
+
+// 	});
+// }
