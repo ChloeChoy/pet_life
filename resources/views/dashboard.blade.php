@@ -19,11 +19,14 @@
                         <li><a href="#"><i class="material-icons">settings</i> Settings</a></li>
                     </ul>
                 </div>
-                <div class="col m12 l7 s12">
-                    <form class="post-form dropzone" action="/laravel/public/src/images">
+                <div class="col m12 s12 l7">
+                    <form class="post-form" action="{{ route('post.create') }}" method="post" enctype="multipart/form-data">
                         <div class="attach-files">
-                            <a class="att-btn"><i class="material-icons">videocam</i> Upload videos</a>
-                            <a class="att-btn"><i class="material-icons">image</i> Upload images</a>
+                            <a type="file"class="att-btn" onclick="getFile()"><i class="material-icons">videocam</i>Video/Picture</a>
+<!--                             <a type="file" class="att-btn"><i class="material-icons">image</i> Upload images</a>
+ -->                            <div style='height: 0px;width: 0px; overflow:hidden;'>
+                                    <input id="image" type="  file" name="image" onchange="sub(this)"/>
+                                </div>                        
                         </div>
                         <div class="input-field col s12">
                             <textarea id="new-post" class="materialize-textarea"  name="body" required></textarea>
@@ -59,6 +62,20 @@
                             </div>
                             <div class="post-content">
                                 <p>{{ $post->body }}</p>
+                                @if(strpos($post->mime, 'image') !== false)
+                                <section class="row new-post">
+                                    <div class="col-md-6 col-md-offset-3">
+                                        <img width="450" height="240" src="{{ route('account.image', ['filename' => $post->filename]) }}" alt="" class="img-responsive">
+                                    </div>
+                                </section>
+                                @endif
+                                @if(strpos($post->mime, 'video') !== false)
+                                <section class="row new-post">
+                                    <video class="col-md-6 col-md-offset-3" width="320" height="240" controls>
+                                      <source src="{{ route('account.image', ['filename' => $post->filename]) }}" type="video/mp4">
+                                    </video>
+                                </section>
+                                @endif
                             </div>
                             <div class="interaction">
                                 <a href="#" class="like"><i class="material-icons">thumb_up</i> {{ Auth::user()->likes()->where('post_id', $post->id)->first() ? Auth::user()->likes()->where('post_id', $post->id)->first()->like == 1 ? 'You like this post' : 'Like' : 'Like'  }}</a>
@@ -152,5 +169,17 @@
         var userAvatar = '{{ URL::to('src/images/boa_hancock_wallpaper_blue_red_by_gian519.png') }}';
 
         var routeDropzone = '{{ URL::to('src/images') }}';
+    </script>
+    <script type="text/javascript">
+         function getFile(){
+           document.getElementById("image").click();
+         }
+         // function sub(obj){
+         //    var file = obj.value;
+         //    var fileName = file.split("\\");
+         //    document.getElementById("yourBtn").innerHTML = fileName[fileName.length-1];
+         //    document.myForm.submit();
+         //    event.preventDefault();
+         //  }
     </script>
 @endsection
