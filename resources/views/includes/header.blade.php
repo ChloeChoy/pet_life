@@ -15,7 +15,7 @@
                     </ul>
                     <ul class="right hide-on-med-and-down">
                         <li class="main-menu-items"><a href="#">News</a></li>
-                        <li class="main-menu-items"><a href="#">Home</a></li>
+                        <li class="main-menu-items"><a href="{{ route('dashboard') }}">Home</a></li>
                         <li id="link-sub-menu" class="main-menu-items">
                             <a href="#"><img class="responsive-img" src="{{ URL::to('src/images/boa_hancock_wallpaper_blue_red_by_gian519.png') }}"></a>
                             <ul id="sub-menu-account">

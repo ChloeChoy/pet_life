@@ -20,7 +20,7 @@
                     </ul>
                 </div>
                 <div class="col m12 l7 s12">
-                    <form class="post-form">
+                    <form class="post-form dropzone" action="/laravel/public/src/images">
                         <div class="attach-files">
                             <a class="att-btn"><i class="material-icons">videocam</i> Upload videos</a>
                             <a class="att-btn"><i class="material-icons">image</i> Upload images</a>
@@ -32,6 +32,7 @@
                         <div class="field-submit">
                             <button id="create-post" type="submit" class="waves-effect waves-light btn">Post</button>
                         </div>
+                        <input type="file" name="file" style="display:none;" />
                         <input id="post-token" type="hidden" value="{{ Session::token() }}" name="_token">
                     </form>
 
@@ -51,7 +52,7 @@
                                     <a class="popup-post-menu"><i class="material-icons"><i class="material-icons">keyboard_arrow_down</i></i></a>
                                     <div class="post-menu-act" style="display:none;">
                                         <a class="edit-post" data-toggle="modal" href="#modal-edit-post"><i class="material-icons">mode_edit</i> Edit</a>
-                                        <a class="delete-post" href="{{ route('post.delete', ['post_id' => $post->id]) }}"><i class="material-icons">delete</i> Delete</a>
+                                        <a class="delete-post"><i class="material-icons">delete</i> Delete</a>
                                     </div>
                                 </div>
                                 @endif
@@ -116,6 +117,7 @@
             </div>
         </div>
     </section>
+
     
     <!-- modal edit post    -->
     <!-- Modal Structure -->
@@ -147,8 +149,8 @@
         var urlLike = '{{ route('like') }}';
 
         var routePost = "{{ route('post.create') }}";
-        var id;
-        var routeDelete = "{{ route('post.delete', ['post_id' => "+id+"]) }}";
         var userAvatar = '{{ URL::to('src/images/boa_hancock_wallpaper_blue_red_by_gian519.png') }}';
+
+        var routeDropzone = '{{ URL::to('src/images') }}';
     </script>
 @endsection
