@@ -27,7 +27,7 @@ class PostController extends Controller
         // ]);
         $post = new Post();
         $user = Auth::user();
-        $file = $request->file('image');
+        $file = $request->file('att_files');
         $extension = $file->getClientOriginalExtension();
         Storage::disk('local')->put($file->getFilename().'.'.$extension,  File::get($file));
         $post->mime = $file->getClientMimeType();
@@ -59,7 +59,6 @@ class PostController extends Controller
             return redirect()->back();
         }
         $post->delete();
-        // return redirect()->route('dashboard')->with(['message' => 'Successfully deleted!']);
         return response()->json(['ok' => 200],200);
     }
 

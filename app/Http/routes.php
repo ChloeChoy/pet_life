@@ -92,3 +92,18 @@ Route::post('/like', [
 
 Route::get('/administrator', 'AdminController@index');
 
+//route to user info
+Route::get('/userinfo', 
+    [
+        'uses' => 'UserController@userInfo',
+        'as'    => 'userinfo'
+    ]
+);
+
+//route to user photos
+Route::get('/photos', 
+    [
+        'uses' => 'UserController@userPhotos',
+        'as'    => 'photos'
+    ]
+);

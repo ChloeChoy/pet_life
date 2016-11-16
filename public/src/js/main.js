@@ -19,8 +19,14 @@ $( document ).ready(function(){
 	$(".button-collapse").sideNav();
 	//auto resize of textarea
 	$('#new-post').trigger('autoresize');
+	//collapse user info
+	$('.collapsible').collapsible();
 	
 	interActivePost();
+	triggerUploadImg();
+	changeUploadName();
+	tabUserInfo();
+	triggerUserForm();
 
 	//preview image by dropzone
 	$(".post-form").dropzone({ 
@@ -55,6 +61,21 @@ $( document ).ready(function(){
 				}
 				
 			}); 
+
+	//magnific popup (view image gallery)
+	jQuery('#user-photos-gallery').magnificPopup({
+		delegate: 'img',
+	  	type: 'image',
+	  	// other options
+	  	gallery: {
+	          enabled:true
+	    },
+        removalDelay: 300,
+
+		// Class that is added to popup wrapper and background
+		// make it unique to apply your CSS animations just to this exact popup
+		mainClass: 'mfp-fade'
+	});
 });
 
 
@@ -93,11 +114,11 @@ $(document).ready(function(){
 			return false;
 	});
 
-	//attach images
+	//trigger attach images
 	$('.att-btn').click(function(){
-		$(this).parent().parent().trigger('click');
+		$('#att-files').trigger('click');
 	});
-	
+
 });
 
 //click on body
@@ -107,3 +128,56 @@ $(document).ready(function(){
 	});
 });
 
+// function trigger upload profile images
+function triggerUploadImg(){
+	$('.edit-wall-img').click(function(){
+		$('#profile-img').trigger('click');
+	});
+
+	$('.edit-avatar').click(function(){
+		$('#profile-img').trigger('click');
+	});
+	
+	$('.change-user-photos').click(function(){
+		$('#profile-img').trigger('click');
+	});
+}
+
+//function change name of input type="file" in form upload profile images
+function changeUploadName(){
+	$('.edit-avatar').click(function(){
+		$('#profile-img').attr('name', 'profile_img');
+	});
+
+	$('.edit-wall-img').click(function(){
+		$('#profile-img').attr('name', 'cover_img');
+	});
+}
+
+
+//function click tabs user info
+function tabUserInfo(){
+	$('.tab-link').click(function(){
+		$('.tab-link').removeClass('link-active');
+		$(this).addClass('link-active');
+	});
+}
+
+//function trigger form edit user info
+function triggerUserForm(){
+	$('#place-live').click(function(){
+		$('#live-info').trigger('click');
+	});
+
+	$('#workplace').click(function(){
+		$('#work-info').trigger('click');
+	});
+
+	$('#user-birth').click(function(){
+		$('#birthday-info').trigger('click');
+	});
+
+	$('.cancel').click(function(){
+		$(this).parent().parent().prev().trigger('click');
+	});
+}

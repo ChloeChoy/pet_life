@@ -111,4 +111,18 @@ class UserController extends Controller
         }
         return view('account', ['message' => $message]);
     }
+
+    /**
+    * user info page
+    */
+    public function userInfo(){
+        return view('userinfo', ['user' => Auth::user()]);
+    }
+
+    /**
+    * user photo page
+    */
+    public function userPhotos(){
+        return view('photos', ['user' => Auth::user()]);   
+    }
 }

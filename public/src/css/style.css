@@ -267,8 +267,8 @@ a.att-btn {
     cursor: pointer !important;
     border-bottom: 1px solid #eee;
 }
-a.att-btn:last-child{
-    border-right: none;
+a.att-image{
+    border-right: none !important;
 }
 a.att-btn i {
     color: #2bbbad;
@@ -484,6 +484,14 @@ textarea#post-body {
 .dz-default.dz-message {
     display: none;
 }
+.interaction {
+    border-top: 1px solid #eee;
+}
+span.num-of-like {
+    font-size: 12px;
+    overflow: hidden;
+    display: block;
+}
 
 
 /* end style home page*/
@@ -637,9 +645,115 @@ span.title-info {
     margin: 0 auto;
     cursor: pointer;
 }
+a.change-user-photos {
+    line-height: 27px;
+}
+a.change-user-photos i{
+    position: relative;
+    top: 5px;
+    font-size: 22px;
+}
 
 
 /* end style profile page */
+
+/* style user info */
+.col-tabs {
+    padding-left: 0 !important;
+}
+@media (max-width: 600px){
+    .col-tabs {
+        display: none;
+    }
+}
+.tab-info {
+    background: #fff;
+}
+.tab-info .tabs {
+    display: block !important;
+    overflow-x: hidden;
+}
+.tabs a.tab-link {
+    display: block;
+    width: 100%;
+    padding: 10px 20px;
+    cursor: pointer;
+    height: 100%;
+    line-height: 28px;
+}
+.tabs a.tab-link:hover {
+    background: #f5f5f5;
+}
+a.link-active{
+    border-left: 2px solid red;
+}
+.col-info {
+    padding-right: 0 !important;
+    background: #fff;
+}
+.main-user-info {
+    padding: 10px 20px;
+}
+.infor span.title {
+    font-size: 18px;
+    color: #555;
+}
+.infor .collapsible {
+    border: none;
+    box-shadow: none;
+}
+.infor .collapsible-header {
+    border: none;
+}
+.infor .collapsible-header:hover{
+    background: #f5f5f5;
+}
+.infor .collapsible-body{
+    border: none;
+}
+.infor i.edit-icon {
+    float: right;
+    font-size: 20px;
+    display: none;
+}
+.infor .collapsible-header:hover i.edit-icon{
+    display: block;
+}
+.infor i {
+    color: #2bbbad;
+}
+button.cancel {
+    background: #777 !important;
+}
+.infor .input-field {
+    padding: 0 20px;
+}
+
+/* end style user info */
+
+/* style photos page*/
+.user-photos {
+    padding: 0 0 20px 0 !important;
+    background: #fff;
+}
+div#user-photos-gallery {
+    padding: 10px 20px;
+}
+.user-photos span.title {
+    display: block;
+    font-size: 18px;
+    margin-left: 30px;
+    margin-top: 10px;
+    color: #555;
+}
+.photo-item img {
+    cursor: pointer;
+}
+.photo-item {
+    margin-bottom: 10px;
+}
+
+/* end style photos page*/
 
 /* fallback */
 @font-face {

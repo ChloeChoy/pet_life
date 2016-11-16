@@ -22,11 +22,11 @@
                 <div class="col m12 s12 l7">
                     <form class="post-form" action="{{ route('post.create') }}" method="post" enctype="multipart/form-data">
                         <div class="attach-files">
-                            <a type="file"class="att-btn" onclick="getFile()"><i class="material-icons">videocam</i>Video/Picture</a>
-<!--                             <a type="file" class="att-btn"><i class="material-icons">image</i> Upload images</a>
- -->                            <div style='height: 0px;width: 0px; overflow:hidden;'>
-                                    <input id="image" type="  file" name="image" onchange="sub(this)"/>
-                                </div>                        
+                            <a class="att-btn"><i class="material-icons">videocam</i> Upload videos</a>
+                            <a class="att-btn att-image"><i class="material-icons">image</i> Upload images</a>
+                            <div style='display: none'>
+                                <input id="att-files" type="file" name="att_files"/>
+                            </div>                        
                         </div>
                         <div class="input-field col s12">
                             <textarea id="new-post" class="materialize-textarea"  name="body" required></textarea>
@@ -78,7 +78,8 @@
                                 @endif
                             </div>
                             <div class="interaction">
-                                <a href="#" class="like"><i class="material-icons">thumb_up</i> {{ Auth::user()->likes()->where('post_id', $post->id)->first() ? Auth::user()->likes()->where('post_id', $post->id)->first()->like == 1 ? 'You like this post' : 'Like' : 'Like'  }}</a>
+                                <span class="num-of-like">0</span>
+                                <a href="#" class="like"><i class="material-icons">thumb_up</i> Like</a>
                                 <a href="#" class="share-post"><i class="material-icons">share</i> Share</a>
                             </div>
                         </div>
@@ -171,9 +172,9 @@
         var routeDropzone = '{{ URL::to('src/images') }}';
     </script>
     <script type="text/javascript">
-         function getFile(){
-           document.getElementById("image").click();
-         }
+         // function getFile(){
+         //   document.getElementById("image").click();
+         // }
          // function sub(obj){
          //    var file = obj.value;
          //    var fileName = file.split("\\");

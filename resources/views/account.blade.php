@@ -12,7 +12,7 @@
                 <div class="col s12 wall">
                     <div class="cover-img">
                         <img class="responsive-img" src="{{ URL::to('src/images/default-wall.jpg') }}">
-                        <a class="edit-wall-img"><i class="material-icons">photo_camera</i> Change cover photo</a>
+                        <a class="edit-wall-img" data-toggle="modal" href="#modal-upload-images"><i class="material-icons">photo_camera</i> Change cover photo</a>
                     </div>
                     <div class="account-avatar">
                         @if (Storage::disk('local')->has($user->first_name . '-' . $user->id . '.jpg'))
@@ -20,13 +20,13 @@
                         @else
                             <img class="responsive-img" src="{{ URL::to('src/images/boa_hancock_wallpaper_blue_red_by_gian519.png') }}">
                         @endif
-                        <a class="edit-avatar"><i class="material-icons">photo_camera</i></a>
+                        <a class="edit-avatar" data-toggle="modal" href="#modal-upload-images"><i class="material-icons">photo_camera</i></a>
                     </div>
                     <div class="profile-menu">
-                        <a href="#">Time line</a>
-                        <a href="#">Info</a>
+                        <a href="{{ route('account') }}">Timeline</a>
+                        <a href="{{ route('userinfo') }}">Info</a>
                         <a href="#">Friends</a>
-                        <a href="#">Photos</a>
+                        <a href="{{ route('photos') }}">Photos</a>
                         <a href="#">Videos</a>
                     </div>
                 </div>
@@ -39,9 +39,9 @@
                         <div class="live info">
                             <span>
                                 <i class="material-icons">home</i>
-                                Lives in:  &nbsp;No information
+                                Living:  &nbsp;No information
                             </span>
-                            <a title="Edit">
+                            <a class="edit-user-info" title="Edit" href="{{ route('userinfo')}}">
                                 <i class="material-icons">mode_edit</i>
                             </a>
                         </div>
@@ -50,7 +50,7 @@
                                 <i class="material-icons">work</i>
                                 Works at:  &nbsp;No information
                             </span>
-                            <a title="Edit">
+                            <a class="edit-user-info" title="Edit" href="{{ route('userinfo')}}">
                                 <i class="material-icons">mode_edit</i>
                             </a>
                         </div>
@@ -59,7 +59,7 @@
                                 <i class="material-icons">date_range</i>
                                 Birthday:  &nbsp;No information
                             </span>
-                            <a title="Edit">
+                            <a class="edit-user-info" title="Edit" href="{{ route('userinfo')}}">
                                 <i class="material-icons">mode_edit</i>
                             </a>
                         </div>
@@ -82,18 +82,21 @@
                 <div class="col l8 s12 col-user-post">
                     <form class="post-form" action="{{ route('post.create') }}" method="post" enctype="multipart/form-data">
                         <div class="attach-files">
-                           <a type="file"class="att-btn" onclick="getFile()"><i class="material-icons">videocam</i>Video/Picture</a>
-<!--                             <a type="file" class="att-btn"><i class="material-icons">image</i> Upload images</a>
- -->                            <div style='height: 0px;width: 0px; overflow:hidden;'><input id="image" type="file" name="image" onchange="sub(this)"/></div>
+                            <a class="att-btn"><i class="material-icons">videocam</i> Upload videos</a>
+                            <a class="att-btn att-image"><i class="material-icons">image</i> Upload images</a>
+                            <div style='display: none'>
+                                <input id="att-files" type="file" name="att_files"/>
+                            </div>                        
                         </div>
                         <div class="input-field col s12">
-                            <textarea id="new-post" class="materialize-textarea"  name="body"></textarea>
+                            <textarea id="new-post" class="materialize-textarea"  name="body" required></textarea>
                             <label for="textarea1">What's your status</label>
                         </div>
                         <div class="field-submit">
-                            <button type="submit" class="waves-effect waves-light btn">Post</button>
+                            <button id="create-post" type="submit" class="waves-effect waves-light btn">Post</button>
                         </div>
-                        <input type="hidden" value="{{ Session::token() }}" name="_token">
+                        <input type="file" name="file" style="display:none;" />
+                        <input id="post-token" type="hidden" value="{{ Session::token() }}" name="_token">
                     </form>
 
                     <!-- post -->
@@ -106,19 +109,19 @@
                                 </div>
                                 <div class="user-post">
                                     <span class="post-username"><a href="#">{{ $post->user->first_name }}</a></span>
-                                    <span class="post-on">posted on {{ $post->created_at }}</span>
+                                    <span class="post-on">Posted on {{  date_format($post->created_at, 'D M Y') }}</span>
                                 </div>
                                 <div class="post-act">
                                     <a class="popup-post-menu"><i class="material-icons"><i class="material-icons">keyboard_arrow_down</i></i></a>
                                     <div class="post-menu-act" style="display:none;">
-                                        <a class="edit-post"><i class="material-icons">mode_edit</i> Edit</a>
-                                        <a class="delete-post" href="{{ route('post.delete', ['post_id' => $post->id]) }}"><i class="material-icons">delete</i> Delete</a>
+                                        <a class="edit-post" data-toggle="modal" href="#modal-edit-post"><i class="material-icons">mode_edit</i> Edit</a>
+                                        <a class="delete-post"><i class="material-icons">delete</i> Delete</a>
                                     </div>
                                 </div>
                             </div>
                             <div class="post-content">
                                 <p>{{ $post->body }}</p>
-                                 @if(strpos($post->mime, 'image') !== false)
+                                @if(strpos($post->mime, 'image') !== false)
                                 <section class="row new-post">
                                     <div class="col-md-6 col-md-offset-3">
                                         <img width="450" height="240" src="{{ route('account.image', ['filename' => $post->filename]) }}" alt="" class="img-responsive">
@@ -134,7 +137,8 @@
                                 @endif
                             </div>
                             <div class="interaction">
-                                <a href="#" class="like"><i class="material-icons">thumb_up</i> {{ Auth::user()->likes()->where('post_id', $post->id)->first() ? Auth::user()->likes()->where('post_id', $post->id)->first()->like == 1 ? 'You like this post' : 'Like' : 'Like'  }}</a>
+                                <span class="num-of-like">0</span>
+                                <a href="#" class="like"><i class="material-icons">thumb_up</i> Like</a>
                                 <a href="#" class="share-post"><i class="material-icons">share</i> Share</a>
                             </div>
                         </div>
@@ -146,40 +150,64 @@
         </div>
     </section>
 
-    <!-- <section class="row new-post">
-        <div class="col-md-6 col-md-offset-3">
-            <header><h3>Your Account</h3></header>
-            <form action="{{ route('account.save') }}" method="post" enctype="multipart/form-data">
-                <div class="form-group">
-                    <label for="first_name">First Name</label>
-                    <input type="text" name="first_name" class="form-control" value="{{ $user->first_name }}" id="first_name">
+    <!-- modal edit post    -->
+    <!-- Modal Structure -->
+    <div id="modal-edit-post" class="modal fade" role="dialog">
+        <div class="modal-dialog">
+        <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                  <h4 class="modal-title">Edit post</h4>
                 </div>
-                <div class="form-group">
-                    <label for="image">Image (only .jpg)</label>
-                    <input type="file" name="image" class="form-control" id="image">
+                <div class="modal-body">
+                    <form>
+                        <div class="input-field col s12">
+                            <textarea id="post-body" class="materialize-textarea"  name="body" autofocus></textarea>
+                        </div>
+                    </form>
                 </div>
-                <button type="submit" class="btn btn-primary">Save Account</button>
-                <input type="hidden" value="{{ Session::token() }}" name="_token">
-            </form>
-        </div>
-    </section>
-    @if (Storage::disk('local')->has($user->first_name . '-' . $user->id . '.jpg'))
-        <section class="row new-post">
-            <div class="col-md-6 col-md-offset-3">
-                <img src="{{ route('account.image', ['filename' => $user->first_name . '-' . $user->id . '.jpg']) }}" alt="" class="img-responsive">
+            <div class="modal-footer">
+                <a class="btn" data-dismiss="modal">Cancel</a>
+                <button id="modal-save" type="button" class="btn btn-default" data-dismiss="modal">Save</button>
+                </div>
             </div>
-        </section>
-    @endif -->
+        </div>
+    </div>
+    <!-- end modal edit post -->
+
+    <!-- form change cover/profile images -->
+    <div id="modal-upload-images" class="modal fade" role="dialog">
+        <div class="modal-dialog">
+        <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                  <h4 class="modal-title">Upload photos</h4>
+                </div>
+                <div class="modal-body">
+                    <form class="upload-photos"  method="post" enctype="multipart/form-data">
+                        <div class="input-field col s12">
+                            <a class="change-user-photos btn"><i class="material-icons">image</i> Upload images</a>
+                            <input id="profile-img" type="file" name="cover_img" style="display:none;">
+                        </div>
+                    </form>
+                </div>
+            <div class="modal-footer">
+                <a class="btn" data-dismiss="modal">Cancel</a>
+                <button id="modal-save" type="button" class="btn btn-default" data-dismiss="modal">Save</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- end form change cover/profile images -->
+    
      <script type="text/javascript">
-         function getFile(){
-           document.getElementById("image").click();
-         }
-         // function sub(obj){
-         //    var file = obj.value;
-         //    var fileName = file.split("\\");
-         //    document.getElementById("yourBtn").innerHTML = fileName[fileName.length-1];
-         //    document.myForm.submit();
-         //    event.preventDefault();
-         //  }
+        var token = '{{ Session::token() }}';
+        var urlEdit = '{{ route('edit') }}';
+        var urlLike = '{{ route('like') }}';
+
+        var routePost = "{{ route('post.create') }}";
+        var userAvatar = '{{ URL::to('src/images/boa_hancock_wallpaper_blue_red_by_gian519.png') }}';
+
+        var routeDropzone = '{{ URL::to('src/images') }}';
     </script>
 @endsection
