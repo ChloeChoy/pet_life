@@ -9,7 +9,21 @@
 	<section class="main-content">
 		<div class="container">
 			<div class="row">
-				<div class="col s12">
+                <div class="col l2 col-left-link">
+                    <div class="link-profile">
+                        <img class="responsive-img" alt="avatar" src="{{ URL::to('src/images/boa_hancock_wallpaper_blue_red_by_gian519.png') }}">
+                        <a href="{{ route('account')}}"><i class="material-icons">mode_edit</i> Update profile</a>
+                    </div>
+                    <ul class="menu-left">
+                        <li><a href="#"><i class="material-icons">wallpaper</i> News</a></li>
+                        <li><a href="#"><i class="material-icons">message</i> Messages</a></li>
+                        <li><a href="#"><i class="fa fa-globe" aria-hidden="true"></i> Notifications</a></li>
+                        <li><a href="#"><i class="material-icons">photo_library</i> Photos</a></li>
+                        <li><a href="#"><i class="material-icons">video_library</i> Videos</a></li>
+                        <li><a href="#"><i class="material-icons">settings</i> Settings</a></li>
+                    </ul>
+                </div>
+				<div class="col s12 l8">
 					<div class="post-row" data-postid="{{ $post->id }}">
                         <div class="post-info">
                             <div class="user-avatar">

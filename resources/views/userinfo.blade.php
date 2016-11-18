@@ -27,8 +27,7 @@
                         <a href="{{ route('account') }}">Timeline</a>
                         <a href="{{ route('userinfo') }}">Info</a>
                         <a href="#">Friends</a>
-                        <a href="{{ route('photos') }}">Photos</a>
-                        <a href="#">Videos</a>
+                        <a href="{{ route('photos') }}">Media</a>
                     </div>
                 </div>
             </div>
