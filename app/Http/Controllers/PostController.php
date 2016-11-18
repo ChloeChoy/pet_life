@@ -15,7 +15,7 @@ class PostController extends Controller
 {
     public function getDashboard()
     {
-       $user = User::orderBy('created_at', 'desc')->get();
+        $user = User::orderBy('created_at', 'desc')->get();
         $posts = Post::orderBy('created_at', 'desc')->get();
         return view('dashboard', ['posts' => $posts, 'user' => Auth::user()]);
     }
@@ -106,5 +106,13 @@ class PostController extends Controller
             $like->save();
         }
         return null;
+    }
+
+    /**
+    * get post view
+    */
+    public function getPostView($post_id){
+        $post = Post::where('id', $post_id)->first();
+        return view('post-view', ['post' => $post, 'user' => Auth::user()]);
     }
 }

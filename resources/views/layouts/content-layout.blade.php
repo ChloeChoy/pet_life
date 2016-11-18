@@ -31,6 +31,9 @@
         </div>
     </section>
     <!-- end main search form -->
+
+    <!-- Go to www.addthis.com/dashboard to customize your tools --> 
+    <div id="pl-share-post" class="addthis_inline_share_toolbox z-depth-1" style="display:none"></div>
  
 
     <script src="{{ URL::to('src/js/jquery-3.0.0.min.js') }}"></script>
@@ -41,5 +44,7 @@
     <script src="{{ URL::to('src/js/jquery.magnific-popup.js') }}"></script>
     <script src="{{ URL::to('src/js/app.js') }}"></script>
     <script src="{{ URL::to('src/js/main.js') }}"></script>
+    <!-- Go to www.addthis.com/dashboard to customize your tools --> 
+    <script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-582f0bca1f9d7459"></script> 
 </body>
 </html>

@@ -107,3 +107,11 @@ Route::get('/photos',
         'as'    => 'photos'
     ]
 );
+
+//route to post view
+Route::get('/post/{post_id}', 
+    [
+        'uses' => 'PostController@getPostView',
+        'as'    => 'post.view'
+    ]
+);

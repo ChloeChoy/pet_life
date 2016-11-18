@@ -47,6 +47,9 @@
             			<div class="tabs">
             				<a id="user-birth" class="tab-link">Birthday</a>
             			</div>
+                        <div class="tabs">
+                            <a id="gender-info" class="tab-link">Gender</a>
+                        </div>
             		</div>
             	</div>
             	<div class="col m8 l8 s12 col-info z-depth-1">
@@ -106,7 +109,7 @@
 							      	<div class="collapsible-body">
 							      		<form>
 							      			<div class="input-field">
-							      				<input type="text" name="birthday">
+							      				<input type="date" class="datepicker" name="birthday">
 							      			</div>
 							      		</form>
 							      		<div class="input-field">
@@ -117,6 +120,35 @@
 							    </li>
 							</ul>
             			</div>
+                        <div class="infor gender">
+                            <span class="title">Gender</span>
+                            <ul class="collapsible" data-collapsible="accordion">
+                                <li>
+                                    <div class="collapsible-header" id="user-gender-info">
+                                        <i class="material-icons">person</i> Add gender information
+                                        <i class="material-icons edit-icon">mode_edit</i>
+                                    </div>
+                                    <div class="collapsible-body">
+                                        <form>
+                                            <div class="input-field">
+                                                <p>
+                                                    <input class="with-gap" name="gender" type="radio" id="male"  />
+                                                    <label for="male">Male</label>
+                                                </p>
+                                                <p>
+                                                    <input class="with-gap" name="gender" type="radio" id="female"  />
+                                                    <label for="female">Female</label>
+                                                </p>
+                                            </div>
+                                        </form>
+                                        <div class="input-field">
+                                            <button class="btn cancel">Cancel</button>
+                                            <button class="btn save-info">Save</button>
+                                        </div>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
             		</div>
             	</div>
             </div>

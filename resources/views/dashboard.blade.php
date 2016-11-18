@@ -79,8 +79,8 @@
                             </div>
                             <div class="interaction">
                                 <span class="num-of-like">0</span>
-                                <a href="#" class="like"><i class="material-icons">thumb_up</i> Like</a>
-                                <a href="#" class="share-post"><i class="material-icons">share</i> Share</a>
+                                <a class="like"><i class="material-icons">thumb_up</i> Like</a>
+                                <a class="share-post"><i class="material-icons">share</i> Share</a>
                             </div>
                         </div>
                     @endforeach
@@ -91,7 +91,7 @@
                     <!-- trending post -->
                     <h5 class="title">Trending posts</h5>
                     <div class="posts">
-                        <a class="trend-row" href="#" data-postid="{{ $post->id }}">
+                        <a class="trend-row" href='{{route("post.view",["post_id" => $post->id])}}' data-postid="{{ $post->id }}">
                             <div class="post-info">
                                 <div class="user-avatar">
                                     <img alt="avatar" src="{{ URL::to('src/images/boa_hancock_wallpaper_blue_red_by_gian519.png') }}" class="responsive-img">
@@ -104,7 +104,7 @@
                                 <p>{{ $post->body }}</p>
                             </div>
                         </a>
-                        <a class="trend-row" href="#" data-postid="{{ $post->id }}">
+                        <a class="trend-row" href='{{route("post.view",["post_id" => $post->id])}}' data-postid="{{ $post->id }}">
                             <div class="post-info">
                                 <div class="user-avatar">
                                     <img alt="avatar" src="{{ URL::to('src/images/boa_hancock_wallpaper_blue_red_by_gian519.png') }}" class="responsive-img">
@@ -117,7 +117,7 @@
                                 <p>{{ $post->body }}</p>
                             </div>
                         </a>
-                        <a class="trend-row" href="#" data-postid="{{ $post->id }}">
+                        <a class="trend-row" href='{{route("post.view",["post_id" => $post->id])}}' data-postid="{{ $post->id }}">
                             <div class="post-info">
                                 <div class="user-avatar">
                                     <img alt="avatar" src="{{ URL::to('src/images/boa_hancock_wallpaper_blue_red_by_gian519.png') }}" class="responsive-img">

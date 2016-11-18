@@ -138,8 +138,8 @@
                             </div>
                             <div class="interaction">
                                 <span class="num-of-like">0</span>
-                                <a href="#" class="like"><i class="material-icons">thumb_up</i> Like</a>
-                                <a href="#" class="share-post"><i class="material-icons">share</i> Share</a>
+                                <a class="like"><i class="material-icons">thumb_up</i> Like</a>
+                                <a class="share-post"><i class="material-icons">share</i> Share</a>
                             </div>
                         </div>
                         @endif

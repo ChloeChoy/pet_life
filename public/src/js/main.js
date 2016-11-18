@@ -21,6 +21,12 @@ $( document ).ready(function(){
 	$('#new-post').trigger('autoresize');
 	//collapse user info
 	$('.collapsible').collapsible();
+	//input date in user info
+	$('.datepicker').pickadate({
+	    selectMonths: true, // Creates a dropdown to control month
+	    selectYears: 15, // Creates a dropdown of 15 years to control year
+	    closeOnSelect: true
+	});
 	
 	interActivePost();
 	triggerUploadImg();
@@ -76,6 +82,20 @@ $( document ).ready(function(){
 		// make it unique to apply your CSS animations just to this exact popup
 		mainClass: 'mfp-fade'
 	});
+
+	jQuery('#user-videos-gallery').magnificPopup({
+		delegate: 'img',
+	  	type: 'image',
+	  	// other options
+	  	gallery: {
+	          enabled:true
+	    },
+        removalDelay: 300,
+
+		// Class that is added to popup wrapper and background
+		// make it unique to apply your CSS animations just to this exact popup
+		mainClass: 'mfp-fade'
+	});
 });
 
 
@@ -99,8 +119,6 @@ $(document).ready(function(){
 		$('.reset-search').hide();
 	});
 
-	
-
 	//position of account avatar
 	if($('.cover-img img').height() < 350){
 		$('.account-avatar').css({'left' : ($(window).width()/2 - 30).toString() + 'px', 'top' : $('.cover-img img').height().toString() + 'px'});
@@ -119,12 +137,19 @@ $(document).ready(function(){
 		$('#att-files').trigger('click');
 	});
 
+	//show share post button
+	$('.share-post').click(function(e){
+		$('#pl-share-post').show().css({'position' : 'absolute', 'top': ($(this).position().top + 20).toString() + 'px', 'left' : ($(this).position().left).toString() + 'px'});
+		e.stopPropagation();
+	});
+
 });
 
 //click on body
 $(document).ready(function(){
 	$('body').click(function(){
 		$('.post-menu-act').hide();
+		$('#pl-share-post').hide();
 	});
 });
 
@@ -175,6 +200,9 @@ function triggerUserForm(){
 
 	$('#user-birth').click(function(){
 		$('#birthday-info').trigger('click');
+	});
+	$('#gender-info').click(function(){
+		$('#user-gender-info').trigger('click');
 	});
 
 	$('.cancel').click(function(){
