@@ -505,6 +505,9 @@ span.num-of-like {
     width: 42px;
     height: 42px;
 }
+#mobile-navbar i {
+    height: 100%;
+}
 
 
 /* end style home page*/

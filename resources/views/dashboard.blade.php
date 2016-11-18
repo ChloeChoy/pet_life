@@ -14,8 +14,8 @@
                         <li><a href="#"><i class="material-icons">wallpaper</i> News</a></li>
                         <li><a href="#"><i class="material-icons">message</i> Messages</a></li>
                         <li><a href="#"><i class="fa fa-globe" aria-hidden="true"></i> Notifications</a></li>
-                        <li><a href="#"><i class="material-icons">photo_library</i> Photos</a></li>
-                        <li><a href="#"><i class="material-icons">video_library</i> Videos</a></li>
+                        <li><a href="{{route('photos')}}"><i class="material-icons">photo_library</i> Photos</a></li>
+                        <li><a href="{{route('photos')}}"><i class="material-icons">video_library</i> Videos</a></li>
                         <li><a href="#"><i class="material-icons">settings</i> Settings</a></li>
                     </ul>
                 </div>
