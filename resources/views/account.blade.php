@@ -111,7 +111,7 @@
                                     <a href="#"><img alt="avatar" src="{{ URL::to('src/images/boa_hancock_wallpaper_blue_red_by_gian519.png') }}" class="responsive-img"></a>
                                 </div>
                                 <div class="user-post">
-                                    <span class="post-username"><a href="#">{{ $post->user->first_name }}</a></span>
+                                    <span class="post-username"><a href="#">{{ $post->user->name }}</a></span>
                                     <span class="post-on">Posted on {{  date_format($post->created_at, 'D M Y') }}</span>
                                 </div>
                                 <div class="post-act">

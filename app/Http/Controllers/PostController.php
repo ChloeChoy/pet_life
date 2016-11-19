@@ -17,6 +17,9 @@ class PostController extends Controller
     {
         $user = User::orderBy('created_at', 'desc')->get();
         $posts = Post::orderBy('created_at', 'desc')->get();
+        // foreach ($posts as $post) {
+        //     # code...
+        // }
         $trendPost = $posts->first();
         return view('dashboard', ['posts' => $posts, 'user' => Auth::user(), 'trendPost' => $trendPost]);
     }
@@ -29,24 +32,33 @@ class PostController extends Controller
         $post = new Post();
         $user = Auth::user();
         $file = $request->file('att_files');
-        $extension = $file->getClientOriginalExtension();
-        Storage::disk('local')->put($file->getFilename().'.'.$extension,  File::get($file));
-        $post->mime = $file->getClientMimeType();
-        $post->original_filename = $file->getClientOriginalName();
-        $post->filename = $file->getFilename().'.'.$extension;
+        for ($i=0; $i < count($file); $i++) { 
+            $extension = $file[$i]->getClientOriginalExtension();
+            Storage::disk('local')->put($file[$i]->getFilename().'.'.$extension,  File::get($file[$i]));
+            $post->mime .= $file[$i]->getClientMimeType();
+            $post->original_filename .= $file[$i]->getClientOriginalName() .',';
+            $post->filename .= $file[$i]->getFilename().'.'.$extension .',';   
+        }
+        // $extension = $file->getClientOriginalExtension();
+        // Storage::disk('local')->put($file->getFilename().'.'.$extension,  File::get($file));
+        // $post->mime = $file->getClientMimeType();
+        // $post->original_filename = $file->getClientOriginalName();
+        // $post->filename = $file->getFilename().'.'.$extension;
 
         $post->body = $request['body'];
         $message = '';
         if ($request->user()->posts()->save($post)) {
-            return response()->json(
-                [
-                    'post_id'   => $post->id,
-                    'post_user' => $post->user->first_name,
-                    'post_body' => $post->body,
-                    'create_at' => date_format(date_create($post->created_at), 'D M Y')
-                ],
-                200
-            );
+            return redirect()->route('dashboard');
+            // return response()->json(
+            //     [
+            //         'post_id'   => $post->id,
+            //         'post_user' => $post->user->first_name,
+            //         'post_body' => $post->body,
+            //         'create_at' => date_format(date_create($post->created_at), 'D M Y'),
+            //         'file_name' => $post->filename
+            //     ],
+            //     200
+            // );
             // $message = 'Post successfully created!';
         }else{
             $message = 'An error occur when create post. Please try again!';

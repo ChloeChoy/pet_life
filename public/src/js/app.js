@@ -49,27 +49,32 @@ $('.like').on('click', function(event) {
 });
 
 //post ajax
-$('#create-post').click(function(event){
-    var files = $('#att-files').val();
-    event.preventDefault();
-    $.ajax({
-        method: 'POST',
-        url: routePost,
-        data: {
-            body: $('#new-post').val(), 
-            att_files: files,
-            _token: token
-        }
-    })
-    .done(function (msg) {
-        var bodyPost = '<p>'+ msg['post_body'] +'</p>';
-        $('.post-form').after('<div class="post-row" data-postid="'+ msg['post_id'] +'"><div class="post-info"><div class="user-avatar"><a href="#"><img alt="avatar" src="'+ userAvatar +'" class="responsive-img"></a></div><div class="user-post"><span class="post-username"><a href="#">'+ msg['post_user'] +'</a></span><span class="post-on">Posted on '+ msg['create_at'] +'</span></div><div class="post-act"><a class="popup-post-menu"><i class="material-icons"><i class="material-icons">keyboard_arrow_down</i></i></a><div class="post-menu-act" style="display:none;"><a class="edit-post" data-toggle="modal" href="#modal-edit-post"><i class="material-icons">mode_edit</i> Edit</a><a class="delete-post"><i class="material-icons">delete</i> Delete</a></div></div></div><div class="post-content">'+ bodyPost +'</div><div class="interaction"><a href="#" class="like"><i class="material-icons">thumb_up</i> Like</a><a href="#" class="share-post"><i class="material-icons">share</i> Share</a></div></div>');
-        $('#new-post').val('');
-        interActivePost();
-        editPost();
-        deletePost();
-    });
-});
+// $('#create-post').click(function(event){
+//     var formData = new FormData();
+//     formData.append('att_files', file);
+//     // event.stopPropagation();
+//     event.preventDefault();
+//     $.ajax({
+//         type: 'POST',
+//         url: routePost,
+//         // data: formData,
+//         // contentType: false,
+//         // processData: false
+//         data: {
+//             body: $('#new-post').val(), 
+//             att_files: new FormData($('#att-files')[0]),
+//             _token: token
+//         }
+//     })
+//     .done(function (msg) {
+//         var bodyPost = '<p>'+ msg['post_body'] +'</p>';
+//         $('.post-form').after('<div class="post-row" data-postid="'+ msg['post_id'] +'"><div class="post-info"><div class="user-avatar"><a href="#"><img alt="avatar" src="'+ userAvatar +'" class="responsive-img"></a></div><div class="user-post"><span class="post-username"><a href="#">'+ msg['post_user'] +'</a></span><span class="post-on">Posted on '+ msg['create_at'] +'</span></div><div class="post-act"><a class="popup-post-menu"><i class="material-icons"><i class="material-icons">keyboard_arrow_down</i></i></a><div class="post-menu-act" style="display:none;"><a class="edit-post" data-toggle="modal" href="#modal-edit-post"><i class="material-icons">mode_edit</i> Edit</a><a class="delete-post"><i class="material-icons">delete</i> Delete</a></div></div></div><div class="post-content">'+ bodyPost +'</div><div class="interaction"><a href="#" class="like"><i class="material-icons">thumb_up</i> Like</a><a href="#" class="share-post"><i class="material-icons">share</i> Share</a></div></div>');
+//         $('#new-post').val('');
+//         interActivePost();
+//         editPost();
+//         deletePost();
+//     });
+// });
 
 //delete post ajax
 function deletePost(){

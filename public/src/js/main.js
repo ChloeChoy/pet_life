@@ -27,6 +27,8 @@ $( document ).ready(function(){
 	    selectYears: 15, // Creates a dropdown of 15 years to control year
 	    closeOnSelect: true
 	});
+	//material media box
+	$('.materialboxed').materialbox();
 	
 	interActivePost();
 	triggerUploadImg();
@@ -96,6 +98,7 @@ $( document ).ready(function(){
 		// make it unique to apply your CSS animations just to this exact popup
 		mainClass: 'mfp-fade'
 	});
+	
 });
 
 
@@ -139,6 +142,10 @@ $(document).ready(function(){
 
 	//show share post button
 	$('.share-post').click(function(e){
+		var id = $(this).parent().parent().attr('data-postid');
+		addthis.update('share', 'url', '//localhost:8888/laravel/public/post/' + id); 
+		addthis.url = "//localhost:8888/laravel/public/post/" + id;                
+		addthis.toolbox(".addthis_inline_share_toolbox");
 		$('#pl-share-post').show().css({'position' : 'absolute', 'top': ($(this).position().top + 20).toString() + 'px', 'left' : ($(this).position().left).toString() + 'px'});
 		e.stopPropagation();
 	});

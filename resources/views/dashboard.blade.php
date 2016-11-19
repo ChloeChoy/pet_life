@@ -25,17 +25,17 @@
                             <a class="att-btn"><i class="material-icons">videocam</i> Upload videos</a>
                             <a class="att-btn att-image"><i class="material-icons">image</i> Upload images</a>
                             <div style='display: none'>
-                                <input id="att-files" type="file" name="att_files"/>
-                            </div>                        
+                                <input id="att-files" type="file" name="att_files[]" multiple onchange="previewFiles()"/>
+                            </div>
                         </div>
                         <div class="input-field col s12">
                             <textarea id="new-post" class="materialize-textarea"  name="body" required></textarea>
                             <label for="textarea1">What's your status</label>
                         </div>
+                        <div id="preview"></div>
                         <div class="field-submit">
                             <button id="create-post" type="submit" class="waves-effect waves-light btn">Post</button>
                         </div>
-                        <input type="file" name="file" style="display:none;" />
                         <input id="post-token" type="hidden" value="{{ Session::token() }}" name="_token">
                     </form>
 
@@ -47,7 +47,7 @@
                                     <a href="#"><img alt="avatar" src="{{ URL::to('src/images/boa_hancock_wallpaper_blue_red_by_gian519.png') }}" class="responsive-img"></a>
                                 </div>
                                 <div class="user-post">
-                                    <span class="post-username"><a href="#">{{ $post->user->first_name }}</a></span>
+                                    <span class="post-username"><a href="#">{{ $post->user->name }}</a></span>
                                     <span class="post-on">Posted on {{  date_format($post->created_at, 'D M Y') }}</span>
                                 </div>
                                 @if(Auth::user() == $post->user)
@@ -62,19 +62,34 @@
                             </div>
                             <div class="post-content">
                                 <p>{{ $post->body }}</p>
+
                                 @if(strpos($post->mime, 'image') !== false)
-                                <section class="row new-post">
-                                    <div class="col-md-6 col-md-offset-3">
-                                        <img width="450" height="240" src="{{ route('account.image', ['filename' => $post->filename]) }}" alt="" class="img-responsive">
+                                    <?php $postImg = explode(',', $post->filename);?>
+                                    @if(count($postImg) > 2)
+                                    <div class="post-media multi-medias" id="post-media{{$post->id}}">
+                                        @for($i = 0; $i < count($postImg); $i++)
+                                            @if($postImg[$i] != '')
+                                                    <img src="{{ route('account.image', ['filename' => $postImg[$i]]) }}" alt="image" class="responsive-img materialboxed" data-mfp-src="{{ route('account.image', ['filename' => $postImg[$i]]) }}">
+                                            @endif
+                                        @endfor
                                     </div>
-                                </section>
+                                    @else
+                                    <div class="post-media" id="post-media{{$post->id}}">
+                                        @for($i = 0; $i < count($postImg); $i++)
+                                            @if($postImg[$i] != '')
+                                                    <img src="{{ route('account.image', ['filename' => $postImg[$i]]) }}" alt="image" class="responsive-img materialboxed" data-mfp-src="{{ route('account.image', ['filename' => $postImg[$i]]) }}">
+                                            @endif
+                                        @endfor
+                                    </div>
+                                    @endif
                                 @endif
+
                                 @if(strpos($post->mime, 'video') !== false)
-                                <section class="row new-post">
-                                    <video class="col-md-6 col-md-offset-3" width="320" height="240" controls>
+                                <div class="post-media">
+                                    <video class="post-video" controls>
                                       <source src="{{ route('account.image', ['filename' => $post->filename]) }}" type="video/mp4">
                                     </video>
-                                </section>
+                                </div>
                                 @endif
                             </div>
                             <div class="interaction">
@@ -98,7 +113,7 @@
                                     <img alt="avatar" src="{{ URL::to('src/images/boa_hancock_wallpaper_blue_red_by_gian519.png') }}" class="responsive-img">
                                 </div>
                                 <div class="user-post">
-                                    <span class="post-username">{{ $trendPost->user->first_name }}</span>
+                                    <span class="post-username">{{ $trendPost->user->name }}</span>
                                 </div>
                             </div>
                             <div class="post-content">
@@ -111,7 +126,7 @@
                                     <img alt="avatar" src="{{ URL::to('src/images/boa_hancock_wallpaper_blue_red_by_gian519.png') }}" class="responsive-img">
                                 </div>
                                 <div class="user-post">
-                                    <span class="post-username">{{ $trendPost->user->first_name }}</span>
+                                    <span class="post-username">{{ $trendPost->user->name }}</span>
                                 </div>
                             </div>
                             <div class="post-content">
@@ -124,7 +139,7 @@
                                     <img alt="avatar" src="{{ URL::to('src/images/boa_hancock_wallpaper_blue_red_by_gian519.png') }}" class="responsive-img">
                                 </div>
                                 <div class="user-post">
-                                    <span class="post-username">{{ $trendPost->user->first_name }}</span>
+                                    <span class="post-username">{{ $trendPost->user->name }}</span>
                                 </div>
                             </div>
                             <div class="post-content">

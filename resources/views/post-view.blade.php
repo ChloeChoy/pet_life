@@ -24,7 +24,7 @@
                     </ul>
                 </div>
 				<div class="col s12 l8">
-					<div class="post-row" data-postid="{{ $post->id }}">
+					<div class="post-row" data-postid="{{ $post->id }}" style="margin-top: 0;">
                         <div class="post-info">
                             <div class="user-avatar">
                                 <a href="#"><img alt="avatar" src="{{ URL::to('src/images/boa_hancock_wallpaper_blue_red_by_gian519.png') }}" class="responsive-img"></a>
@@ -45,19 +45,19 @@
                         </div>
                         <div class="post-content">
                             <p>{{ $post->body }}</p>
+                            
                             @if(strpos($post->mime, 'image') !== false)
-                            <section class="row new-post">
-                                <div class="col-md-6 col-md-offset-3">
-                                    <img width="450" height="240" src="{{ route('account.image', ['filename' => $post->filename]) }}" alt="" class="img-responsive">
-                                </div>
-                            </section>
+                            <div class="post-media">
+                                <img src="{{ route('account.image', ['filename' => $post->filename]) }}" alt="image" class="responsive-img materialboxed">
+                            </div>
                             @endif
+
                             @if(strpos($post->mime, 'video') !== false)
-                            <section class="row new-post">
-                                <video class="col-md-6 col-md-offset-3" width="320" height="240" controls>
+                            <div class="post-media">
+                                <video class="post-video" controls>
                                   <source src="{{ route('account.image', ['filename' => $post->filename]) }}" type="video/mp4">
                                 </video>
-                            </section>
+                            </div>
                             @endif
                         </div>
                         <div class="interaction">

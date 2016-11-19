@@ -36,6 +36,49 @@
     <div id="pl-share-post" class="addthis_inline_share_toolbox z-depth-1" style="display:none"></div>
  
 
+    <script type="text/javascript">
+        function previewFiles() {
+          var preview = document.querySelector('#preview');
+          var files   = document.querySelector('#att-files').files;
+          // var fileRemoves = document.querySelector('#mp-remove-files');
+
+          function readAndPreview(file) {
+
+            // Make sure `file.name` matches our extensions criteria
+            if ( /\.(jpe?g|png|gif)$/i.test(file.name) ) {
+              var reader = new FileReader();
+
+              reader.addEventListener("load", function () {
+                var image = new Image();
+                image.height = 100;
+                image.name = file.name;
+                image.src = this.result;
+                preview.appendChild( image );
+                var para = document.createElement("a");
+                //var para = "<a class='remove-preview'>Delete</a>";
+                var node = document.createTextNode("Delete");
+                para.appendChild(node);
+                preview.appendChild( para );
+                para.addEventListener("click", function(){
+                    // fileRemoves.value += this.previousElementSibling.getAttribute('name') + ',';
+                    this.previousElementSibling.remove();
+                    this.remove();
+                });
+              }, false);
+
+              reader.readAsDataURL(file);
+            }
+
+          }
+
+          if (files) {
+            [].forEach.call(files, readAndPreview);
+            //deletePreview();
+          }
+
+        }
+    </script>
+
     <script src="{{ URL::to('src/js/jquery-3.0.0.min.js') }}"></script>
     <script src="{{ URL::to('src/js/materialize.min.js') }}"></script>
     <script src="{{ URL::to('src/js/dropzone.js') }}"></script>
