@@ -34,5 +34,15 @@ return [
         'key'    => env('STRIPE_KEY'),
         'secret' => env('STRIPE_SECRET'),
     ],
+    'facebook' => [
+        'client_id' => '357948871223576',
+        'client_secret' => '8ea0d3933419fbacafe373600cb74ef5',
+        'redirect' => 'http://localhost/pet_life/public/facebook/callback',
+    ],
+    'google' => [
+        'client_id' => '751491640545-4hv201itgukhn7j4ebttnsttqsiebn3v.apps.googleusercontent.com',
+        'client_secret' => 'iV7US8z2klqwQzjLvVRzV9Be',
+        'redirect' => 'http://localhost/pet_life/public/google/callback',
+    ],
 
 ];

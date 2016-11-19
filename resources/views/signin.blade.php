@@ -15,13 +15,13 @@
                         <div class="social-signin row">
                             <span class="signin-title">Sign in with</span>
                             <div class="col s4">
-                                <a id="signin-fb" class="waves-effect waves-light btn"><i class="fa fa-facebook"></i></a>
+                                <a id="signin-fb" class="waves-effect waves-light btn" title="Sign in with facebook" href="{{ url('facebook/redirect') }}"><i class="fa fa-facebook"></i></a>
                             </div>
                             <div class="col s4">
-                                <a id="signin-gg" class="waves-effect waves-light btn" title="Sign in with google+"><i class="fa fa-google-plus"></i></a>
+                                <a id="signin-gg" class="waves-effect waves-light btn" title="Sign in with google+" href="{{ url('google/redirect') }}"><i class="fa fa-google-plus"></i></a>
                             </div>
                             <div class="col s4">
-                                <a id="signin-twt" class="waves-effect waves-light btn"><i class="fa fa-twitter"></i></a>
+                                <a id="signin-twt" class="waves-effect waves-light btn" title="Sign in with twitter"><i class="fa fa-twitter"></i></a>
                             </div>
                         </div>
                         <form class="signin-form" action="{{ route('signin') }}" method="post">

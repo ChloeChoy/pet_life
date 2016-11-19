@@ -115,3 +115,8 @@ Route::get('/post/{post_id}',
         'as'    => 'post.view'
     ]
 );
+Route::get('facebook/redirect', 'Auth\SocialController@redirectToProvider');
+Route::get('facebook/callback', 'Auth\SocialController@handleProviderCallback');
+
+Route::get('google/redirect', 'Auth\SocialController@redirectToProviderGoogle');
+Route::get('google/callback', 'Auth\SocialController@handleProviderCallbackGoogle');
