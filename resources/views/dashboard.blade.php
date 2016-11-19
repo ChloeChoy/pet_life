@@ -87,51 +87,53 @@
                     <!-- end post -->
 
                 </div>
+                @if($trendPost != null)
                 <div class="col l3 trending hide-on-med-and-down">
                     <!-- trending post -->
                     <h5 class="title">Trending posts</h5>
                     <div class="posts">
-                        <a class="trend-row" href='{{route("post.view",["post_id" => $post->id])}}' data-postid="{{ $post->id }}">
+                        <a class="trend-row" href='{{route("post.view",["post_id" => $trendPost->id])}}' data-postid="{{ $trendPost->id }}">
                             <div class="post-info">
                                 <div class="user-avatar">
                                     <img alt="avatar" src="{{ URL::to('src/images/boa_hancock_wallpaper_blue_red_by_gian519.png') }}" class="responsive-img">
                                 </div>
                                 <div class="user-post">
-                                    <span class="post-username">{{ $post->user->first_name }}</span>
+                                    <span class="post-username">{{ $trendPost->user->first_name }}</span>
                                 </div>
                             </div>
                             <div class="post-content">
-                                <p>{{ $post->body }}</p>
+                                <p>{{ $trendPost->body }}</p>
                             </div>
                         </a>
-                        <a class="trend-row" href='{{route("post.view",["post_id" => $post->id])}}' data-postid="{{ $post->id }}">
+                        <a class="trend-row" href='{{route("post.view",["post_id" => $trendPost->id])}}' data-postid="{{ $trendPost->id }}">
                             <div class="post-info">
                                 <div class="user-avatar">
                                     <img alt="avatar" src="{{ URL::to('src/images/boa_hancock_wallpaper_blue_red_by_gian519.png') }}" class="responsive-img">
                                 </div>
                                 <div class="user-post">
-                                    <span class="post-username">{{ $post->user->first_name }}</span>
+                                    <span class="post-username">{{ $trendPost->user->first_name }}</span>
                                 </div>
                             </div>
                             <div class="post-content">
-                                <p>{{ $post->body }}</p>
+                                <p>{{ $trendPost->body }}</p>
                             </div>
                         </a>
-                        <a class="trend-row" href='{{route("post.view",["post_id" => $post->id])}}' data-postid="{{ $post->id }}">
+                        <a class="trend-row" href='{{route("post.view",["post_id" => $trendPost->id])}}' data-postid="{{ $trendPost->id }}">
                             <div class="post-info">
                                 <div class="user-avatar">
                                     <img alt="avatar" src="{{ URL::to('src/images/boa_hancock_wallpaper_blue_red_by_gian519.png') }}" class="responsive-img">
                                 </div>
                                 <div class="user-post">
-                                    <span class="post-username">{{ $post->user->first_name }}</span>
+                                    <span class="post-username">{{ $trendPost->user->first_name }}</span>
                                 </div>
                             </div>
                             <div class="post-content">
-                                <p>{{ $post->body }}</p>
+                                <p>{{ $trendPost->body }}</p>
                             </div>
                         </a>
                     </div>
                 </div>
+                @endif
             </div>
         </div>
     </section>

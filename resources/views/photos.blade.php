@@ -89,5 +89,30 @@
         </div>
     </section>
 
+    <!-- form change cover/profile images -->
+    <div id="modal-upload-images" class="modal fade" role="dialog">
+        <div class="modal-dialog">
+        <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                  <h4 class="modal-title">Upload photos</h4>
+                </div>
+                <div class="modal-body">
+                    <form class="upload-photos"  method="post" enctype="multipart/form-data">
+                        <div class="input-field col s12">
+                            <a class="change-user-photos btn"><i class="material-icons">image</i> Upload images</a>
+                            <input id="profile-img" type="file" name="cover_img" style="display:none;">
+                        </div>
+                    </form>
+                </div>
+            <div class="modal-footer">
+                <a class="btn" data-dismiss="modal">Cancel</a>
+                <button id="modal-save" type="button" class="btn btn-default" data-dismiss="modal">Save</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- end form change cover/profile images -->
+
 
 @endsection

@@ -17,7 +17,8 @@ class PostController extends Controller
     {
         $user = User::orderBy('created_at', 'desc')->get();
         $posts = Post::orderBy('created_at', 'desc')->get();
-        return view('dashboard', ['posts' => $posts, 'user' => Auth::user()]);
+        $trendPost = $posts->first();
+        return view('dashboard', ['posts' => $posts, 'user' => Auth::user(), 'trendPost' => $trendPost]);
     }
 
     public function postCreatePost(Request $request)
