@@ -15,12 +15,14 @@
                         <a class="edit-wall-img" data-toggle="modal" href="#modal-upload-images"><i class="material-icons">photo_camera</i> Change cover photo</a>
                     </div>
                     <div class="account-avatar">
+                    @if($user)
                         @if (Storage::disk('local')->has($user->first_name . '-' . $user->id . '.jpg'))
                             <img src="{{ route('account.image', ['filename' => $user->first_name . '-' . $user->id . '.jpg']) }}" alt="" class="responsive-img">
                         @else
                             <img class="responsive-img" src="{{ URL::to('src/images/boa_hancock_wallpaper_blue_red_by_gian519.png') }}">
                         @endif
                         <a class="edit-avatar" data-toggle="modal" href="#modal-upload-images"><i class="material-icons">photo_camera</i></a>
+                    @endif
                     </div>
                     <div class="profile-menu">
                         <a href="{{ route('account') }}">Timeline</a>
@@ -66,11 +68,13 @@
                     <div class="photo-box">
                         <span class="title-info">Photos</span>
                         <div class="photo thumnail">
+                    @if($user)
                         @if (Storage::disk('local')->has($user->first_name . '-' . $user->id . '.jpg'))
                             <img src="{{ route('account.image', ['filename' => $user->first_name . '-' . $user->id . '.jpg']) }}" alt="" class="resposive-img">
                         @else
                             <span class="photo-alert">You have no photo. Please post your photo.</span>
                         @endif
+                    @endif
                         </div>
                     </div>
                     <div class="video-box">
