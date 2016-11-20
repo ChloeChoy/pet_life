@@ -67,8 +67,9 @@ class PostController extends Controller
     public function getDeletePost($post_id)
     {
         $post = Post::where('id', $post_id)->first();
-        if (Auth::user() != $post->user) {
-            return redirect()->back();
+        $user = Auth::user();
+        if ($user->id != $post->user->id) {
+            return response()->json(['error' => 'You not permitted to delete this post'],401);
         }
         $post->delete();
         return response()->json(['ok' => 200],200);
@@ -139,5 +140,15 @@ class PostController extends Controller
     public function getPostView($post_id){
         $post = Post::where('id', $post_id)->first();
         return view('post-view', ['post' => $post, 'user' => Auth::user()]);
+    }
+
+    /**
+    * get post for news page
+    */
+    public function getPostNews(){
+        $user = User::orderBy('created_at', 'desc')->get();
+        $posts = Post::orderBy('created_at', 'desc')->limit(5)->get();
+        $trendPost = $posts->first();
+        return view('news', ['posts' => $posts, 'user' => Auth::user(), 'trendPost' => $trendPost]);
     }
 }

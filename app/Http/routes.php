@@ -120,3 +120,10 @@ Route::get('facebook/callback', 'Auth\SocialController@handleProviderCallback');
 
 Route::get('google/redirect', 'Auth\SocialController@redirectToProviderGoogle');
 Route::get('google/callback', 'Auth\SocialController@handleProviderCallbackGoogle');
+
+//route to news page
+Route::get('/news', [
+        'uses'  => 'PostController@getPostNews',
+        'as'    => 'post.news'
+    ]
+);

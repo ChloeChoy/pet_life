@@ -36,42 +36,8 @@ $( document ).ready(function(){
 	tabUserInfo();
 	triggerUserForm();
 
-	//preview image by dropzone
-	$(".post-form").dropzone({ 
-				url: "/laravel/public/src/images",
-				maxFilesize: 10,
-				addRemoveLinks: true,
-				dictRemoveFile: 'delete',
-				uploadMultiple: true,
-				paramName: 'image',
-				acceptedFiles: 'image/*',
-				parallelUploads: 1,
-				init: function() {
-					this.on('success', function(file, response) {
-						// If you return JSON as response (with the proper `Content-Type` header
-						// it will be parsed properly. So lets say you returned:
-						// `{ "fileName": "my-file-2234.jpg" }`
-
-						// Create a hidden input to submit to the server:
-					});
-
-					this.on('queuecomplete', function() {
-						// Invoked when all files finished uploading
-						// Now just submit the form. It will send the filenames along since
-						// they are added as hidden input fields.
-						$('.dz-filename span').each(function () {
-							$(".post-form").append($('<input type="hidden" ' +
-							'name="files[]" ' +
-							'value="' + $(this).text() + '">'));
-						});
-						// submitPosition();
-					});
-				}
-				
-			}); 
-
 	//magnific popup (view image gallery)
-	jQuery('#user-photos-gallery').magnificPopup({
+	$('#user-photos-gallery').magnificPopup({
 		delegate: 'img',
 	  	type: 'image',
 	  	// other options
@@ -85,7 +51,7 @@ $( document ).ready(function(){
 		mainClass: 'mfp-fade'
 	});
 
-	jQuery('#user-videos-gallery').magnificPopup({
+	$('#user-videos-gallery').magnificPopup({
 		delegate: 'img',
 	  	type: 'image',
 	  	// other options

@@ -535,6 +535,13 @@ div#preview {
     width: 48%;
     text-align: center;
 }
+.trend-img {
+    height: 100px;
+    margin-top: 5px;
+}
+.trend-img img{
+    height: 100% !important;
+}
 
 
 /* end style home page*/
@@ -816,6 +823,22 @@ div#user-videos-gallery {
 }
 
 /* end style photos page*/
+
+/* style news page*/
+.col-news .post-row:first-child{
+    margin-top: 0;
+}
+.col-news span.title {
+    display: block;
+    background: #fff;
+    box-shadow: 0 0px 0px 0 rgba(0,0,0,0.16),0 2px 10px 0 rgba(0,0,0,0.12);
+    height: 30px;
+    line-height: 30px;
+    padding-left: 10px;
+    font-size: 16px;
+}
+
+/* end style news page*/
 
 /* fallback */
 @font-face {

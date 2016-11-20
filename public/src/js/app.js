@@ -16,7 +16,7 @@ function editPost(){
         $.ajax({
                 method: 'POST',
                 url: urlEdit,
-                data: {body: $('#post-body').val(), postId: postId, _token: token}
+                data: {body: $('#post-body').val(), postId: postId, _token: token},
             })
             .done(function (msg) {
                 $(postBodyElement).text(msg['new_body']);
@@ -93,7 +93,10 @@ function deletePost(){
         event.preventDefault();
         $.ajax({
             method: 'GET',
-            url: '/laravel/public/delete-post/' + postId,
+            url: '/pet_life/public/delete-post/' + postId,
+            error: function (request, status, error) {
+                alert(request.responseText);
+            }
         })
         .done(function(msg){
             if(msg['ok']){

@@ -1,11 +1,11 @@
 @extends('layouts.content-layout')
 @section('title')
-    Dashboard
+    News posts
 @endsection
 
 @section('content')
-    <!-- @include('includes.message-block') -->
-    <section class="main-content">
+
+	<section class="main-content">
         <div class="container">
             <div class="row">
                 <div class="col l2 col-left-link">
@@ -22,28 +22,11 @@
                         <li><a href="#"><i class="material-icons">settings</i> Settings</a></li>
                     </ul>
                 </div>
-                <div class="col m12 s12 l7">
-                    <form class="post-form" action="{{ route('post.create') }}" method="post" enctype="multipart/form-data">
-                        <div class="attach-files">
-                            <a class="att-btn"><i class="material-icons">videocam</i> Upload videos</a>
-                            <a class="att-btn att-image"><i class="material-icons">image</i> Upload images</a>
-                            <div style='display: none'>
-                                <input id="att-files" type="file" name="att_files[]" multiple onchange="previewFiles()"/>
-                            </div>
-                        </div>
-                        <div class="input-field col s12">
-                            <textarea id="new-post" class="materialize-textarea"  name="body" required></textarea>
-                            <label for="textarea1">What's your status</label>
-                        </div>
-                        <div id="preview"></div>
-                        <div class="field-submit">
-                            <button id="create-post" type="submit" class="waves-effect waves-light btn">Post</button>
-                        </div>
-                        <input id="post-token" type="hidden" value="{{ Session::token() }}" name="_token">
-                    </form>
 
-                    <!-- post -->
-                    @foreach($posts as $post)
+                <!-- new posts -->
+                <div class="col l7 s12 col-news">
+                	<span class="title">News</span>
+                	@foreach($posts as $post)
                         <div class="post-row" data-postid="{{ $post->id }}">
                             <div class="post-info">
                                 <div class="user-avatar">
@@ -103,9 +86,10 @@
                             </div>
                         </div>
                     @endforeach
-                    <!-- end post -->
-
                 </div>
+                <!-- end new post -->
+
+                <!-- trend post -->
                 @if($trendPost != null)
                 <div class="col l3 trending hide-on-med-and-down">
                     <!-- trending post -->
@@ -122,28 +106,6 @@
                             </div>
                             <div class="post-content">
                                 <p>{{ $trendPost->body }}</p>
-
-                                @if(strpos($trendPost->mime, 'image') !== false)
-                                    <?php $postImg = explode(',', $trendPost->filename);?>
-                                    @if(count($postImg) > 2)
-                                    <div class="trend-img multi-img" id="post-media{{$trendPost->id}}">
-                                        @for($i = 0; $i < count($postImg); $i++)
-                                            @if($postImg[$i] != '')
-                                                    <img src="{{ route('account.image', ['filename' => $postImg[$i]]) }}" alt="image" class="responsive-img" data-mfp-src="{{ route('account.image', ['filename' => $postImg[$i]]) }}">
-                                            @endif
-                                        @endfor
-                                    </div>
-                                    @else
-                                    <div class="trend-img" id="post-media{{$trendPost->id}}">
-                                        @for($i = 0; $i < count($postImg); $i++)
-                                            @if($postImg[$i] != '')
-                                                    <img src="{{ route('account.image', ['filename' => $postImg[$i]]) }}" alt="image" class="responsive-img" data-mfp-src="{{ route('account.image', ['filename' => $postImg[$i]]) }}">
-                                            @endif
-                                        @endfor
-                                    </div>
-                                    @endif
-                                @endif
-
                             </div>
                         </a>
                         <a class="trend-row" href='{{route("post.view",["post_id" => $trendPost->id])}}' data-postid="{{ $trendPost->id }}">
@@ -157,28 +119,6 @@
                             </div>
                             <div class="post-content">
                                 <p>{{ $trendPost->body }}</p>
-
-                                @if(strpos($trendPost->mime, 'image') !== false)
-                                    <?php $postImg = explode(',', $trendPost->filename);?>
-                                    @if(count($postImg) > 2)
-                                    <div class="trend-img multi-img" id="post-media{{$trendPost->id}}">
-                                        @for($i = 0; $i < count($postImg); $i++)
-                                            @if($postImg[$i] != '')
-                                                    <img src="{{ route('account.image', ['filename' => $postImg[$i]]) }}" alt="image" class="responsive-img" data-mfp-src="{{ route('account.image', ['filename' => $postImg[$i]]) }}">
-                                            @endif
-                                        @endfor
-                                    </div>
-                                    @else
-                                    <div class="trend-img" id="post-media{{$trendPost->id}}">
-                                        @for($i = 0; $i < count($postImg); $i++)
-                                            @if($postImg[$i] != '')
-                                                    <img src="{{ route('account.image', ['filename' => $postImg[$i]]) }}" alt="image" class="responsive-img" data-mfp-src="{{ route('account.image', ['filename' => $postImg[$i]]) }}">
-                                            @endif
-                                        @endfor
-                                    </div>
-                                    @endif
-                                @endif
-
                             </div>
                         </a>
                         <a class="trend-row" href='{{route("post.view",["post_id" => $trendPost->id])}}' data-postid="{{ $trendPost->id }}">
@@ -192,82 +132,14 @@
                             </div>
                             <div class="post-content">
                                 <p>{{ $trendPost->body }}</p>
-
-                                @if(strpos($trendPost->mime, 'image') !== false)
-                                    <?php $postImg = explode(',', $trendPost->filename);?>
-                                    @if(count($postImg) > 2)
-                                    <div class="trend-img multi-img" id="post-media{{$trendPost->id}}">
-                                        @for($i = 0; $i < count($postImg); $i++)
-                                            @if($postImg[$i] != '')
-                                                    <img src="{{ route('account.image', ['filename' => $postImg[$i]]) }}" alt="image" class="responsive-img" data-mfp-src="{{ route('account.image', ['filename' => $postImg[$i]]) }}">
-                                            @endif
-                                        @endfor
-                                    </div>
-                                    @else
-                                    <div class="trend-img" id="post-media{{$trendPost->id}}">
-                                        @for($i = 0; $i < count($postImg); $i++)
-                                            @if($postImg[$i] != '')
-                                                    <img src="{{ route('account.image', ['filename' => $postImg[$i]]) }}" alt="image" class="responsive-img" data-mfp-src="{{ route('account.image', ['filename' => $postImg[$i]]) }}">
-                                            @endif
-                                        @endfor
-                                    </div>
-                                    @endif
-                                @endif
-
                             </div>
                         </a>
                     </div>
                 </div>
                 @endif
+                <!-- end trend post -->
             </div>
         </div>
     </section>
 
-    
-    <!-- modal edit post    -->
-    <!-- Modal Structure -->
-    <div id="modal-edit-post" class="modal fade" role="dialog">
-        <div class="modal-dialog">
-        <!-- Modal content-->
-            <div class="modal-content">
-                <div class="modal-header">
-                  <h4 class="modal-title">Edit post</h4>
-                </div>
-                <div class="modal-body">
-                    <form>
-                        <div class="input-field col s12">
-                            <textarea id="post-body" class="materialize-textarea"  name="body" autofocus></textarea>
-                        </div>
-                    </form>
-                </div>
-            <div class="modal-footer">
-                <a class="btn" data-dismiss="modal">Cancel</a>
-                <button id="modal-save" type="button" class="btn btn-default" data-dismiss="modal">Save</button>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <script>
-        var token = '{{ Session::token() }}';
-        var urlEdit = '{{ route('edit') }}';
-        var urlLike = '{{ route('like') }}';
-
-        var routePost = "{{ route('post.create') }}";
-        var userAvatar = '{{ URL::to('src/images/boa_hancock_wallpaper_blue_red_by_gian519.png') }}';
-
-        var routeDropzone = '{{ URL::to('src/images') }}';
-    </script>
-    <script type="text/javascript">
-         // function getFile(){
-         //   document.getElementById("image").click();
-         // }
-         // function sub(obj){
-         //    var file = obj.value;
-         //    var fileName = file.split("\\");
-         //    document.getElementById("yourBtn").innerHTML = fileName[fileName.length-1];
-         //    document.myForm.submit();
-         //    event.preventDefault();
-         //  }
-    </script>
 @endsection
