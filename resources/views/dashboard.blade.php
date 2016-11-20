@@ -1,4 +1,7 @@
 @extends('layouts.content-layout')
+@section('title')
+    Dashboard
+@endsection
 
 @section('content')
     <!-- @include('includes.message-block') -->
@@ -96,6 +99,7 @@
                                 <span class="num-of-like">0</span>
                                 <a class="like"><i class="material-icons">thumb_up</i> Like</a>
                                 <a class="share-post"><i class="material-icons">share</i> Share</a>
+                                <span class="islike" style="display:none">0</span>
                             </div>
                         </div>
                     @endforeach

@@ -29,7 +29,7 @@
                             <h5>Sign up</h5>
                             <div class="input-field {{ $errors->has('first_name') ? 'has-error' : '' }}">
                                 <i class="material-icons prefix">account_circle</i>
-                                <input id="signup_username" type="text" name="first_name" class="validate" value="{{ Request::old('first_name') }}">
+                                <input id="signup_username" type="text" name="name" class="validate" value="{{ Request::old('first_name') }}">
                                 <label for="signup_username">Username</label>
                             </div>
                             <div class="input-field {{ $errors->has('email') ? 'has-error' : '' }}">

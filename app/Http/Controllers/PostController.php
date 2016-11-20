@@ -17,9 +17,6 @@ class PostController extends Controller
     {
         $user = User::orderBy('created_at', 'desc')->get();
         $posts = Post::orderBy('created_at', 'desc')->get();
-        // foreach ($posts as $post) {
-        //     # code...
-        // }
         $trendPost = $posts->first();
         return view('dashboard', ['posts' => $posts, 'user' => Auth::user(), 'trendPost' => $trendPost]);
     }
@@ -32,12 +29,14 @@ class PostController extends Controller
         $post = new Post();
         $user = Auth::user();
         $file = $request->file('att_files');
-        for ($i=0; $i < count($file); $i++) { 
-            $extension = $file[$i]->getClientOriginalExtension();
-            Storage::disk('local')->put($file[$i]->getFilename().'.'.$extension,  File::get($file[$i]));
-            $post->mime .= $file[$i]->getClientMimeType();
-            $post->original_filename .= $file[$i]->getClientOriginalName() .',';
-            $post->filename .= $file[$i]->getFilename().'.'.$extension .',';   
+        if($file[0] != null){
+            for ($i=0; $i < count($file); $i++) { 
+                $extension = $file[$i]->getClientOriginalExtension();
+                Storage::disk('local')->put($file[$i]->getFilename().'.'.$extension,  File::get($file[$i]));
+                $post->mime .= $file[$i]->getClientMimeType();
+                $post->original_filename .= $file[$i]->getClientOriginalName() .',';
+                $post->filename .= $file[$i]->getFilename().'.'.$extension .',';   
+            }
         }
         // $extension = $file->getClientOriginalExtension();
         // Storage::disk('local')->put($file->getFilename().'.'.$extension,  File::get($file));
@@ -93,24 +92,36 @@ class PostController extends Controller
     {
         $post_id = $request['postId'];
         $is_like = $request['isLike'] === 'true';
+        return response()->json(['isLike' => $is_like]);
+        // $is_like = $request['isLike'];
         $update = false;
         $post = Post::find($post_id);
         if (!$post) {
             return null;
         }
+        //num of likes
+        // $numLike = Like::find($post_id)->like;
+        // $numLike = DB::table('likes')
+        //          ->select('post_id', DB::raw('count(*) as total'))
+        //          ->groupBy('post_id')
+        //          ->lists('total','post_id')->all();
+        // var_dump($numLike);die();
         $user = Auth::user();
         $like = $user->likes()->where('post_id', $post_id)->first();
         if ($like) {
             $already_like = $like->like;
             $update = true;
-            if ($already_like == $is_like) {
+            if ($already_like != $is_like) {
                 $like->delete();
-                return null;
+                $numLike -= 1;
+                // return null;
+                // return response()->json(['num_like' => $numLike], 200);
             }
         } else {
             $like = new Like();
         }
         $like->like = $is_like;
+        $numLike += 1;
         $like->user_id = $user->id;
         $like->post_id = $post->id;
         if ($update) {
@@ -118,6 +129,7 @@ class PostController extends Controller
         } else {
             $like->save();
         }
+        // return response()->json(['num_like' => $numLike], 200);
         return null;
     }
 

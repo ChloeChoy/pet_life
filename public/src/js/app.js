@@ -29,22 +29,31 @@ editPost();
 
 $('.like').on('click', function(event) {
     event.preventDefault();
+    var checkLike = $(this).next().next();
+    if(!checkLike.hasClass('liked')){
+        checkLike.addClass('liked').text('1');
+    }else{
+        checkLike.removeClass('liked').text('0');
+    }
     postId = event.target.parentNode.parentNode.dataset['postid'];
-    var isLike = event.target.previousElementSibling == null;
-    // var numOfLike = $(this).prev().text();
+    var isLike = checkLike.text();
+    console.log(isLike);
     $.ajax({
         method: 'POST',
         url: urlLike,
-        data: {isLike: isLike, postId: postId, _token: token}
+        data: {isLike: isLike, postId: postId, _token: token},
+        error: function (request, status, error) {
+            alert(request.responseText);
+        }
     })
-    .done(function() {
+    .done(function(msg) {
         // event.target.innerText = isLike ? event.target.innerText == 'Like' ? 'You like this post' : 'Like' : event.target.innerText == 'Dislike' ? 'You don\'t like this post' : 'Dislike';
         // if (isLike) {
         //     event.target.nextElementSibling.innerText = 'Dislike';
         // } else {
         //     event.target.previousElementSibling.innerText = 'Like';
         // }
-        
+        $(this).prev().text(msg['num_like']);
     });
 });
 
