@@ -87,7 +87,86 @@
     <script src="{{ URL::to('src/js/jquery.magnific-popup.js') }}"></script>
     <script src="{{ URL::to('src/js/app.js') }}"></script>
     <script src="{{ URL::to('src/js/main.js') }}"></script>
+    <script src="{{ URL::to('src/js/Chart.bundle.js') }}"></script>
     <!-- Go to www.addthis.com/dashboard to customize your tools --> 
     <script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-582f0bca1f9d7459"></script> 
+
+    <script type="text/javascript">
+        //users chart
+        var users = document.getElementById("userChart");
+        var userChart = new Chart(users, {
+            type: 'pie',
+            data: {
+                labels: ["Male", "Female"],
+                datasets: [{
+                    label: '# of Votes',
+                    data: [1000, 800],
+                    backgroundColor: [
+                        '#f44265',
+                        '#3333ff',
+                    ],
+                }]
+            },
+            options: {
+                responsive: true
+            }
+        });
+        //end users chart
+
+        // users online chart
+        var userOnl = document.getElementById("userOnlChart");
+        var userChart = new Chart(userOnl, {
+            type: 'pie',
+            data: {
+                labels: ["Online", "Offline"],
+                datasets: [{
+                    label: '# of Votes',
+                    data: [1000, 800],
+                    backgroundColor: [
+                        '#00cc99',
+                        '#eee',
+                    ],
+                }]
+            },
+            options: {
+                responsive: true
+            }
+        });
+        //end users online chart
+
+        // post chart
+        var posts = document.getElementById("postChart");
+        var postChart = new Chart(posts, {
+            type: 'line',
+            data: {
+                labels: ["January", "February", "March", "April", "May", "June", "July"],
+                datasets: [{
+                    label: "My First dataset",
+                    backgroundColor: '#f44265',
+                    borderColor: '#f44268',
+                    data: [10, 23, 5, 99, 67, 43, 0],
+                    fill: false,
+                    pointRadius: 10,
+                    pointHoverRadius: 15,
+                    showLine: false // no line shown
+                }]
+            },
+            options: {
+                responsive: true,
+                title:{
+                    display:true,
+                },
+                legend: {
+                    display: false
+                },
+                elements: {
+                    point: {
+                    }
+                }
+            }
+
+        });
+        // end post chart
+    </script>
 </body>
 </html>
