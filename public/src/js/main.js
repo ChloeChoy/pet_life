@@ -1,3 +1,7 @@
+//preload event
+// $(window).load(function(){
+// 	$('.preloader-wrapper').show();
+// });
 
 //function show edit/delete post
 function interActivePost(){
@@ -29,6 +33,7 @@ $( document ).ready(function(){
 	});
 	//material media box
 	$('.materialboxed').materialbox();
+	
 	
 	interActivePost();
 	triggerUploadImg();
@@ -72,12 +77,12 @@ $(document).ready(function(){
 	//display main search box
 	$('#display-main-search').click(function(){
 		$('.main-nav').hide();
-		$('.main-search').fadeIn(200);
+		$('.main-search').fadeIn(100);
 	});
 
 	//hide main search
 	$('.close-main-search').click(function(){
-		$('.main-nav').fadeIn();
+		$('.main-nav').fadeIn(100);
 		$('.main-search').hide();
 	});
 
@@ -116,6 +121,12 @@ $(document).ready(function(){
 		e.stopPropagation();
 	});
 
+	//show manage users link in admin page
+	$('.manage-user-btn').click(function(e){
+		$('#manage-users').show();
+		e.stopPropagation();
+	});
+
 });
 
 //click on body
@@ -123,6 +134,7 @@ $(document).ready(function(){
 	$('body').click(function(){
 		$('.post-menu-act').hide();
 		$('#pl-share-post').hide();
+		$('#manage-users').hide();
 	});
 });
 

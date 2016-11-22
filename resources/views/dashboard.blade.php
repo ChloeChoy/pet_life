@@ -111,6 +111,7 @@
                     <!-- trending post -->
                     <h5 class="title">Trending posts</h5>
                     <div class="posts">
+
                         <a class="trend-row" href='{{route("post.view",["post_id" => $trendPost->id])}}' data-postid="{{ $trendPost->id }}">
                             <div class="post-info">
                                 <div class="user-avatar">
@@ -124,20 +125,25 @@
                                 <p>{{ $trendPost->body }}</p>
 
                                 @if(strpos($trendPost->mime, 'image') !== false)
-                                    <?php $postImg = explode(',', $trendPost->filename);?>
+                                    <?php
+                                        $postImg = explode(',', $trendPost->filename);
+                                        $numOfImg = 0;
+                                    ?>
                                     @if(count($postImg) > 2)
                                     <div class="trend-img multi-img" id="post-media{{$trendPost->id}}">
                                         @for($i = 0; $i < count($postImg); $i++)
                                             @if($postImg[$i] != '')
-                                                    <img src="{{ route('account.image', ['filename' => $postImg[$i]]) }}" alt="image" class="responsive-img" data-mfp-src="{{ route('account.image', ['filename' => $postImg[$i]]) }}">
+                                                <?php $numOfImg++; ?>
+                                                <img src="{{ route('account.image', ['filename' => $postImg[$i]]) }}" alt="image" class="responsive-img" data-mfp-src="{{ route('account.image', ['filename' => $postImg[$i]]) }}">
                                             @endif
                                         @endfor
+                                        <span class="num-of-img">{{$numOfImg - 1}}+</span>
                                     </div>
                                     @else
                                     <div class="trend-img" id="post-media{{$trendPost->id}}">
                                         @for($i = 0; $i < count($postImg); $i++)
                                             @if($postImg[$i] != '')
-                                                    <img src="{{ route('account.image', ['filename' => $postImg[$i]]) }}" alt="image" class="responsive-img" data-mfp-src="{{ route('account.image', ['filename' => $postImg[$i]]) }}">
+                                                <img src="{{ route('account.image', ['filename' => $postImg[$i]]) }}" alt="image" class="responsive-img" data-mfp-src="{{ route('account.image', ['filename' => $postImg[$i]]) }}">
                                             @endif
                                         @endfor
                                     </div>

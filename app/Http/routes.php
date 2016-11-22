@@ -90,7 +90,8 @@ Route::post('/like', [
     'as' => 'like'
 ]);
 
-Route::get('/administrator', 'AdminController@index');
+//route admin
+Route::get('/administrator', ['uses' => 'AdminController@index', 'as' => 'administrator']);
 
 //route to user info
 Route::get('/userinfo', 
@@ -125,5 +126,12 @@ Route::get('google/callback', 'Auth\SocialController@handleProviderCallbackGoogl
 Route::get('/news', [
         'uses'  => 'PostController@getPostNews',
         'as'    => 'post.news'
+    ]
+);
+
+//route to admin remove users
+Route::get('/administrator/remove-users', [
+        'uses'  => 'AdminController@getRemoveUsers',
+        'as'    => 'remove.users'
     ]
 );

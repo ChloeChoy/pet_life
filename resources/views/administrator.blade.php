@@ -16,7 +16,13 @@
 					<div class="nav-wrapper">
 						<ul>
 							<li><a href="#">Dashboard</a></li>
-							<li><a href="#">Manage Accounts</a></li>
+							<li>
+								<a class="manage-user-btn" href="#">Manage Users<i class="material-icons right">arrow_drop_down</i></a>
+								<ul id="manage-users" class="dropdown-content">
+								  <li><a href="">Add user</a></li>
+								  <li><a href="{{route('remove.users')}}">List user</a></li>
+								</ul>
+							</li>
 							<li><a href="#">Manage Posts</a></li>
 						</ul>
 					</div>

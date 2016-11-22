@@ -19,6 +19,7 @@
                         <li id="link-sub-menu" class="main-menu-items">
                             <a href="#"><img class="responsive-img" src="{{ URL::to('src/images/boa_hancock_wallpaper_blue_red_by_gian519.png') }}"></a>
                             <ul id="sub-menu-account">
+                               <li><a href="{{ route('administrator') }}">Administrator</a></li> 
                                <li><a href="{{ route('account') }}">Profile</a></li> 
                                <li><a href="#">Settings</a></li> 
                                <li><a href="{{ route('logout') }}">Log out</a></li> 

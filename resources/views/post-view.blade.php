@@ -47,18 +47,26 @@
                             <p>{{ $post->body }}</p>
                             
                             @if(strpos($post->mime, 'image') !== false)
-                            <div class="post-media">
-                                <img src="{{ route('account.image', ['filename' => $post->filename]) }}" alt="image" class="responsive-img materialboxed">
-                            </div>
+                                <?php $postImg = explode(',', $post->filename);?>
+                                @if(count($postImg) > 2)
+                                <div class="post-media multi-medias" id="post-media{{$post->id}}">
+                                    @for($i = 0; $i < count($postImg); $i++)
+                                        @if($postImg[$i] != '')
+                                                <img src="{{ route('account.image', ['filename' => $postImg[$i]]) }}" alt="image" class="responsive-img materialboxed" data-mfp-src="{{ route('account.image', ['filename' => $postImg[$i]]) }}">
+                                        @endif
+                                    @endfor
+                                </div>
+                                @else
+                                <div class="post-media" id="post-media{{$post->id}}">
+                                    @for($i = 0; $i < count($postImg); $i++)
+                                        @if($postImg[$i] != '')
+                                                <img src="{{ route('account.image', ['filename' => $postImg[$i]]) }}" alt="image" class="responsive-img materialboxed" data-mfp-src="{{ route('account.image', ['filename' => $postImg[$i]]) }}">
+                                        @endif
+                                    @endfor
+                                </div>
+                                @endif
                             @endif
-
-                            @if(strpos($post->mime, 'video') !== false)
-                            <div class="post-media">
-                                <video class="post-video" controls>
-                                  <source src="{{ route('account.image', ['filename' => $post->filename]) }}" type="video/mp4">
-                                </video>
-                            </div>
-                            @endif
+                            
                         </div>
                         <div class="interaction">
                             <span class="num-of-like">0</span>

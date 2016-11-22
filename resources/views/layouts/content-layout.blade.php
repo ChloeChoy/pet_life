@@ -141,7 +141,7 @@
             data: {
                 labels: ["January", "February", "March", "April", "May", "June", "July"],
                 datasets: [{
-                    label: "My First dataset",
+                    label: "Total posts",
                     backgroundColor: '#f44265',
                     borderColor: '#f44268',
                     data: [10, 23, 5, 99, 67, 43, 0],
