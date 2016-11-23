@@ -11,7 +11,7 @@
                 <div class="col l2 col-left-link">
                     <div class="link-profile">
                         <img class="responsive-img" alt="avatar" src="{{ URL::to('src/images/boa_hancock_wallpaper_blue_red_by_gian519.png') }}">
-                        <a href="{{ route('account')}}"><i class="material-icons">mode_edit</i> Update profile</a>
+                        <a href="{{ route('account')}}"><i class="material-icons">mode_edit</i> {{ $user->name }}</a>
                     </div>
                     <ul class="menu-left">
                         <li><a href="{{route('post.news')}}"><i class="material-icons">wallpaper</i> News</a></li>
@@ -28,7 +28,7 @@
                             <a class="att-btn"><i class="material-icons">videocam</i> Upload videos</a>
                             <a class="att-btn att-image"><i class="material-icons">image</i> Upload images</a>
                             <div style='display: none'>
-                                <input id="att-files" type="file" name="att_files[]" multiple onchange="previewFiles()"/>
+                                <input id="att-files" type="file" name="att_files[]" multiple onchange="previewFiles('att-files')"/>
                             </div>
                         </div>
                         <div class="input-field col s12">

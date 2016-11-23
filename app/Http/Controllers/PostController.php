@@ -22,12 +22,14 @@ class PostController extends Controller
                 $temp    = array(
                     'desc'  => $item->email,
                     'value' => $item->name,
-                    // 'image' =>  'http://localhost/pet_life/storage/app/cho.jpg'
-                    // 'image' => ($visibleImage == 1 ? ($this->getMediaFileBaseUrl() . $product->getData('image')) : '')
+                    'image' => ''   // user avatar
                 );
                 array_push($productList, $temp);
             }
         }
+        $suggestUsers = json_encode($productList);
+        File::put('users.js', 'var searchplus = '.$suggestUsers);
+
         $posts = Post::orderBy('created_at', 'desc')->get();
         $trendPosts = $posts->first();
         return view('dashboard', ['posts' => $posts, 'user' => Auth::user(), 'trendPost' => $trendPosts, 'productList' => $productList]);
@@ -162,5 +164,13 @@ class PostController extends Controller
         $posts = Post::orderBy('created_at', 'desc')->limit(5)->get();
         $trendPost = $posts->first();
         return view('news', ['posts' => $posts, 'user' => Auth::user(), 'trendPost' => $trendPost]);
+    }
+
+    /**
+    * get searched users
+    */
+    public function getSearchUsers(Request $request){
+        $users = User::where('name', 'like', '%' . $request['q'] . '%')->get();
+        return view('search', ['users' => $users]);
     }
 }

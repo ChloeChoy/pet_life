@@ -18,9 +18,9 @@
     <section class="main-search" style="display:none;">
         <div class="container">
             <div class="row">
-                <form class="search-form col s11">
+                <form class="search-form col s11" action="{{ route('search') }}" method="get">
                     <div class="input-field">
-                        <input id="pl-search" type="search" required autofocus>
+                        <input id="pl-search" type="search" name="q" required autofocus>
                         <button class="search-icon" type="submit"><i class="material-icons">search</i></button>
                         <button type="reset" class="reset-search" style="display:none"><i class="material-icons">close</i></button>
                     </div>
@@ -38,9 +38,9 @@
  
 
     <script type="text/javascript">
-        function previewFiles() {
+        function previewFiles(fileId) {
           var preview = document.querySelector('#preview');
-          var files   = document.querySelector('#att-files').files;
+          var files   = document.querySelector('#' + fileId).files;
           // var fileRemoves = document.querySelector('#mp-remove-files');
 
           function readAndPreview(file) {
@@ -86,10 +86,12 @@
     <script src="{{ URL::to('src/js/jquery-migrate-3.0.0.min.js') }}"></script>
     <script src="{{ URL::to('src/js/bootstrap.min.js') }}"></script>
     <script src="{{ URL::to('src/js/jquery.magnific-popup.js') }}"></script>
+    <script src="{{ URL::to('user-avatar.js') }}"></script>
     <script src="{{ URL::to('src/js/app.js') }}"></script>
     <script src="{{ URL::to('src/js/main.js') }}"></script>
     <script src="{{ URL::to('src/js/Chart.bundle.js') }}"></script>
     <script src="{{ URL::to('src/js/jquery.autocomplete.js') }}"></script>
+    <script src="{{ URL::to('users.js') }}"></script>
 
     <!-- Go to www.addthis.com/dashboard to customize your tools --> 
     <script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-582f0bca1f9d7459"></script> 
@@ -174,7 +176,7 @@
 
     <!-- Search scrift start --> 
     <script>
-        var searchplus = <?php echo json_encode($productList);?>;
+        // var searchplus = <?php //echo json_encode($productList);?>;
         var resultLimit = 5;
         var visibleImage = 1;
         var minSearchChars = 1;
@@ -191,7 +193,7 @@
                 //          window.location.href = suggestion.productUrl;
                 //      },
                 formatResult: function (suggestion, currentValue) {
-                    return ("<a href='" + '' + "'><div class='suggestion-left'><img class='img-responsive' src='" + ( visibleImage == 1 ? suggestion.image : '') + "' alt=''" + "/></div>" + "<div class='suggestion-right'><div class='product-line product-name'>" + suggestion.value + "</div><div class='product-des'><p class='short-des'>" + '' + "</p></div></div></a>");
+                    return ("<a href='" + '' + "'><div class='suggestion-left'><img class='img-responsive' src='" + ( visibleImage == 1 ? suggestion.image : '') + "' alt=''" + "/></div>" + "<div class='suggestion-right'><div class='product-line product-name'>" + suggestion.value + "</div></div></a>");
                 },
                 onSearchComplete: function (query, suggestion) {
                     $('.autocomplete-suggestions').append("<div id='view_all'><a href=''>View all >></a></div>");

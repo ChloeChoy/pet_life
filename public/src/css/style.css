@@ -290,6 +290,7 @@ a.att-btn i {
 textarea#new-post {
     border-bottom: 1px solid #eee;
     cursor: text;
+    margin: 0;
 }
 .post-row {
     margin-top: 10px;
@@ -419,6 +420,9 @@ textarea#new-post {
     text-align: center;
     font-size: 14px;
     color: #777;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
 }
 .link-profile a:hover{
     text-decoration: underline;
@@ -438,7 +442,11 @@ textarea#new-post {
 textarea#post-body {
     border-bottom: 1px solid #ddd;
 }
-.modal-footer a.btn {
+.form-btn{
+    text-align: right;
+    margin-top: 30px;
+}
+.form-btn a.btn {
     float: none !important;
     margin-right: 10px !important;
     background: #777 !important;
@@ -549,7 +557,7 @@ div#preview {
 .trend-img span.num-of-img {
     position: absolute;
     top: 65px;
-    left: 130px;
+    left: 5px;
     color: #fff;
     font-size: 24px;
 }
@@ -572,6 +580,9 @@ section.profile-image {
     height: 350px;
     overflow: hidden;
     position: relative;
+}
+.cover-img img {
+    width: 100%;
 }
 .cover-img:hover a.edit-wall-img{
     display: block;
@@ -965,6 +976,50 @@ div#user-videos-gallery {
 }
 
 /* end style news page*/
+
+/*style search page*/
+.search-content {
+    padding: 0 30px 30px !important;
+    background: #fff;
+}
+.search-content span.title {
+    display: block;
+    height: 35px;
+    font-size: 18px;
+    line-height: 35px;
+    border-bottom: 1px solid #eee;
+    margin: 10px 0 20px;
+    color: #757575;
+}
+.result-item {
+    border-bottom: 1px solid #eee;
+}
+.search-content a.user-link {
+    height: 70px;
+    display: inline-block;
+    padding: 10px;
+    width: calc(100% - 110px);
+}
+.search-content a.user-link:hover{
+    background: #fafafa;
+}
+a.user-link img {
+    height: 100% !important;
+}
+.result-item .add-friend {
+    float: right;
+    margin-top: 17px;
+    font-size: 12px;
+    padding: 0 10px;
+}
+.user-link span.user-name {
+    position: relative;
+    top: -37px;
+    margin-left: 5px;
+}
+
+
+/*end style search page*/
 
 /* fallback */
 @font-face {

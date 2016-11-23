@@ -1,7 +1,3 @@
-//preload event
-// $(window).load(function(){
-// 	$('.preloader-wrapper').show();
-// });
 
 //function show edit/delete post
 function interActivePost(){
@@ -114,8 +110,8 @@ $(document).ready(function(){
 	//show share post button
 	$('.share-post').click(function(e){
 		var id = $(this).parent().parent().attr('data-postid');
-		addthis.update('share', 'url', '//localhost:8888/laravel/public/post/' + id); 
-		addthis.url = "//localhost:8888/laravel/public/post/" + id;                
+		addthis.update('share', 'url', '//localhost/pet_life/public/post/' + id); 
+		addthis.url = "//localhost/pet_life/public/post/" + id;                
 		addthis.toolbox(".addthis_inline_share_toolbox");
 		$('#pl-share-post').show().css({'position' : 'absolute', 'top': ($(this).position().top + 20).toString() + 'px', 'left' : ($(this).position().left).toString() + 'px'});
 		e.stopPropagation();
@@ -126,6 +122,16 @@ $(document).ready(function(){
 		$('#manage-users').show();
 		e.stopPropagation();
 	});
+
+	//upload avatar/cover photo
+	$('#form-upload-photos').submit(function(){
+		$('#modal-upload-images').hide();
+	});
+
+	//set avatar in navbar
+	if(userAvatar){
+		$('li#link-sub-menu a img').attr('src', userAvatar);
+	}
 
 });
 

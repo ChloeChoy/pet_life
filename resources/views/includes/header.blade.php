@@ -17,7 +17,9 @@
                         <li class="main-menu-items"><a href="{{route('post.news')}}">News</a></li>
                         <li class="main-menu-items"><a href="{{ route('dashboard') }}">Home</a></li>
                         <li id="link-sub-menu" class="main-menu-items">
-                            <a href="#"><img class="responsive-img" src="{{ URL::to('src/images/boa_hancock_wallpaper_blue_red_by_gian519.png') }}"></a>
+                            <a href="#">
+                                <img class="responsive-img" src="{{ URL::to('src/images/boa_hancock_wallpaper_blue_red_by_gian519.png') }}">
+                            </a>
                             <ul id="sub-menu-account">
                                <li><a href="{{ route('administrator') }}">Administrator</a></li> 
                                <li><a href="{{ route('account') }}">Profile</a></li> 
@@ -27,7 +29,7 @@
                         </li>
                     </ul>
                     <ul class="right">
-                        <li class="main-menu-items"><a id="display-main-search" href="#"><i class="material-icons left">search</i></a></li>
+                        <li class="main-menu-items"><a id="display-main-search"><i class="material-icons left">search</i></a></li>
                     </ul>
                     <ul id="mobile-navbar" class="side-nav">
                         <li><div class="userView">

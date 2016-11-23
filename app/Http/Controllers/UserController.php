@@ -66,15 +66,15 @@ class UserController extends Controller
     public function postSaveAccount(Request $request)
     {
         $this->validate($request, [
-           'first_name' => 'required|max:120'
+           'name' => 'required|max:120'
         ]);
 
         $user = Auth::user();
-        $old_name = $user->first_name;
-        $user->first_name = $request['first_name'];
+        $old_name = $user->name;
+        $user->name = $request['name'];
         $user->update();
         $file = $request->file('image');
-        $filename = $request['first_name'] . '-' . $user->id . '.jpg';
+        $filename = $request['name'] . '-' . $user->id . '.jpg';
         $old_filename = $old_name . '-' . $user->id . '.jpg';
         $update = false;
         if (Storage::disk('local')->has($old_filename)) {
@@ -87,6 +87,29 @@ class UserController extends Controller
         }
         if ($update && $old_filename !== $filename) {
             Storage::delete($old_filename);
+        }
+        return redirect()->route('account');
+    }
+
+    /**
+    * upload avatar/cover image
+    */
+    public function uploadAvatarCover(Request $request){
+        $user = Auth::user();
+        $file = $request->file('cover_img') ? $request->file('cover_img') : $request->file('profile_img');
+        $extension = $file->getClientOriginalExtension();
+        Storage::disk('local')->put($file->getFilename().'.'.$extension,  File::get($file));
+        
+        if($request->file('cover_img')){
+            $user->cover_photo .= $file->getFilename().'.'.$extension;
+            $user->update();
+        }
+
+        if($request->file('profile_img')){
+            $user->avatar .= $file->getFilename().'.'.$extension;
+            File::put('user-avatar.js', 'var userAvatar = "'
+                .route('account.image', ['filename' => $user->avatar]) .'"');
+            $user->update();
         }
         return redirect()->route('account');
     }
@@ -127,4 +150,14 @@ class UserController extends Controller
     public function userPhotos(){
         return view('photos', ['user' => Auth::user()]);   
     }
+
+    /**
+    * return user avatar
+    */
+    // public function getUserAvatar(){
+    //     $user = Auth::user();
+    //     if($user->avatar && Storage::disk('local')->has($user->avatar)){
+    //     }
+    //     return view('includes/header', ['user' => Auth::user()]);
+    // }
 }

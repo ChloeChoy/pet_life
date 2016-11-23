@@ -135,3 +135,27 @@ Route::get('/administrator/remove-users', [
         'as'    => 'remove.users'
     ]
 );
+
+//route to search page
+Route::get('/search', 
+    [
+        'uses' => 'PostController@getSearchUsers',
+        'as'    => 'search'
+    ]
+);
+
+//route upload avatar/cover photo
+Route::post('upload-photo',
+    [
+        'uses'  => 'UserController@uploadAvatarCover',
+        'as'    => 'upload.photo'
+    ]
+);
+
+//route to header
+// Route::get('/header', 
+//     [
+//         'uses' => 'UserController@getUserAvatar',
+//         'as'    => 'header'
+//     ]
+// );

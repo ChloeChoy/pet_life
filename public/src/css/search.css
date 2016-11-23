@@ -1,11 +1,9 @@
 
 .autocomplete-suggestions {
-    border: 1px solid #bbb;
+    border: 1px solid #e0e0e0;
     background: #fff;
     cursor: default;
-    border-top: none;
     overflow: auto;
-    max-height: 10000px;
 
 }
 
@@ -20,12 +18,15 @@
 }
 
 .autocomplete-selected {
-    background: #eef3d6;
+    background: #fafafa;
+}
+.autocomplete-suggestion a {
+    display: block;
+    height: 100%;
 }
 
 
 input#searchauto {
-    /*height: 40px;*/
     border: 1px solid #bbb;
     border-radius: 2px;
     width: 375px;
@@ -53,65 +54,18 @@ input#searchauto {
     text-overflow: ellipsis;
 }
 
-.product-price {
-    font-size: 12px;
-}
-
-.product-des {
-    font-size: 12px;
-    /* width: 100%; */
-}
-
-.product-des p {
-
-    /* width: 100%; */
-    display: block;
-    white-space: nowrap;
-    /* max-height: 35px; */
-    overflow: hidden;
-    text-overflow: ellipsis;
-}
-
 .product-line {
     margin-bottom: 5px;
-}
-
-ul#ui-id-1 {
-    background: #fff;
-    width: 373px;
-    font-family: inherit;
-    padding: 0px;
-    border-bottom: none;
 }
 
 .autocomplete-suggestion:last-child {
     border-bottom: none;
 }
 
-p.short-des {
-    margin: 0px;
-    font-size: 0.9em;
-    color: #aaa;
-}
-
-@media (min-width: 771px) {
-    #search_mini_form {
-        width: 374px;
-        float: right;
-    }
-}
-
-/*.form-search.input-box {*/
-/*width: 450px;*/
-/*}*/
 #view_all{
     text-align: center;
     background: #eff4f7;
     cursor: pointer;
+    height: 30px;
+    line-height: 30px;
 }
-/*#view_all:hover {*/
-/*background: #dfeff7;*/
-/*color: salmon;*/
-/*}*/
-
-

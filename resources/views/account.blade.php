@@ -11,13 +11,25 @@
             <div class="row">
                 <div class="col s12 wall">
                     <div class="cover-img">
-                        <img class="responsive-img" src="{{ URL::to('src/images/default-wall.jpg') }}">
+                    @if($user)
+                        @if($user->cover_photo)
+                            @if (Storage::disk('local')->has($user->cover_photo))
+                                <img src="{{ route('account.image', ['filename' => $user->cover_photo]) }}" alt="" class="responsive-img">
+                            @endif
+                        @else
+                            <img class="responsive-img" src="{{ URL::to('src/images/default-wall.jpg') }}">
+                        @endif
+                        
                         <a class="edit-wall-img" data-toggle="modal" href="#modal-upload-images"><i class="material-icons">photo_camera</i> Change cover photo</a>
+                    @endif
+
                     </div>
                     <div class="account-avatar">
                     @if($user)
-                        @if (Storage::disk('local')->has($user->first_name . '-' . $user->id . '.jpg'))
-                            <img src="{{ route('account.image', ['filename' => $user->first_name . '-' . $user->id . '.jpg']) }}" alt="" class="responsive-img">
+                        @if($user->avatar)
+                            @if (Storage::disk('local')->has($user->avatar))
+                                <img src="{{ route('account.image', ['filename' => $user->avatar]) }}" alt="" class="responsive-img">
+                            @endif
                         @else
                             <img class="responsive-img" src="{{ URL::to('src/images/boa_hancock_wallpaper_blue_red_by_gian519.png') }}">
                         @endif
@@ -125,18 +137,32 @@
                             <div class="post-content">
                                 <p>{{ $post->body }}</p>
                                 @if(strpos($post->mime, 'image') !== false)
-                                <section class="row new-post">
-                                    <div class="col-md-6 col-md-offset-3">
-                                        <img width="450" height="240" src="{{ route('account.image', ['filename' => $post->filename]) }}" alt="" class="img-responsive">
+                                    <?php $postImg = explode(',', $post->filename);?>
+                                    @if(count($postImg) > 2)
+                                    <div class="post-media multi-medias" id="post-media{{$post->id}}">
+                                        @for($i = 0; $i < count($postImg); $i++)
+                                            @if($postImg[$i] != '')
+                                                    <img src="{{ route('account.image', ['filename' => $postImg[$i]]) }}" alt="image" class="responsive-img materialboxed" data-mfp-src="{{ route('account.image', ['filename' => $postImg[$i]]) }}">
+                                            @endif
+                                        @endfor
                                     </div>
-                                </section>
+                                    @else
+                                    <div class="post-media" id="post-media{{$post->id}}">
+                                        @for($i = 0; $i < count($postImg); $i++)
+                                            @if($postImg[$i] != '')
+                                                    <img src="{{ route('account.image', ['filename' => $postImg[$i]]) }}" alt="image" class="responsive-img materialboxed" data-mfp-src="{{ route('account.image', ['filename' => $postImg[$i]]) }}">
+                                            @endif
+                                        @endfor
+                                    </div>
+                                    @endif
                                 @endif
+
                                 @if(strpos($post->mime, 'video') !== false)
-                                <section class="row new-post">
-                                    <video class="col-md-6 col-md-offset-3" width="320" height="240" controls>
+                                <div class="post-media">
+                                    <video class="post-video" controls>
                                       <source src="{{ route('account.image', ['filename' => $post->filename]) }}" type="video/mp4">
                                     </video>
-                                </section>
+                                </div>
                                 @endif
                             </div>
                             <div class="interaction">
@@ -187,18 +213,19 @@
                   <h4 class="modal-title">Upload photos</h4>
                 </div>
                 <div class="modal-body">
-                    <form class="upload-photos"  method="post" enctype="multipart/form-data">
+                    <form id="form-upload-photos" action="{{ route('upload.photo') }}"  method="post" enctype="multipart/form-data">
                         <div class="input-field col s12">
                             <a class="change-user-photos btn"><i class="material-icons">image</i> Upload images</a>
-                            <input id="profile-img" type="file" name="cover_img" style="display:none;">
+                            <input id="profile-img" type="file" name="cover_img" onchange="previewFiles('profile-img')" style="display:none;">
                         </div>
+                        <div id="preview"></div>
+                        <div class="form-btn">
+                            <a class="btn" data-dismiss="modal">Cancel</a>
+                            <button id="modal-save" type="submit" class="btn btn-default">Save</button>
+                        </div>
+                        <input id="post-token" type="hidden" value="{{ Session::token() }}" name="_token">
                     </form>
                 </div>
-            <div class="modal-footer">
-                <a class="btn" data-dismiss="modal">Cancel</a>
-                <button id="modal-save" type="button" class="btn btn-default" data-dismiss="modal">Save</button>
-                </div>
-            </div>
         </div>
     </div>
     <!-- end form change cover/profile images -->
