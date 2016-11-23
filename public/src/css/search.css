@@ -1,0 +1,117 @@
+
+.autocomplete-suggestions {
+    border: 1px solid #bbb;
+    background: #fff;
+    cursor: default;
+    border-top: none;
+    overflow: auto;
+    max-height: 10000px;
+
+}
+
+.autocomplete-suggestion {
+    height: 67px;
+    overflow: hidden;
+    padding: 10px 5px 10px 5px;
+    font-size: 1.2em;
+    white-space: nowrap;
+    border-bottom: 1px solid #eee;
+    display: block;
+}
+
+.autocomplete-selected {
+    background: #eef3d6;
+}
+
+
+input#searchauto {
+    /*height: 40px;*/
+    border: 1px solid #bbb;
+    border-radius: 2px;
+    width: 375px;
+}
+
+.suggestion-left {
+    float: left;
+    width: 15%;
+    padding: auto;
+}
+
+.suggestion-right {
+    width: 82%;
+    padding-left: 10px;
+    text-align: left;
+    color: black;
+    float: left;
+}
+
+.product-name {
+    font-size: 14px;
+    color: #3399cc;
+    display: block;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.product-price {
+    font-size: 12px;
+}
+
+.product-des {
+    font-size: 12px;
+    /* width: 100%; */
+}
+
+.product-des p {
+
+    /* width: 100%; */
+    display: block;
+    white-space: nowrap;
+    /* max-height: 35px; */
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.product-line {
+    margin-bottom: 5px;
+}
+
+ul#ui-id-1 {
+    background: #fff;
+    width: 373px;
+    font-family: inherit;
+    padding: 0px;
+    border-bottom: none;
+}
+
+.autocomplete-suggestion:last-child {
+    border-bottom: none;
+}
+
+p.short-des {
+    margin: 0px;
+    font-size: 0.9em;
+    color: #aaa;
+}
+
+@media (min-width: 771px) {
+    #search_mini_form {
+        width: 374px;
+        float: right;
+    }
+}
+
+/*.form-search.input-box {*/
+/*width: 450px;*/
+/*}*/
+#view_all{
+    text-align: center;
+    background: #eff4f7;
+    cursor: pointer;
+}
+/*#view_all:hover {*/
+/*background: #dfeff7;*/
+/*color: salmon;*/
+/*}*/
+
+

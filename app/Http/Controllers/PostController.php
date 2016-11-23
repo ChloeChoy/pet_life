@@ -15,10 +15,22 @@ class PostController extends Controller
 {
     public function getDashboard()
     {
+        $productList    = array();
         $user = User::orderBy('created_at', 'desc')->get();
+        foreach ($user as $item ) {
+            if ($item->name) {
+                $temp    = array(
+                    'desc'  => $item->email,
+                    'value' => $item->name,
+                    // 'image' =>  'http://localhost/pet_life/storage/app/cho.jpg'
+                    // 'image' => ($visibleImage == 1 ? ($this->getMediaFileBaseUrl() . $product->getData('image')) : '')
+                );
+                array_push($productList, $temp);
+            }
+        }
         $posts = Post::orderBy('created_at', 'desc')->get();
         $trendPosts = $posts->first();
-        return view('dashboard', ['posts' => $posts, 'user' => Auth::user(), 'trendPost' => $trendPosts]);
+        return view('dashboard', ['posts' => $posts, 'user' => Auth::user(), 'trendPost' => $trendPosts, 'productList' => $productList]);
     }
 
     public function postCreatePost(Request $request)

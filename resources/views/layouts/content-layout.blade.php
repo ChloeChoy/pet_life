@@ -7,6 +7,7 @@
     <link rel="stylesheet" href="{{ URL::to('src/css/font-awesome.min.css') }}">
     <link rel="stylesheet" href="{{ URL::to('src/css/dropzone.css') }}">
     <link rel="stylesheet" href="{{ URL::to('src/css/magnific-popup.css') }}">
+    <link rel="stylesheet" href="{{ URL::to('src/css/search.css') }}">
 </head>
 <body>
     @include('includes.header')
@@ -88,6 +89,8 @@
     <script src="{{ URL::to('src/js/app.js') }}"></script>
     <script src="{{ URL::to('src/js/main.js') }}"></script>
     <script src="{{ URL::to('src/js/Chart.bundle.js') }}"></script>
+    <script src="{{ URL::to('src/js/jquery.autocomplete.js') }}"></script>
+
     <!-- Go to www.addthis.com/dashboard to customize your tools --> 
     <script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-582f0bca1f9d7459"></script> 
 
@@ -168,5 +171,34 @@
         });
         // end post chart
     </script>
+
+    <!-- Search scrift start --> 
+    <script>
+        var searchplus = <?php echo json_encode($productList);?>;
+        var resultLimit = 5;
+        var visibleImage = 1;
+        var minSearchChars = 1;
+        //  var minSearchChars = '2';
+    </script>
+    <script>
+         // function ($) {
+            $('#pl-search').autocomplete({
+                lookup: searchplus,
+                lookupLimit: resultLimit,
+                maxHeight: 2000,
+                minChars: minSearchChars,
+                //      onSelect: function (suggestion) {
+                //          window.location.href = suggestion.productUrl;
+                //      },
+                formatResult: function (suggestion, currentValue) {
+                    return ("<a href='" + '' + "'><div class='suggestion-left'><img class='img-responsive' src='" + ( visibleImage == 1 ? suggestion.image : '') + "' alt=''" + "/></div>" + "<div class='suggestion-right'><div class='product-line product-name'>" + suggestion.value + "</div><div class='product-des'><p class='short-des'>" + '' + "</p></div></div></a>");
+                },
+                onSearchComplete: function (query, suggestion) {
+                    $('.autocomplete-suggestions').append("<div id='view_all'><a href=''>View all >></a></div>");
+                }
+            });
+        // };
+    </script>
+    <!-- Search scrift end --> 
 </body>
 </html>
