@@ -15,6 +15,9 @@ class PostController extends Controller
 {
     public function getDashboard()
     {
+        // if(!Auth::user())
+        //     return redirect()->route('home');
+        
         $productList    = array();
         $user = User::orderBy('created_at', 'desc')->get();
         foreach ($user as $item ) {
@@ -22,7 +25,7 @@ class PostController extends Controller
                 $temp    = array(
                     'desc'  => $item->email,
                     'value' => $item->name,
-                    'image' => ''   // user avatar
+                    'image' => $item->avatar ? route('account.image', ['filename' => $item->avatar]) : '/pet_life/public/src/images/boa_hancock_wallpaper_blue_red_by_gian519.png'    // user avatar
                 );
                 array_push($productList, $temp);
             }
@@ -32,7 +35,7 @@ class PostController extends Controller
 
         $posts = Post::orderBy('created_at', 'desc')->get();
         $trendPosts = $posts->first();
-        return view('dashboard', ['posts' => $posts, 'user' => Auth::user(), 'trendPost' => $trendPosts, 'productList' => $productList]);
+        return view('dashboard', ['posts' => $posts, 'user' => Auth::user(), 'trendPost' => $trendPosts]);
     }
 
     public function postCreatePost(Request $request)
@@ -52,12 +55,7 @@ class PostController extends Controller
                 $post->filename .= $file[$i]->getFilename().'.'.$extension .',';   
             }
         }
-        // $extension = $file->getClientOriginalExtension();
-        // Storage::disk('local')->put($file->getFilename().'.'.$extension,  File::get($file));
-        // $post->mime = $file->getClientMimeType();
-        // $post->original_filename = $file->getClientOriginalName();
-        // $post->filename = $file->getFilename().'.'.$extension;
-
+        
         $post->body = $request['body'];
         $message = '';
         if ($request->user()->posts()->save($post)) {
@@ -106,21 +104,22 @@ class PostController extends Controller
     public function postLikePost(Request $request)
     {
         $post_id = $request['postId'];
-        $is_like = $request['isLike'] === 'true';
-        return response()->json(['isLike' => $is_like]);
-        // $is_like = $request['isLike'];
+        $is_like = $request['isLike'];
+        // return response()->json(['isLike' => $is_like]);
         $update = false;
         $post = Post::find($post_id);
         if (!$post) {
             return null;
         }
         //num of likes
-        // $numLike = Like::find($post_id)->like;
-        // $numLike = DB::table('likes')
-        //          ->select('post_id', DB::raw('count(*) as total'))
-        //          ->groupBy('post_id')
-        //          ->lists('total','post_id')->all();
-        // var_dump($numLike);die();
+        // $nlike = 0;
+        // $numLike = Like::where('post_id', $post_id);;
+        // for($i = 0; $i < count($numLike); $i++){
+        //     if($numLike->post_id == $post_id){
+        //         $nlike += 1;
+        //     }
+        // }
+        // return response()->json(['like' => $nlike]);
         $user = Auth::user();
         $like = $user->likes()->where('post_id', $post_id)->first();
         if ($like) {
@@ -128,15 +127,15 @@ class PostController extends Controller
             $update = true;
             if ($already_like != $is_like) {
                 $like->delete();
-                $numLike -= 1;
+                // $numLike -= 1;
                 // return null;
-                // return response()->json(['num_like' => $numLike], 200);
+                return response()->json(['unlike' => 'unlike']);
             }
         } else {
             $like = new Like();
         }
         $like->like = $is_like;
-        $numLike += 1;
+        // $numLike += 1;
         $like->user_id = $user->id;
         $like->post_id = $post->id;
         if ($update) {
@@ -144,8 +143,8 @@ class PostController extends Controller
         } else {
             $like->save();
         }
-        // return response()->json(['num_like' => $numLike], 200);
-        return null;
+        return response()->json(['like' => 'like']);
+        // return null;
     }
 
     /**

@@ -1,1 +1,0 @@
-var userAvatar = "http://localhost/pet_life/public/userimage/phpD400.tmp.jpg"

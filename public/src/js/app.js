@@ -29,6 +29,7 @@ editPost();
 
 $('.like').on('click', function(event) {
     event.preventDefault();
+    var numLike = event.target.previousElementSibling;
     var checkLike = $(this).next().next();
     if(!checkLike.hasClass('liked')){
         checkLike.addClass('liked').text('1');
@@ -41,19 +42,19 @@ $('.like').on('click', function(event) {
     $.ajax({
         method: 'POST',
         url: urlLike,
-        data: {isLike: isLike, postId: postId, _token: token},
-        error: function (request, status, error) {
-            alert(request.responseText);
+        data: {
+            isLike: isLike, 
+            postId: postId, 
+            _token: token
         }
     })
     .done(function(msg) {
-        // event.target.innerText = isLike ? event.target.innerText == 'Like' ? 'You like this post' : 'Like' : event.target.innerText == 'Dislike' ? 'You don\'t like this post' : 'Dislike';
-        // if (isLike) {
-        //     event.target.nextElementSibling.innerText = 'Dislike';
-        // } else {
-        //     event.target.previousElementSibling.innerText = 'Like';
-        // }
-        $(this).prev().text(msg['num_like']);
+        console.log(msg['like']);
+        if(msg['like']){
+            numLike.textContent = '1 like';
+        }else if(msg['unlike']){
+            numLike.textContent = '0';
+        }
     });
 });
 

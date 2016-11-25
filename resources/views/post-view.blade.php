@@ -72,6 +72,9 @@
                             <span class="num-of-like">0</span>
                             <a class="like"><i class="material-icons">thumb_up</i> Like</a>
                             <a class="share-post"><i class="material-icons">share</i> Share</a>
+                            <a class="comment-post-view">Comment</a>
+
+                            <div class="fb-comments" data-href="{{Request::url()}}" data-numposts="5"></div>
                         </div>
                     </div>
 				</div>

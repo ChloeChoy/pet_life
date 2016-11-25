@@ -22,12 +22,14 @@ class UserController extends Controller
         $email = $request['email'];
         $name = $request['name'];
         $password = bcrypt($request['password']);
-        // $token = $request['_token'];
+        $gender = $request['male'] ? 1 : ($request['female'] ? 0 : '');
+        $token = $request['_token'];
 
         $user = new User();
         $user->email = $email;
         $user->name = $name;
         $user->password = $password;
+        $user->gender = $gender;
         // $user->remember_token = $token;
 
         $user->save();
@@ -101,14 +103,12 @@ class UserController extends Controller
         Storage::disk('local')->put($file->getFilename().'.'.$extension,  File::get($file));
         
         if($request->file('cover_img')){
-            $user->cover_photo .= $file->getFilename().'.'.$extension;
+            $user->cover_photo = $file->getFilename().'.'.$extension;
             $user->update();
         }
 
         if($request->file('profile_img')){
-            $user->avatar .= $file->getFilename().'.'.$extension;
-            File::put('user-avatar.js', 'var userAvatar = "'
-                .route('account.image', ['filename' => $user->avatar]) .'"');
+            $user->avatar = $file->getFilename().'.'.$extension;
             $user->update();
         }
         return redirect()->route('account');
@@ -151,13 +151,4 @@ class UserController extends Controller
         return view('photos', ['user' => Auth::user()]);   
     }
 
-    /**
-    * return user avatar
-    */
-    // public function getUserAvatar(){
-    //     $user = Auth::user();
-    //     if($user->avatar && Storage::disk('local')->has($user->avatar)){
-    //     }
-    //     return view('includes/header', ['user' => Auth::user()]);
-    // }
 }

@@ -13,11 +13,11 @@
 				<nav class="menu-admin">
 					<div class="nav-wrapper">
 						<ul>
-							<li><a href="#">Dashboard</a></li>
+							<li><a href="{{route('administrator')}}">Dashboard</a></li>
 							<li>
 								<a class="manage-user-btn" href="#">Manage Users<i class="material-icons right">arrow_drop_down</i></a>
 								<ul id="manage-users" class="dropdown-content">
-								  <li><a href="">Add user</a></li>
+								  <li><a href="{{route('adduser')}}">Add user</a></li>
 								  <li><a href="{{route('remove.users')}}">List user</a></li>
 								</ul>
 							</li>
@@ -53,18 +53,24 @@
 						        </thead>
 
 						        <tbody>
-						        @for($i = 0; $i < 10; $i++)
-						          <tr class="row-user" data-userid="{{$i}}">
+						        @foreach($users as $user)
+						        	@if($user->email != 'khanhpkk@gmail.com')
+						          <tr class="row-user" data-userid="{{$user->id}}">
 						            <td>
-						            	<img class="responsive-img" alt="user-avatar" src="{{ URL::to('src/images/boa_hancock_wallpaper_blue_red_by_gian519.png') }}">
-										<span>Username {{$i + 1}}</span>
+						            	@if($user->avatar)
+		                                <img class="responsive-img" alt="avatar" src="{{ route('account.image', ['filename' => $user->avatar]) }}">
+		                                @else
+		                                <img class="responsive-img" alt="avatar" src="{{ URL::to('src/images/boa_hancock_wallpaper_blue_red_by_gian519.png') }}">
+		                                @endif
+										<span>{{$user->name}}</span>
 						            </td>
-						            <td>Example@gmail.com</td>
+						            <td>{{$user->email}}</td>
 						            <td>
 						            	<a class="remove-user" title="Delete"><i class="material-icons">delete</i></a>
 						            </td>
 						          </tr>
-						        @endfor
+						          @endif
+						        @endforeach
 						        </tbody>
 						    </table>
 
@@ -85,19 +91,6 @@
 				<!-- end list user -->
 			</div>
 
-			<!-- <div class="preloader-wrapper active" style="display: none;">
-				<div class="spinner-layer spinner-green-only">
-			      	<div class="circle-clipper left">
-			        	<div class="circle"></div>
-			      	</div>
-			      	<div class="gap-patch">
-			        	<div class="circle"></div>
-			        </div>
-			        <div class="circle-clipper right">
-			           <div class="circle"></div>
-			        </div>
-				</div>
-			</div> -->
 	</div>
 </section>
 

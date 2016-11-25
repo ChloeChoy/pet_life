@@ -45,11 +45,11 @@
                             <div class="field-small" style="padding-left: 5px;">
                                 Gender:
                                 <p>
-                                    <input class="with-gap" name="gender" type="radio" id="male"  />
+                                    <input class="with-gap" name="male" type="radio" id="male" />
                                     <label for="male">Male</label>
                                 </p>
                                 <p>
-                                    <input class="with-gap" name="gender" type="radio" id="female"  />
+                                    <input class="with-gap" name="female" type="radio" id="female" />
                                     <label for="female">Female</label>
                                 </p>
                             </div>

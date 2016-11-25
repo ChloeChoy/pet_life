@@ -87,7 +87,8 @@ Route::post('/edit', [
 
 Route::post('/like', [
     'uses' => 'PostController@postLikePost',
-    'as' => 'like'
+    'as' => 'like',
+    'middleware' => 'auth'
 ]);
 
 //route admin
@@ -152,10 +153,10 @@ Route::post('upload-photo',
     ]
 );
 
-//route to header
-// Route::get('/header', 
-//     [
-//         'uses' => 'UserController@getUserAvatar',
-//         'as'    => 'header'
-//     ]
-// );
+//route to admin add user
+Route::get('/administrator/adduser', 
+    [
+        'uses' => 'AdminController@getAddUser',
+        'as'    => 'adduser'
+    ]
+);

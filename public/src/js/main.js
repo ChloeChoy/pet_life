@@ -128,11 +128,13 @@ $(document).ready(function(){
 		$('#modal-upload-images').hide();
 	});
 
-	//set avatar in navbar
-	if(userAvatar){
-		$('li#link-sub-menu a img').attr('src', userAvatar);
-	}
+	//redirect to comment post
+	$('.comment-post').click(function(){
+		var id = $(this).parent().parent().attr('data-postid');
+		$(this).attr('href', 'post/' + id);
+	});
 
+	
 });
 
 //click on body

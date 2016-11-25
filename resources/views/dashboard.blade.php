@@ -10,7 +10,11 @@
             <div class="row">
                 <div class="col l2 col-left-link">
                     <div class="link-profile">
+                        @if(Auth::user()->avatar)
+                        <img class="responsive-img" alt="avatar" src="{{ route('account.image', ['filename' => Auth::user()->avatar]) }}">
+                        @else
                         <img class="responsive-img" alt="avatar" src="{{ URL::to('src/images/boa_hancock_wallpaper_blue_red_by_gian519.png') }}">
+                        @endif
                         <a href="{{ route('account')}}"><i class="material-icons">mode_edit</i> {{ $user->name }}</a>
                     </div>
                     <ul class="menu-left">
@@ -47,7 +51,13 @@
                         <div class="post-row" data-postid="{{ $post->id }}">
                             <div class="post-info">
                                 <div class="user-avatar">
-                                    <a href="#"><img alt="avatar" src="{{ URL::to('src/images/boa_hancock_wallpaper_blue_red_by_gian519.png') }}" class="responsive-img"></a>
+                                    <a href="#">
+                                        @if($post->user->avatar)
+                                        <img class="user-avatar" alt="avatar" src="{{route('account.image', ['filename' => $post->user->avatar])}}" class="responsive-img">
+                                        @else
+                                        <img class="user-avatar" alt="avatar" src="{{ URL::to('src/images/boa_hancock_wallpaper_blue_red_by_gian519.png') }}" class="responsive-img">
+                                        @endif
+                                    </a>
                                 </div>
                                 <div class="user-post">
                                     <span class="post-username"><a href="#">{{ $post->user->name }}</a></span>
@@ -100,6 +110,8 @@
                                 <a class="like"><i class="material-icons">thumb_up</i> Like</a>
                                 <a class="share-post"><i class="material-icons">share</i> Share</a>
                                 <span class="islike" style="display:none">0</span>
+                                <a class="comment-post">Comment</a>
+                                
                             </div>
                         </div>
                     @endforeach

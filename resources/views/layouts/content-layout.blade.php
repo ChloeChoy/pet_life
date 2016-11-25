@@ -5,11 +5,22 @@
     <link rel="stylesheet" href="{{ URL::to('src/css/style.css') }}">
     <link rel="stylesheet" href="{{ URL::to('src/css/materialize.min.css') }}">
     <link rel="stylesheet" href="{{ URL::to('src/css/font-awesome.min.css') }}">
-    <link rel="stylesheet" href="{{ URL::to('src/css/dropzone.css') }}">
     <link rel="stylesheet" href="{{ URL::to('src/css/magnific-popup.css') }}">
     <link rel="stylesheet" href="{{ URL::to('src/css/search.css') }}">
+    <script src="{{ URL::to('src/js/Chart.bundle.js') }}"></script>
 </head>
 <body>
+    <div id="fb-root"></div>
+    <script>
+        (function(d, s, id) {
+          var js, fjs = d.getElementsByTagName(s)[0];
+          if (d.getElementById(id)) return;
+          js = d.createElement(s); js.id = id;
+          js.src = "//connect.facebook.net/en_US/sdk.js#xfbml=1&version=v2.8&appId=942200332520167";
+          fjs.parentNode.insertBefore(js, fjs);
+        }(document, 'script', 'facebook-jssdk'));
+    </script>
+
     @include('includes.header')
     
     @yield('content')
@@ -41,7 +52,6 @@
         function previewFiles(fileId) {
           var preview = document.querySelector('#preview');
           var files   = document.querySelector('#' + fileId).files;
-          // var fileRemoves = document.querySelector('#mp-remove-files');
 
           function readAndPreview(file) {
 
@@ -56,12 +66,10 @@
                 image.src = this.result;
                 preview.appendChild( image );
                 var para = document.createElement("a");
-                //var para = "<a class='remove-preview'>Delete</a>";
                 var node = document.createTextNode("Delete");
                 para.appendChild(node);
                 preview.appendChild( para );
                 para.addEventListener("click", function(){
-                    // fileRemoves.value += this.previousElementSibling.getAttribute('name') + ',';
                     this.previousElementSibling.remove();
                     this.remove();
                 });
@@ -74,7 +82,6 @@
 
           if (files) {
             [].forEach.call(files, readAndPreview);
-            //deletePreview();
           }
 
         }
@@ -82,97 +89,16 @@
 
     <script src="{{ URL::to('src/js/jquery-3.0.0.min.js') }}"></script>
     <script src="{{ URL::to('src/js/materialize.min.js') }}"></script>
-    <script src="{{ URL::to('src/js/dropzone.js') }}"></script>
     <script src="{{ URL::to('src/js/jquery-migrate-3.0.0.min.js') }}"></script>
     <script src="{{ URL::to('src/js/bootstrap.min.js') }}"></script>
     <script src="{{ URL::to('src/js/jquery.magnific-popup.js') }}"></script>
-    <script src="{{ URL::to('user-avatar.js') }}"></script>
     <script src="{{ URL::to('src/js/app.js') }}"></script>
     <script src="{{ URL::to('src/js/main.js') }}"></script>
-    <script src="{{ URL::to('src/js/Chart.bundle.js') }}"></script>
     <script src="{{ URL::to('src/js/jquery.autocomplete.js') }}"></script>
     <script src="{{ URL::to('users.js') }}"></script>
 
     <!-- Go to www.addthis.com/dashboard to customize your tools --> 
     <script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-582f0bca1f9d7459"></script> 
-
-    <script type="text/javascript">
-        //users chart
-        var users = document.getElementById("userChart");
-        var userChart = new Chart(users, {
-            type: 'pie',
-            data: {
-                labels: ["Male", "Female"],
-                datasets: [{
-                    label: '# of Votes',
-                    data: [1000, 800],
-                    backgroundColor: [
-                        '#f44265',
-                        '#3333ff',
-                    ],
-                }]
-            },
-            options: {
-                responsive: true
-            }
-        });
-        //end users chart
-
-        // users online chart
-        var userOnl = document.getElementById("userOnlChart");
-        var userChart = new Chart(userOnl, {
-            type: 'pie',
-            data: {
-                labels: ["Online", "Offline"],
-                datasets: [{
-                    label: '# of Votes',
-                    data: [1000, 800],
-                    backgroundColor: [
-                        '#00cc99',
-                        '#eee',
-                    ],
-                }]
-            },
-            options: {
-                responsive: true
-            }
-        });
-        //end users online chart
-
-        // post chart
-        var posts = document.getElementById("postChart");
-        var postChart = new Chart(posts, {
-            type: 'line',
-            data: {
-                labels: ["January", "February", "March", "April", "May", "June", "July"],
-                datasets: [{
-                    label: "Total posts",
-                    backgroundColor: '#f44265',
-                    borderColor: '#f44268',
-                    data: [10, 23, 5, 99, 67, 43, 0],
-                    fill: false,
-                    pointRadius: 10,
-                    pointHoverRadius: 15,
-                    showLine: false // no line shown
-                }]
-            },
-            options: {
-                responsive: true,
-                title:{
-                    display:true,
-                },
-                legend: {
-                    display: false
-                },
-                elements: {
-                    point: {
-                    }
-                }
-            }
-
-        });
-        // end post chart
-    </script>
 
     <!-- Search scrift start --> 
     <script>
@@ -193,10 +119,10 @@
                 //          window.location.href = suggestion.productUrl;
                 //      },
                 formatResult: function (suggestion, currentValue) {
-                    return ("<a href='" + '' + "'><div class='suggestion-left'><img class='img-responsive' src='" + ( visibleImage == 1 ? suggestion.image : '') + "' alt=''" + "/></div>" + "<div class='suggestion-right'><div class='product-line product-name'>" + suggestion.value + "</div></div></a>");
+                    return ("<a href='" + '' + "'><div class='suggestion-left'><img class='responsive-img' src='" + ( visibleImage == 1 ? suggestion.image : '') + "' alt='user avatar'" + "/></div>" + "<div class='suggestion-right'><div class='product-line product-name'>" + suggestion.value + "</div></div></a>");
                 },
                 onSearchComplete: function (query, suggestion) {
-                    $('.autocomplete-suggestions').append("<div id='view_all'><a href=''>View all >></a></div>");
+                    $('.autocomplete-suggestions').append("<div id='view_all'><a href=''>View all</a></div>");
                 }
             });
         // };

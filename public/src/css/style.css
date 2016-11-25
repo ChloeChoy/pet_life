@@ -435,6 +435,7 @@ textarea#new-post {
 }
 .post-info {
     min-height: 50px;
+    margin-bottom: 5px;
 }
 .post-content p{
     margin-top: 0;
@@ -560,6 +561,15 @@ div#preview {
     left: 5px;
     color: #fff;
     font-size: 24px;
+}
+.fb-comments.fb_iframe_widget {
+    width: 100% !important;
+}
+.fb_iframe_widget span {
+    width: 100% !important;
+}
+.fb_iframe_widget iframe {
+    width: 100% !important;
 }
 
 

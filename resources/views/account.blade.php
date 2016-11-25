@@ -12,8 +12,8 @@
                 <div class="col s12 wall">
                     <div class="cover-img">
                     @if($user)
-                        @if($user->cover_photo)
-                            @if (Storage::disk('local')->has($user->cover_photo))
+                        @if(Auth::user()->cover_photo)
+                            @if (Storage::disk('local')->has(Auth::user()->cover_photo))
                                 <img src="{{ route('account.image', ['filename' => $user->cover_photo]) }}" alt="" class="responsive-img">
                             @endif
                         @else
@@ -81,10 +81,12 @@
                         <span class="title-info">Photos</span>
                         <div class="photo thumnail">
                     @if($user)
-                        @if (Storage::disk('local')->has($user->first_name . '-' . $user->id . '.jpg'))
-                            <img src="{{ route('account.image', ['filename' => $user->first_name . '-' . $user->id . '.jpg']) }}" alt="" class="resposive-img">
-                        @else
-                            <span class="photo-alert">You have no photo. Please post your photo.</span>
+                        <?php if (Storage::disk('local')->has($user->avatar) && $user->avatar): ?>
+                            <img src="{{ route('account.image', ['filename' => $user->avatar]) }}" alt="" class="resposive-img">
+                        @endif
+
+                        <?php if(Storage::disk('local')->has($user->cover_photo) && $user->cover_photo): ?>
+                            <img src="{{ route('account.image', ['filename' => $user->cover_photo]) }}" alt="" class="resposive-img">
                         @endif
                     @endif
                         </div>
@@ -120,7 +122,13 @@
                         <div class="post-row" data-postid="{{ $post->id }}">
                             <div class="post-info">
                                 <div class="user-avatar">
-                                    <a href="#"><img alt="avatar" src="{{ URL::to('src/images/boa_hancock_wallpaper_blue_red_by_gian519.png') }}" class="responsive-img"></a>
+                                    <a href="#">
+                                        @if($post->user->avatar)
+                                        <img class="user-avatar" alt="avatar" src="{{route('account.image', ['filename' => $post->user->avatar])}}" class="responsive-img">
+                                        @else
+                                        <img class="user-avatar" alt="avatar" src="{{ URL::to('src/images/boa_hancock_wallpaper_blue_red_by_gian519.png') }}" class="responsive-img">
+                                        @endif
+                                    </a>
                                 </div>
                                 <div class="user-post">
                                     <span class="post-username"><a href="#">{{ $post->user->name }}</a></span>

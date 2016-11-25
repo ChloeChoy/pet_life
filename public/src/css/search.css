@@ -23,8 +23,11 @@
 .autocomplete-suggestion a {
     display: block;
     height: 100%;
+    overflow: hidden;
 }
-
+.autocomplete-suggestion img {
+    width: 100%;
+}
 
 input#searchauto {
     border: 1px solid #bbb;
@@ -34,8 +37,9 @@ input#searchauto {
 
 .suggestion-left {
     float: left;
-    width: 15%;
+    width: 60px;
     padding: auto;
+    height: 100%;
 }
 
 .suggestion-right {
