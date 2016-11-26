@@ -5,6 +5,7 @@
 
 @section('content')
     <!-- @include('includes.message-block') -->
+
     <section class="main-content">
         <div class="container">
             <div class="row">
@@ -77,14 +78,19 @@
                                 <p>{{ $post->body }}</p>
 
                                 @if(strpos($post->mime, 'image') !== false)
-                                    <?php $postImg = explode(',', $post->filename);?>
+                                    <?php 
+                                        $postImg = explode(',', $post->filename);
+                                        $numOfPostMedia = 0;
+                                    ?>
                                     @if(count($postImg) > 2)
                                     <div class="post-media multi-medias" id="post-media{{$post->id}}">
                                         @for($i = 0; $i < count($postImg); $i++)
                                             @if($postImg[$i] != '')
-                                                    <img src="{{ route('account.image', ['filename' => $postImg[$i]]) }}" alt="image" class="responsive-img materialboxed" data-mfp-src="{{ route('account.image', ['filename' => $postImg[$i]]) }}">
+                                                    <img src="{{ route('account.image', ['filename' => $postImg[$i]]) }}" alt="image" class="responsive-img" data-mfp-src="{{ route('account.image', ['filename' => $postImg[$i]]) }}">
+                                                    <?php $numOfPostMedia++;?>
                                             @endif
                                         @endfor
+                                        <span class="num-of-img">{{$numOfPostMedia - 1}}+</span>
                                     </div>
                                     @else
                                     <div class="post-media" id="post-media{{$post->id}}">

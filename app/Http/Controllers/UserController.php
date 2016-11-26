@@ -22,7 +22,7 @@ class UserController extends Controller
         $email = $request['email'];
         $name = $request['name'];
         $password = bcrypt($request['password']);
-        $gender = $request['male'] ? 1 : ($request['female'] ? 0 : '');
+        $gender = $request['gender'] != '' ? $request['gender'] : '';
         $token = $request['_token'];
 
         $user = new User();

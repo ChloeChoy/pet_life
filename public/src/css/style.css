@@ -505,7 +505,7 @@ span.num-of-like {
     display: block;
 }
 .addthis_inline_share_toolbox {
-    width: 68px;
+    width: 206px;
     padding: 10px;
     border: 1px solid #ddd;
     background: #fafafa;
@@ -570,6 +570,23 @@ div#preview {
 }
 .fb_iframe_widget iframe {
     width: 100% !important;
+}
+.post-media.multi-medias{
+    position: relative;
+}
+.post-media.multi-medias img{
+    display: none;
+}
+.post-media.multi-medias img:first-child{
+    display: block;
+    cursor: pointer;
+}
+.multi-medias span.num-of-img {
+    position: absolute;
+    /*top: 415px;*/
+    left: 30px;
+    font-size: 30px;
+    color: #fff;
 }
 
 
@@ -850,6 +867,32 @@ th.table-title {
 ul.pagination {
     text-align: center;
     margin-top: 20px;
+}
+.admin-adduser {
+    background: #fff;
+    margin-top: 15px;
+    padding: 20px !important;
+}
+.admin-adduser span.title {
+    display: block;
+    height: 40px;
+    font-size: 20px;
+    margin-top: 10px;
+    line-height: 40px;
+    border-bottom: 1px solid #ddd;
+    color: #555;
+    text-transform: capitalize;
+}
+.admin-adduser .adduser {
+    padding: 10px 20px;
+}
+.adduser button.btn {
+    float:right;
+}
+.adduser span.add-msg {
+    display: block;
+    margin-left: 55px;
+    color: red;
 }
 
 /* end style admin page*/

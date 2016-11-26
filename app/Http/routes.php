@@ -160,3 +160,12 @@ Route::get('/administrator/adduser',
         'as'    => 'adduser'
     ]
 );
+
+//route admin create user
+Route::post('/administrator/admin-adduser',
+    [
+        'uses'  => 'AdminController@addNewUser',
+        'as'    => 'admin.adduser',
+        'middleware' => 'auth'
+    ]
+);

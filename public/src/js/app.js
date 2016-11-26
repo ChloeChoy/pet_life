@@ -38,7 +38,6 @@ $('.like').on('click', function(event) {
     }
     postId = event.target.parentNode.parentNode.dataset['postid'];
     var isLike = checkLike.text();
-    console.log(isLike);
     $.ajax({
         method: 'POST',
         url: urlLike,
@@ -49,7 +48,6 @@ $('.like').on('click', function(event) {
         }
     })
     .done(function(msg) {
-        console.log(msg['like']);
         if(msg['like']){
             numLike.textContent = '1 like';
         }else if(msg['unlike']){
@@ -107,3 +105,31 @@ function deletePost(){
     });
 }
 deletePost();
+
+// function admin add user
+// function adminAddUser(){
+//     $('#addmin-add').click(function(event){
+//         $.ajax({
+//             method: 'POST',
+//             url: adminCreate,
+//             data: {
+//                 name: $('#signup_username').val(),
+//                 email: $('#signup-email').val(),
+//                 password: $('#signup-pwd').val(),
+//                 gender: $('input[name="gender"]').val()
+//             },
+//             _token: token
+//         })
+//         .done(function(msg){
+//             console.log(msg['email']);
+//             if(msg['success']){
+//                 $('span.add-msg').text(msg['success']);
+//             }
+//             if(msg['error']){
+//                 $('span.add-msg').text(msg['error']);
+//             }
+//         });
+//         event.preventDefault();
+//     });
+// }
+// adminAddUser();

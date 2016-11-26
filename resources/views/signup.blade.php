@@ -27,7 +27,7 @@
                         </div>
                         <form class="signin-form" action="{{ route('signup') }}" method="post">
                             <h5>Sign up</h5>
-                            <div class="input-field {{ $errors->has('first_name') ? 'has-error' : '' }}">
+                            <div class="input-field {{ $errors->has('name') ? 'has-error' : '' }}">
                                 <i class="material-icons prefix">account_circle</i>
                                 <input id="signup_username" type="text" name="name" class="validate" value="{{ Request::old('first_name') }}">
                                 <label for="signup_username">Username</label>
@@ -45,11 +45,11 @@
                             <div class="field-small" style="padding-left: 5px;">
                                 Gender:
                                 <p>
-                                    <input class="with-gap" name="male" type="radio" id="male" />
+                                    <input class="with-gap" name="gender" type="radio" id="male" value="1" />
                                     <label for="male">Male</label>
                                 </p>
                                 <p>
-                                    <input class="with-gap" name="female" type="radio" id="female" />
+                                    <input class="with-gap" name="gender" type="radio" id="female" value="0" />
                                     <label for="female">Female</label>
                                 </p>
                             </div>

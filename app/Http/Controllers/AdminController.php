@@ -53,9 +53,40 @@ class AdminController extends Controller
 	}
 
 	/**
-	* admin add user
+	* admin add user link
 	*/
 	public function getAddUser(){
 		return view('admin-adduser');
+	}
+
+	/**
+	* add new user
+	*/
+	public function addNewUser(Request $request){
+		$this->validate($request, [
+            'email' => 'required|email|unique:users',
+            'name' => 'required|max:120',
+            'password' => 'required|min:4'
+        ]);
+
+        $email = $request['email'];
+        $name = $request['name'];
+        $password = bcrypt($request['password']);
+        $gender = $request['gender'] != '' ? $request['gender'] : '';
+        $token = $request['_token'];
+
+        $user = new User();
+        $user->email = $email;
+        $user->name = $name;
+        $user->password = $password;
+        $user->gender = $gender;
+
+        try {
+        	$user->save();	
+        	return response()->json(['success' => 'Add success'], 200);
+        } catch (Exception $e) {
+        	return $e.getMessage();
+        	// return respone()->json(['error' => 'An error occur when create user'], 500);
+        }
 	}
 }
