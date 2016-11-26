@@ -30,11 +30,21 @@ class PostController extends Controller
                 array_push($productList, $temp);
             }
         }
+        
         $suggestUsers = json_encode($productList);
         File::put('users.js', 'var searchplus = '.$suggestUsers);
 
         $posts = Post::orderBy('created_at', 'desc')->get();
-        $trendPosts = $posts->first();
+        $trendTest = DB::table('likes') ->select('post_id', DB::raw("count(likes.like) as total"))
+                 ->groupBy('post_id')->orderBy('total', 'DESC')->limit(2)
+                 ->get();
+        if($trendTest) {
+            foreach ($trendTest as $key => $value) {
+                $temp = $value->post_id;
+            }
+        }
+
+        $trendPosts = Post::select('*')->where('id',  $temp)->get()->first();
         return view('dashboard', ['posts' => $posts, 'user' => Auth::user(), 'trendPost' => $trendPosts]);
     }
 
