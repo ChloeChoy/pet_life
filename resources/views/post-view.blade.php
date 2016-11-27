@@ -11,8 +11,12 @@
 			<div class="row">
                 <div class="col l2 col-left-link">
                     <div class="link-profile">
+                        @if(Auth::user()->avatar)
+                        <img class="responsive-img" alt="avatar" src="{{ route('account.image', ['filename' => Auth::user()->avatar]) }}">
+                        @else
                         <img class="responsive-img" alt="avatar" src="{{ URL::to('src/images/boa_hancock_wallpaper_blue_red_by_gian519.png') }}">
-                        <a href="{{ route('account')}}"><i class="material-icons">mode_edit</i> Update profile</a>
+                        @endif
+                        <a href="{{ route('account')}}"><i class="material-icons">mode_edit</i> {{ $user->name }}</a>
                     </div>
                     <ul class="menu-left">
                         <li><a href="#"><i class="material-icons">wallpaper</i> News</a></li>
@@ -30,7 +34,7 @@
                                 <a href="#"><img alt="avatar" src="{{ URL::to('src/images/boa_hancock_wallpaper_blue_red_by_gian519.png') }}" class="responsive-img"></a>
                             </div>
                             <div class="user-post">
-                                <span class="post-username"><a href="#">{{ $post->user->first_name }}</a></span>
+                                <span class="post-username"><a href="#">{{ $post->user->name }}</a></span>
                                 <span class="post-on">Posted on {{  date_format($post->created_at, 'D M Y') }}</span>
                             </div>
                             @if(Auth::user() == $post->user)
@@ -49,10 +53,10 @@
                             @if(strpos($post->mime, 'image') !== false)
                                 <?php $postImg = explode(',', $post->filename);?>
                                 @if(count($postImg) > 2)
-                                <div class="post-media multi-medias" id="post-media{{$post->id}}">
+                                <div class="multi-medias">
                                     @for($i = 0; $i < count($postImg); $i++)
                                         @if($postImg[$i] != '')
-                                                <img src="{{ route('account.image', ['filename' => $postImg[$i]]) }}" alt="image" class="responsive-img materialboxed" data-mfp-src="{{ route('account.image', ['filename' => $postImg[$i]]) }}">
+                                                <img src="{{ route('account.image', ['filename' => $postImg[$i]]) }}" alt="image" class="responsive-img materialboxed">
                                         @endif
                                     @endfor
                                 </div>
@@ -60,7 +64,7 @@
                                 <div class="post-media" id="post-media{{$post->id}}">
                                     @for($i = 0; $i < count($postImg); $i++)
                                         @if($postImg[$i] != '')
-                                                <img src="{{ route('account.image', ['filename' => $postImg[$i]]) }}" alt="image" class="responsive-img materialboxed" data-mfp-src="{{ route('account.image', ['filename' => $postImg[$i]]) }}">
+                                                <img src="{{ route('account.image', ['filename' => $postImg[$i]]) }}" alt="image" class="responsive-img materialboxed">
                                         @endif
                                     @endfor
                                 </div>
@@ -69,9 +73,10 @@
                             
                         </div>
                         <div class="interaction">
-                            <span class="num-of-like">0</span>
+                            <span class="num-of-like">{{$like . ' likes'}}</span>
                             <a class="like"><i class="material-icons">thumb_up</i> Like</a>
                             <a class="share-post"><i class="material-icons">share</i> Share</a>
+                            <span class="islike" style="display:none">0</span>
                             <a class="comment-post-view">Comment</a>
 
                             <div class="fb-comments" data-href="{{Request::url()}}" data-numposts="5"></div>

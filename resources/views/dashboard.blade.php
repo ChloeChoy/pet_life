@@ -112,7 +112,13 @@
                                 @endif
                             </div>
                             <div class="interaction">
-                                <span class="num-of-like">0</span>
+                                <span class="num-of-like">
+                                    @foreach($postLikes as $key => $value)
+                                        @if($post->id == $value->post_id)
+                                            {{$value->total .' likes'}}
+                                        @endif
+                                    @endforeach
+                                </span>
                                 <a class="like"><i class="material-icons">thumb_up</i> Like</a>
                                 <a class="share-post"><i class="material-icons">share</i> Share</a>
                                 <span class="islike" style="display:none">0</span>
@@ -124,124 +130,55 @@
                     <!-- end post -->
 
                 </div>
-                @if($trendPost != null)
-                <div class="col l3 trending hide-on-med-and-down">
-                    <!-- trending post -->
-                    <h5 class="title">Trending posts</h5>
-                    <div class="posts">
-
-                        <a class="trend-row" href='{{route("post.view",["post_id" => $trendPost->id])}}' data-postid="{{ $trendPost->id }}">
-                            <div class="post-info">
-                                <div class="user-avatar">
-                                    <img alt="avatar" src="{{ URL::to('src/images/boa_hancock_wallpaper_blue_red_by_gian519.png') }}" class="responsive-img">
-                                </div>
-                                <div class="user-post">
-                                    <span class="post-username">{{ $trendPost->user->name }}</span>
-                                </div>
-                            </div>
-                            <div class="post-content">
-                                <p>{{ $trendPost->body }}</p>
-
-                                @if(strpos($trendPost->mime, 'image') !== false)
-                                    <?php
-                                        $postImg = explode(',', $trendPost->filename);
-                                        $numOfImg = 0;
-                                    ?>
-                                    @if(count($postImg) > 2)
-                                    <div class="trend-img multi-img" id="post-media{{$trendPost->id}}">
-                                        @for($i = 0; $i < count($postImg); $i++)
-                                            @if($postImg[$i] != '')
-                                                <?php $numOfImg++; ?>
-                                                <img src="{{ route('account.image', ['filename' => $postImg[$i]]) }}" alt="image" class="responsive-img" data-mfp-src="{{ route('account.image', ['filename' => $postImg[$i]]) }}">
-                                            @endif
-                                        @endfor
-                                        <span class="num-of-img">{{$numOfImg - 1}}+</span>
+                @if($trendPosts)
+                    <div class="col l3 trending hide-on-med-and-down">
+                        <!-- trending post -->
+                        <h5 class="title">Trending posts</h5>
+                        <div class="posts">
+                            @foreach($trendPosts as $trendPost)
+                            <a class="trend-row" href='{{route("post.view",["post_id" => $trendPost->id])}}' data-postid="{{ $trendPost->id }}">
+                                <div class="post-info">
+                                    <div class="user-avatar">
+                                        <img alt="avatar" src="{{ URL::to('src/images/boa_hancock_wallpaper_blue_red_by_gian519.png') }}" class="responsive-img">
                                     </div>
-                                    @else
-                                    <div class="trend-img" id="post-media{{$trendPost->id}}">
-                                        @for($i = 0; $i < count($postImg); $i++)
-                                            @if($postImg[$i] != '')
-                                                <img src="{{ route('account.image', ['filename' => $postImg[$i]]) }}" alt="image" class="responsive-img" data-mfp-src="{{ route('account.image', ['filename' => $postImg[$i]]) }}">
-                                            @endif
-                                        @endfor
+                                    <div class="user-post">
+                                        <span class="post-username">{{ $trendPost->user->name }}</span>
                                     </div>
+                                </div>
+                                <div class="post-content">
+                                    <p>{{ $trendPost->body }}</p>
+
+                                    @if(strpos($trendPost->mime, 'image') !== false)
+                                        <?php
+                                            $postImg = explode(',', $trendPost->filename);
+                                            $numOfImg = 0;
+                                        ?>
+                                        @if(count($postImg) > 2)
+                                        <div class="trend-img multi-img" id="post-media{{$trendPost->id}}">
+                                            @for($i = 0; $i < count($postImg); $i++)
+                                                @if($postImg[$i] != '')
+                                                    <?php $numOfImg++; ?>
+                                                    <img src="{{ route('account.image', ['filename' => $postImg[$i]]) }}" alt="image" class="responsive-img" data-mfp-src="{{ route('account.image', ['filename' => $postImg[$i]]) }}">
+                                                @endif
+                                            @endfor
+                                            <span class="num-of-img">{{$numOfImg - 1}}+</span>
+                                        </div>
+                                        @else
+                                        <div class="trend-img" id="post-media{{$trendPost->id}}">
+                                            @for($i = 0; $i < count($postImg); $i++)
+                                                @if($postImg[$i] != '')
+                                                    <img src="{{ route('account.image', ['filename' => $postImg[$i]]) }}" alt="image" class="responsive-img" data-mfp-src="{{ route('account.image', ['filename' => $postImg[$i]]) }}">
+                                                @endif
+                                            @endfor
+                                        </div>
+                                        @endif
                                     @endif
-                                @endif
 
-                            </div>
-                        </a>
-                        <a class="trend-row" href='{{route("post.view",["post_id" => $trendPost->id])}}' data-postid="{{ $trendPost->id }}">
-                            <div class="post-info">
-                                <div class="user-avatar">
-                                    <img alt="avatar" src="{{ URL::to('src/images/boa_hancock_wallpaper_blue_red_by_gian519.png') }}" class="responsive-img">
                                 </div>
-                                <div class="user-post">
-                                    <span class="post-username">{{ $trendPost->user->name }}</span>
-                                </div>
-                            </div>
-                            <div class="post-content">
-                                <p>{{ $trendPost->body }}</p>
-
-                                @if(strpos($trendPost->mime, 'image') !== false)
-                                    <?php $postImg = explode(',', $trendPost->filename);?>
-                                    @if(count($postImg) > 2)
-                                    <div class="trend-img multi-img" id="post-media{{$trendPost->id}}">
-                                        @for($i = 0; $i < count($postImg); $i++)
-                                            @if($postImg[$i] != '')
-                                                    <img src="{{ route('account.image', ['filename' => $postImg[$i]]) }}" alt="image" class="responsive-img" data-mfp-src="{{ route('account.image', ['filename' => $postImg[$i]]) }}">
-                                            @endif
-                                        @endfor
-                                    </div>
-                                    @else
-                                    <div class="trend-img" id="post-media{{$trendPost->id}}">
-                                        @for($i = 0; $i < count($postImg); $i++)
-                                            @if($postImg[$i] != '')
-                                                    <img src="{{ route('account.image', ['filename' => $postImg[$i]]) }}" alt="image" class="responsive-img" data-mfp-src="{{ route('account.image', ['filename' => $postImg[$i]]) }}">
-                                            @endif
-                                        @endfor
-                                    </div>
-                                    @endif
-                                @endif
-
-                            </div>
-                        </a>
-                        <a class="trend-row" href='{{route("post.view",["post_id" => $trendPost->id])}}' data-postid="{{ $trendPost->id }}">
-                            <div class="post-info">
-                                <div class="user-avatar">
-                                    <img alt="avatar" src="{{ URL::to('src/images/boa_hancock_wallpaper_blue_red_by_gian519.png') }}" class="responsive-img">
-                                </div>
-                                <div class="user-post">
-                                    <span class="post-username">{{ $trendPost->user->name }}</span>
-                                </div>
-                            </div>
-                            <div class="post-content">
-                                <p>{{ $trendPost->body }}</p>
-
-                                @if(strpos($trendPost->mime, 'image') !== false)
-                                    <?php $postImg = explode(',', $trendPost->filename);?>
-                                    @if(count($postImg) > 2)
-                                    <div class="trend-img multi-img" id="post-media{{$trendPost->id}}">
-                                        @for($i = 0; $i < count($postImg); $i++)
-                                            @if($postImg[$i] != '')
-                                                    <img src="{{ route('account.image', ['filename' => $postImg[$i]]) }}" alt="image" class="responsive-img" data-mfp-src="{{ route('account.image', ['filename' => $postImg[$i]]) }}">
-                                            @endif
-                                        @endfor
-                                    </div>
-                                    @else
-                                    <div class="trend-img" id="post-media{{$trendPost->id}}">
-                                        @for($i = 0; $i < count($postImg); $i++)
-                                            @if($postImg[$i] != '')
-                                                    <img src="{{ route('account.image', ['filename' => $postImg[$i]]) }}" alt="image" class="responsive-img" data-mfp-src="{{ route('account.image', ['filename' => $postImg[$i]]) }}">
-                                            @endif
-                                        @endfor
-                                    </div>
-                                    @endif
-                                @endif
-
-                            </div>
-                        </a>
+                            </a>
+                            @endforeach
+                        </div>
                     </div>
-                </div>
                 @endif
             </div>
         </div>

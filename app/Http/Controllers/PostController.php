@@ -35,17 +35,23 @@ class PostController extends Controller
         File::put('users.js', 'var searchplus = '.$suggestUsers);
 
         $posts = Post::orderBy('created_at', 'desc')->get();
-        $trendTest = DB::table('likes') ->select('post_id', DB::raw("count(likes.like) as total"))
-                 ->groupBy('post_id')->orderBy('total', 'DESC')->limit(2)
+        $postLikes = \DB::table('likes') ->select('post_id', \DB::raw("count(likes.like) as total"))
+                 ->groupBy('post_id')->orderBy('total', 'DESC')
                  ->get();
-        if($trendTest) {
-            foreach ($trendTest as $key => $value) {
+        $trendPosts = array();
+        if($postLikes) {
+            $count = 0;
+            foreach ($postLikes as $key => $value) {
+                $count++;
+                if($count > 5)
+                    break;
                 $temp = $value->post_id;
+                $trendPost = Post::select('*')->where('id',  $temp)->get()->first();
+                array_push($trendPosts, $trendPost);
             }
         }
 
-        $trendPosts = Post::select('*')->where('id',  $temp)->get()->first();
-        return view('dashboard', ['posts' => $posts, 'user' => Auth::user(), 'trendPost' => $trendPosts]);
+        return view('dashboard', ['posts' => $posts, 'postLikes' => $postLikes, 'user' => Auth::user(), 'trendPosts' => $trendPosts]);
     }
 
     public function postCreatePost(Request $request)
@@ -114,10 +120,16 @@ class PostController extends Controller
     public function postLikePost(Request $request)
     {
         $post_id = $request['postId'];
-        $is_like = $request['isLike'];
+        // $is_like = $request['isLike'];
         // return response()->json(['isLike' => $is_like]);
         $update = false;
         $post = Post::find($post_id);
+        $like = \DB::table('likes') ->select('post_id', \DB::raw("count(likes.like) as total"))
+                ->where('post_id', $post_id)
+                ->groupBy('post_id')->orderBy('total', 'DESC')
+                ->get();
+        $numLike = $like[0]->total ? $like[0]->total : 0;
+
         if (!$post) {
             return null;
         }
@@ -135,16 +147,16 @@ class PostController extends Controller
         if ($like) {
             $already_like = $like->like;
             $update = true;
-            if ($already_like != $is_like) {
+            if ($already_like) {
                 $like->delete();
                 // $numLike -= 1;
                 // return null;
-                return response()->json(['unlike' => 'unlike']);
+                return response()->json(['unlike' => $numLike - 1]);
             }
         } else {
             $like = new Like();
         }
-        $like->like = $is_like;
+        $like->like = 1;
         // $numLike += 1;
         $like->user_id = $user->id;
         $like->post_id = $post->id;
@@ -153,7 +165,7 @@ class PostController extends Controller
         } else {
             $like->save();
         }
-        return response()->json(['like' => 'like']);
+        return response()->json(['like' => $numLike + 1]);
         // return null;
     }
 
@@ -162,7 +174,12 @@ class PostController extends Controller
     */
     public function getPostView($post_id){
         $post = Post::where('id', $post_id)->first();
-        return view('post-view', ['post' => $post, 'user' => Auth::user()]);
+        $like = \DB::table('likes') ->select('post_id', \DB::raw("count(likes.like) as total"))
+                ->where('post_id', $post_id)
+                ->groupBy('post_id')->orderBy('total', 'DESC')
+                ->get();
+        $numLike = $like[0]->total ? $like[0]->total : '';
+        return view('post-view', ['post' => $post, 'like' => $numLike, 'user' => Auth::user()]);
     }
 
     /**

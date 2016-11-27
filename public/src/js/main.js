@@ -148,15 +148,6 @@ $(document).ready(function(){
 		var id = $(this).parent().parent().attr('data-postid');
 		$(this).attr('href', 'post/' + id);
 	});
-
-	//position of medias number in post
-	// var top = 0;
-
-	$('.num-of-img').each(function(){
-		var top = 0;
-		top = $(this).parent().children().first().height();
-		$(this).css({'top' : (top - 50).toString() + 'px'});
-	});
 	
 });
 

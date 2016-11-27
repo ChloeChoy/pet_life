@@ -12,13 +12,25 @@
             <div class="row">
                 <div class="col s12 wall">
                     <div class="cover-img">
-                        <img class="responsive-img" src="{{ URL::to('src/images/default-wall.jpg') }}">
+                    @if($user)
+                        @if(Auth::user()->cover_photo)
+                            @if (Storage::disk('local')->has(Auth::user()->cover_photo))
+                                <img src="{{ route('account.image', ['filename' => $user->cover_photo]) }}" alt="" class="responsive-img">
+                            @endif
+                        @else
+                            <img class="responsive-img" src="{{ URL::to('src/images/default-wall.jpg') }}">
+                        @endif
+                        
                         <a class="edit-wall-img" data-toggle="modal" href="#modal-upload-images"><i class="material-icons">photo_camera</i> Change cover photo</a>
+                    @endif
+
                     </div>
                     <div class="account-avatar">
                     @if($user)
-                        @if (Storage::disk('local')->has($user->first_name . '-' . $user->id . '.jpg'))
-                            <img src="{{ route('account.image', ['filename' => $user->first_name . '-' . $user->id . '.jpg']) }}" alt="" class="responsive-img">
+                        @if($user->avatar)
+                            @if (Storage::disk('local')->has($user->avatar))
+                                <img src="{{ route('account.image', ['filename' => $user->avatar]) }}" alt="" class="responsive-img">
+                            @endif
                         @else
                             <img class="responsive-img" src="{{ URL::to('src/images/boa_hancock_wallpaper_blue_red_by_gian519.png') }}">
                         @endif

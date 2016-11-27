@@ -42,16 +42,16 @@ $('.like').on('click', function(event) {
         method: 'POST',
         url: urlLike,
         data: {
-            isLike: isLike, 
+            // isLike: isLike, 
             postId: postId, 
             _token: token
         }
     })
     .done(function(msg) {
         if(msg['like']){
-            numLike.textContent = '1 like';
+            numLike.textContent = msg['like'] + ' likes';
         }else if(msg['unlike']){
-            numLike.textContent = '0';
+            numLike.textContent = msg['unlike'] + ' likes';
         }
     });
 });

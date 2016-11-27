@@ -471,10 +471,10 @@ textarea#post-body {
 .trending a.trend-row {
     display: block;
     border-top: 1px solid #eee;
-    padding: 5px 0;
+    padding: 10px 0;
 }
 .trending a.trend-row:hover {
-    background: #fafafa;
+    background: #f5f5f5;
 }
 .trend-row .post-info {
     min-height: 40px;
@@ -552,12 +552,10 @@ div#preview {
     overflow: hidden;
     position: relative;
 }
-.trend-img img{
-    height: 100% !important;
-}
+
 .trend-img span.num-of-img {
     position: absolute;
-    top: 65px;
+    top: 0 !important;
     left: 5px;
     color: #fff;
     font-size: 24px;
@@ -583,9 +581,9 @@ div#preview {
 }
 .multi-medias span.num-of-img {
     position: absolute;
-    /*top: 415px;*/
+    top: 0 !important;
     left: 30px;
-    font-size: 30px;
+    font-size: 35px;
     color: #fff;
 }
 

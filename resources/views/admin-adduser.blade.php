@@ -34,7 +34,7 @@
 						<form class="col s12 l6" id="admin-create-form" action="{{route('admin.adduser')}}" method="post">
 							<div class="input-field {{ $errors->has('name') ? 'has-error' : '' }}">
                                 <i class="material-icons prefix">account_circle</i>
-                                <input id="signup_username" type="text" name="name" class="validate" value="{{ Request::old('first_name') }}">
+                                <input id="signup_username" type="text" name="name" class="validate" value="{{ Request::old('name') }}">
                                 <label for="signup_username">Username</label>
                             </div>
                             <div class="input-field {{ $errors->has('email') ? 'has-error' : '' }}">
