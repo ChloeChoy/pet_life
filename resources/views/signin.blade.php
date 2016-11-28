@@ -5,10 +5,10 @@
 @endsection
 
 @section('content')
-    @include('includes.message-block')
 
     <section class="main-signin">
         <div class="container">
+        @include('includes.message-block')
             <div class="row">
                 <div class="col s12 m8 l6">
                     <div class="col-signin">
@@ -36,11 +36,7 @@
                                 <input id="signin-pwd" type="password" class="validate" name="password" value="{{ Request::old('password') }}">
                                 <label for="signin-pwd">Password</label>
                             </div>
-                            <div class="field-small">
-                                <p>
-                                  <input type="checkbox" class="filled-in" id="filled-in-box" name="sign_remember" checked="checked" />
-                                  <label for="filled-in-box">Remember me</label>
-                                </p>
+                            <div class="field-small">                                
                                 <a id="forgot-pass" href="#">Forgot password</a>
                             </div>
                             <div class="input-field" style="padding-left: 44px;">

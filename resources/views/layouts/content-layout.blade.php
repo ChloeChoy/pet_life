@@ -8,6 +8,8 @@
     <link rel="stylesheet" href="{{ URL::to('src/css/magnific-popup.css') }}">
     <link rel="stylesheet" href="{{ URL::to('src/css/search.css') }}">
     <script src="{{ URL::to('src/js/Chart.bundle.js') }}"></script>
+    <script src="{{ URL::to('src/js/jquery-3.0.0.min.js') }}"></script>
+    <script src="{{ URL::to('src/js/jquery.magnific-popup.js') }}"></script>
 </head>
 <body>
     <div id="fb-root"></div>
@@ -87,11 +89,9 @@
         }
     </script>
 
-    <script src="{{ URL::to('src/js/jquery-3.0.0.min.js') }}"></script>
     <script src="{{ URL::to('src/js/materialize.min.js') }}"></script>
     <script src="{{ URL::to('src/js/jquery-migrate-3.0.0.min.js') }}"></script>
     <script src="{{ URL::to('src/js/bootstrap.min.js') }}"></script>
-    <script src="{{ URL::to('src/js/jquery.magnific-popup.js') }}"></script>
     <script src="{{ URL::to('src/js/app.js') }}"></script>
     <script src="{{ URL::to('src/js/main.js') }}"></script>
     <script src="{{ URL::to('src/js/jquery.autocomplete.js') }}"></script>

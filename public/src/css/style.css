@@ -151,6 +151,13 @@ a#forgot-pass:hover{
 .col-signin a.create-acc:hover {
     text-decoration: underline !important;
 }
+.list-error ul {
+    background: #fff;
+    margin: 0;
+    padding: 10px 20px;
+    box-shadow: 0 0px 2px 0 rgba(0,0,0,0.16),0 2px 10px 0 rgba(0,0,0,0.12);
+    color: #f44336;
+}
 
 /* end style sign in page*/
 
@@ -585,6 +592,9 @@ div#preview {
     left: 30px;
     font-size: 35px;
     color: #fff;
+}
+.post-media video {
+    width: 100%;
 }
 
 

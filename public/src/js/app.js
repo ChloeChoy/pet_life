@@ -30,30 +30,29 @@ editPost();
 $('.like').on('click', function(event) {
     event.preventDefault();
     var numLike = event.target.previousElementSibling;
-    var checkLike = $(this).next().next();
-    if(!checkLike.hasClass('liked')){
-        checkLike.addClass('liked').text('1');
-    }else{
-        checkLike.removeClass('liked').text('0');
-    }
     postId = event.target.parentNode.parentNode.dataset['postid'];
-    var isLike = checkLike.text();
     $.ajax({
         method: 'POST',
         url: urlLike,
         data: {
-            // isLike: isLike, 
             postId: postId, 
             _token: token
+        },
+        error: function($request, $response){
+            console.log($response.text);
         }
     })
     .done(function(msg) {
         if(msg['like']){
             numLike.textContent = msg['like'] + ' likes';
         }else if(msg['unlike']){
+            if(msg['unlike'] == 0){
+                numLike.textContent = '';
+            }
             numLike.textContent = msg['unlike'] + ' likes';
         }
     });
+
 });
 
 //post ajax

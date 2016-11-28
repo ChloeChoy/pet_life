@@ -65,21 +65,6 @@ $( document ).ready(function(){
 		// make it unique to apply your CSS animations just to this exact popup
 		mainClass: 'mfp-fade'
 	});
-
-	var postMediaId = 9;
-	$('#post-media'+postMediaId).magnificPopup({
-		delegate: 'img',
-	  	type: 'image',
-	  	// other options
-	  	gallery: {
-	          enabled:true
-	    },
-        removalDelay: 300,
-
-		// Class that is added to popup wrapper and background
-		// make it unique to apply your CSS animations just to this exact popup
-		mainClass: 'mfp-fade'
-	});
 	
 });
 

@@ -19,11 +19,11 @@
                         <a href="{{ route('account')}}"><i class="material-icons">mode_edit</i> {{ $user->name }}</a>
                     </div>
                     <ul class="menu-left">
-                        <li><a href="#"><i class="material-icons">wallpaper</i> News</a></li>
+                        <li><a href="{{route('post.news')}}"><i class="material-icons">wallpaper</i> News</a></li>
                         <li><a href="#"><i class="material-icons">message</i> Messages</a></li>
                         <li><a href="#"><i class="fa fa-globe" aria-hidden="true"></i> Notifications</a></li>
-                        <li><a href="#"><i class="material-icons">photo_library</i> Photos</a></li>
-                        <li><a href="#"><i class="material-icons">video_library</i> Videos</a></li>
+                        <li><a href="{{route('photos')}}"><i class="material-icons">photo_library</i> Photos</a></li>
+                        <li><a href="{{route('photos')}}"><i class="material-icons">video_library</i> Videos</a></li>
                         <li><a href="#"><i class="material-icons">settings</i> Settings</a></li>
                     </ul>
                 </div>
@@ -69,6 +69,21 @@
                                     @endfor
                                 </div>
                                 @endif
+                            @endif
+
+                            @if(strpos($post->mime, 'video') !== false)
+                                <?php
+                                    $postVideo = explode(',', $post->filename);
+                                ?>
+                                <div class="post-media">
+                                    @for($i = 0; $i < count($postVideo); $i++)
+                                        @if($postVideo[$i] != '')
+                                        <video class="responsive-video" controls>
+                                          <source src="{{ route('account.image', ['filename' => $postVideo[$i]]) }}" type="video/mp4">
+                                        </video>
+                                        @endif
+                                    @endfor
+                                </div>
                             @endif
                             
                         </div>

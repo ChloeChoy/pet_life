@@ -30,7 +30,7 @@ class UserController extends Controller
         $user->name = $name;
         $user->password = $password;
         $user->gender = $gender;
-        // $user->remember_token = $token;
+        $user->remember_token = $token;
 
         $user->save();
 
@@ -46,6 +46,13 @@ class UserController extends Controller
             'password' => 'required'
         ]);
 
+        // $remember = $request['sign_remember'];
+        // if($remember == 'on'){
+        //     if (Auth::attempt(['email' => $request['email'], 'password' => $request['password']], $remember)) {
+        //         return redirect()->route('dashboard');
+        //     }         
+        // }
+
         if (Auth::attempt(['email' => $request['email'], 'password' => $request['password']])) {
             return redirect()->route('dashboard');
         }
@@ -60,7 +67,9 @@ class UserController extends Controller
 
     public function getAccount()
     {
-
+        if(!Auth::user()){
+            return view('signin');
+        }
         $posts = Post::orderBy('created_at', 'desc')->get();
         return view('account', ['user' => Auth::user()], ['posts' => $posts]);
     }

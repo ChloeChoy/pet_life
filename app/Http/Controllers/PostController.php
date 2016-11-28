@@ -73,6 +73,7 @@ class PostController extends Controller
         }
         
         $post->body = $request['body'];
+        $token = $request['_token'];
         $message = '';
         if ($request->user()->posts()->save($post)) {
             return redirect()->route('dashboard');
@@ -120,53 +121,33 @@ class PostController extends Controller
     public function postLikePost(Request $request)
     {
         $post_id = $request['postId'];
-        // $is_like = $request['isLike'];
-        // return response()->json(['isLike' => $is_like]);
-        $update = false;
+        // $update = false;
         $post = Post::find($post_id);
-        $like = \DB::table('likes') ->select('post_id', \DB::raw("count(likes.like) as total"))
+        $totalLike = \DB::table('likes') ->select('post_id', \DB::raw("count(likes.like) as total"))
                 ->where('post_id', $post_id)
                 ->groupBy('post_id')->orderBy('total', 'DESC')
                 ->get();
-        $numLike = $like[0]->total ? $like[0]->total : 0;
-
+        $numLike = count($totalLike) ? $totalLike[0]->total : 0;
+        
         if (!$post) {
             return null;
         }
-        //num of likes
-        // $nlike = 0;
-        // $numLike = Like::where('post_id', $post_id);;
-        // for($i = 0; $i < count($numLike); $i++){
-        //     if($numLike->post_id == $post_id){
-        //         $nlike += 1;
-        //     }
-        // }
-        // return response()->json(['like' => $nlike]);
+        
         $user = Auth::user();
         $like = $user->likes()->where('post_id', $post_id)->first();
         if ($like) {
-            $already_like = $like->like;
-            $update = true;
-            if ($already_like) {
-                $like->delete();
-                // $numLike -= 1;
-                // return null;
-                return response()->json(['unlike' => $numLike - 1]);
-            }
+            $like->delete();
+            return response()->json(['unlike' => $numLike - 1]);
         } else {
             $like = new Like();
         }
         $like->like = 1;
-        // $numLike += 1;
         $like->user_id = $user->id;
         $like->post_id = $post->id;
-        if ($update) {
-            $like->update();
-        } else {
-            $like->save();
-        }
+
+        $like->save();
+        
         return response()->json(['like' => $numLike + 1]);
-        // return null;
     }
 
     /**
@@ -187,9 +168,23 @@ class PostController extends Controller
     */
     public function getPostNews(){
         $user = User::orderBy('created_at', 'desc')->get();
-        $posts = Post::orderBy('created_at', 'desc')->limit(5)->get();
-        $trendPost = $posts->first();
-        return view('news', ['posts' => $posts, 'user' => Auth::user(), 'trendPost' => $trendPost]);
+        $posts = Post::orderBy('created_at', 'desc')->get();
+        $postLikes = \DB::table('likes') ->select('post_id', \DB::raw("count(likes.like) as total"))
+                 ->groupBy('post_id')->orderBy('total', 'DESC')
+                 ->get();
+        $trendPosts = array();
+        if($postLikes) {
+            $count = 0;
+            foreach ($postLikes as $key => $value) {
+                $count++;
+                if($count > 5)
+                    break;
+                $temp = $value->post_id;
+                $trendPost = Post::select('*')->where('id',  $temp)->get()->first();
+                array_push($trendPosts, $trendPost);
+            }
+        }
+        return view('news', ['posts' => $posts, 'postLikes' => $postLikes, 'user' => Auth::user(), 'trendPosts' => $trendPosts]);
     }
 
     /**

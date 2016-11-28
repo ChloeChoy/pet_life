@@ -96,18 +96,42 @@
                                     <div class="post-media" id="post-media{{$post->id}}">
                                         @for($i = 0; $i < count($postImg); $i++)
                                             @if($postImg[$i] != '')
-                                                    <img src="{{ route('account.image', ['filename' => $postImg[$i]]) }}" alt="image" class="responsive-img materialboxed" data-mfp-src="{{ route('account.image', ['filename' => $postImg[$i]]) }}">
+                                                    <img src="{{ route('account.image', ['filename' => $postImg[$i]]) }}" alt="image" class="responsive-img" data-mfp-src="{{ route('account.image', ['filename' => $postImg[$i]]) }}">
                                             @endif
                                         @endfor
                                     </div>
                                     @endif
+
+                                    <script type="text/javascript">
+                                            $('#post-media'+ {{$post->id}}).magnificPopup({
+                                                delegate: 'img',
+                                                type: 'image',
+                                                // other options
+                                                gallery: {
+                                                      enabled:true
+                                                },
+                                                removalDelay: 300,
+
+                                                // Class that is added to popup wrapper and background
+                                                // make it unique to apply your CSS animations just to this exact popup
+                                                mainClass: 'mfp-fade'
+                                            });
+                                    </script>
+
                                 @endif
 
                                 @if(strpos($post->mime, 'video') !== false)
+                                <?php
+                                    $postVideo = explode(',', $post->filename);
+                                ?>
                                 <div class="post-media">
-                                    <video class="post-video" controls>
-                                      <source src="{{ route('account.image', ['filename' => $post->filename]) }}" type="video/mp4">
-                                    </video>
+                                    @for($i = 0; $i < count($postVideo); $i++)
+                                        @if($postVideo[$i] != '')
+                                        <video class="responsive-video" controls>
+                                          <source src="{{ route('account.image', ['filename' => $postVideo[$i]]) }}" type="video/mp4">
+                                        </video>
+                                        @endif
+                                    @endfor
                                 </div>
                                 @endif
                             </div>
@@ -148,6 +172,7 @@
                                 <div class="post-content">
                                     <p>{{ $trendPost->body }}</p>
 
+                                    <!-- image -->
                                     @if(strpos($trendPost->mime, 'image') !== false)
                                         <?php
                                             $postImg = explode(',', $trendPost->filename);
@@ -173,6 +198,24 @@
                                         </div>
                                         @endif
                                     @endif
+                                    <!-- end image -->
+
+                                    <!-- video -->
+                                    @if(strpos($trendPost->mime, 'video') !== false)
+                                    <?php
+                                        $postVideo = explode(',', $trendPost->filename);
+                                    ?>
+                                    <div class="post-media">
+                                        @for($i = 0; $i < count($postVideo); $i++)
+                                            @if($postVideo[$i] != '')
+                                            <video class="responsive-video">
+                                              <source src="{{ route('account.image', ['filename' => $postVideo[$i]]) }}" type="video/mp4">
+                                            </video>
+                                            @endif
+                                        @endfor
+                                    </div>
+                                    @endif
+                                    <!-- end video -->
 
                                 </div>
                             </a>
@@ -180,6 +223,8 @@
                         </div>
                     </div>
                 @endif
+                <!-- end trenpost -->
+
             </div>
         </div>
     </section>
