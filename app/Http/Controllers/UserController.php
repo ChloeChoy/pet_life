@@ -71,7 +71,12 @@ class UserController extends Controller
             return view('signin');
         }
         $posts = Post::orderBy('created_at', 'desc')->get();
-        return view('account', ['user' => Auth::user()], ['posts' => $posts]);
+        $postLikes = \DB::table('likes')->select('post_id', \DB::raw("count(likes.like) as total"))
+                ->where('user_id', Auth::user()->id)
+                ->groupBy('post_id')->orderBy('total', 'DESC')
+                ->get();
+
+        return view('account', ['user' => Auth::user(), 'posts' => $posts, 'postLikes' => $postLikes]);
     }
 
     public function postSaveAccount(Request $request)
@@ -134,16 +139,24 @@ class UserController extends Controller
     */
     public function postInProfile(Request $request)
     {
-        $this->validate($request, [
-            'body' => 'required|max:1000'
-        ]);
         $post = new Post();
-        $post->body = $request['body'];
-        $message = 'There was an error';
-        if ($request->user()->posts()->save($post)) {
-            $message = 'Post successfully created!';
+        $user = Auth::user();
+        $file = $request->file('att_files');
+        if($file[0] != null){
+            for ($i=0; $i < count($file); $i++) { 
+                $extension = $file[$i]->getClientOriginalExtension();
+                Storage::disk('local')->put($file[$i]->getFilename().'.'.$extension,  File::get($file[$i]));
+                $post->mime .= $file[$i]->getClientMimeType();
+                $post->original_filename .= $file[$i]->getClientOriginalName() .',';
+                $post->filename .= $file[$i]->getFilename().'.'.$extension .',';   
+            }
         }
-        return view('account', ['message' => $message]);
+        
+        $post->body = $request['body'];
+        $token = $request['_token'];
+        $request->user()->posts()->save($post);
+        
+        return view('account');
     }
 
     /**
@@ -157,6 +170,10 @@ class UserController extends Controller
     * user photo page
     */
     public function userPhotos(){
+        if(!Auth::user()){
+            return view('signin');
+        }
+        $posts = Post::orderBy('created_at', 'desc')->get();
         return view('photos', ['user' => Auth::user()]);   
     }
 

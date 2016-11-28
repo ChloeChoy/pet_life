@@ -596,6 +596,10 @@ div#preview {
 .post-media video {
     width: 100%;
 }
+.modal-footer a.cancel {
+    background: #777;
+    margin-right: 10px !important;
+}
 
 
 /* end style home page*/
@@ -751,6 +755,7 @@ span.title-info {
     width: 48%;
     margin: 0 auto;
     cursor: pointer;
+    height: 100px !important;
 }
 a.change-user-photos {
     line-height: 27px;
@@ -760,7 +765,10 @@ a.change-user-photos i{
     top: 5px;
     font-size: 22px;
 }
-
+.thumnail video {
+    width: 48%;
+    height: 120px !important;
+}
 
 /* end style profile page */
 

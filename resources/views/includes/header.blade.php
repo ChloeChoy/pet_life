@@ -50,7 +50,7 @@
                                 @endif
                               </div>
                               <a href="#!user"><img class="circle" src="{{ URL::to('src/images/boa_hancock_wallpaper_blue_red_by_gian519.png') }}"></a>
-                              <a href="#!name"><span class="white-text name">{{ Auth::user()->name }}</span></a>
+                              <a href="{{route('account')}}"><span class="white-text name">{{ Auth::user()->name }}</span></a>
                             </div>
                         </li>
                         <li><a href="{{ route('dashboard') }}"><i class="material-icons">home</i>Home</a></li>

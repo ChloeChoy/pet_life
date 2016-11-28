@@ -169,3 +169,12 @@ Route::post('/administrator/admin-adduser',
         'middleware' => 'auth'
     ]
 );
+
+//route to create post in profile page
+Route::post('/profile-post',
+    [
+        'uses'  => 'UserController@postInProfile',
+        'as'    => 'post.profile',
+        'middleware' => 'auth'
+    ]
+);
