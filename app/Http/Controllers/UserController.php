@@ -173,8 +173,8 @@ class UserController extends Controller
         if(!Auth::user()){
             return view('signin');
         }
-        $posts = Post::orderBy('created_at', 'desc')->get();
-        return view('photos', ['user' => Auth::user()]);   
+        $posts = Post::where('user_id', Auth::user()->id)->get();
+        return view('photos', ['user' => Auth::user(), 'posts' => $posts]);   
     }
 
 }

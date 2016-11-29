@@ -10,7 +10,23 @@ function editPost(){
             var postBody = postBodyElement.text();
             postId = event.target.parentNode.parentNode.parentNode.parentNode.dataset['postid'];
             $('#post-body').val(postBody);
+
+            if($('#post-img'+postId).length){
+                var arr = $('#post-img'+postId).val();
+                var imgs = arr.split(',')
+                for(var i = 0; i < imgs.length; i++){
+                    if(imgs[i] != ''){
+                        $('#preview-img-post').append('<div class="preview-item"><img class="responsive-img" src="//localhost/pet_life/public/userimage/'+ imgs[i] +'" name="'+ imgs[i] +'"><a class="del-post-img">Delete</a></div>');
+                        removeOldImg();
+                    }
+                }
+            }
         });
+
+    $('.edit-media').click(function(){
+        $('#media-edit').trigger('click');
+    });
+    
 
     $('#modal-save').on('click', function () {
         $.ajax({
@@ -24,8 +40,19 @@ function editPost(){
             });
     });
 }
-//end edit post
 editPost();
+//end edit post
+
+//remove old post imgs
+function removeOldImg() {
+    var x = '';
+    $('.del-post-img').on('click', function(){
+        x += $(this).prev().attr('name') + ',';
+        $('#rm-old-img').val(x);
+        $(this).parent().remove();
+    });
+}
+// end remove old images
 
 $('.like').on('click', function(event) {
     event.preventDefault();

@@ -600,6 +600,21 @@ div#preview {
     background: #777;
     margin-right: 10px !important;
 }
+#preview-img-post .preview-item {
+    width: 100px;
+    height: 130px;
+    display: inline-block;
+    margin-right: 5px;
+}
+.preview-item a{
+    cursor: pointer;
+    display: block;
+    text-align: center;
+}
+.preview-item img{
+    height: 100px !important;
+    width: 100px;
+}
 
 
 /* end style home page*/
@@ -768,6 +783,9 @@ a.change-user-photos i{
 .thumnail video {
     width: 48%;
     height: 120px !important;
+}
+.video-item video {
+    height: 200px;
 }
 
 /* end style profile page */

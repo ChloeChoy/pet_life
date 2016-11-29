@@ -83,7 +83,7 @@
                                         $numOfPostMedia = 0;
                                     ?>
                                     @if(count($postImg) > 2)
-                                    <div class="post-media multi-medias" id="post-media{{$post->id}}">
+                                    <div class="post-media post-img multi-medias" id="post-media{{$post->id}}">
                                         @for($i = 0; $i < count($postImg); $i++)
                                             @if($postImg[$i] != '')
                                                     <img src="{{ route('account.image', ['filename' => $postImg[$i]]) }}" alt="image" class="responsive-img" data-mfp-src="{{ route('account.image', ['filename' => $postImg[$i]]) }}">
@@ -93,7 +93,7 @@
                                         <span class="num-of-img">{{$numOfPostMedia - 1}}+</span>
                                     </div>
                                     @else
-                                    <div class="post-media" id="post-media{{$post->id}}">
+                                    <div class="post-media post-img" id="post-media{{$post->id}}">
                                         @for($i = 0; $i < count($postImg); $i++)
                                             @if($postImg[$i] != '')
                                                     <img src="{{ route('account.image', ['filename' => $postImg[$i]]) }}" alt="image" class="responsive-img" data-mfp-src="{{ route('account.image', ['filename' => $postImg[$i]]) }}">
@@ -101,6 +101,8 @@
                                         @endfor
                                     </div>
                                     @endif
+
+                                    <input id="post-img{{$post->id}}" type="hidden" name="post-img" value="{{$post->filename}}">
 
                                     <script type="text/javascript">
                                             $('#post-media'+ {{$post->id}}).magnificPopup({
@@ -241,9 +243,15 @@
                 </div>
                 <div class="modal-body">
                     <form>
+                        <div class="input-field">
+                            <button class="btn edit-media"><i class="material-icons">image</i> Add Photo</button>
+                        </div>
                         <div class="input-field col s12">
                             <textarea id="post-body" class="materialize-textarea"  name="body" autofocus></textarea>
                         </div>
+                        <input id="media-edit" type="file" name="media_edit" style="display:none" onchange="previewFiles('media-edit')">
+                        <input id="rm-old-img" type="hidden" name="rm_old-img" value="">
+                        <div id="preview-img-post"></div>
                     </form>
                 </div>
             <div class="modal-footer">
@@ -263,6 +271,7 @@
         var userAvatar = '{{ URL::to('src/images/boa_hancock_wallpaper_blue_red_by_gian519.png') }}';
 
         var routeDropzone = '{{ URL::to('src/images') }}';
+        
     </script>
     <script type="text/javascript">
          // function getFile(){

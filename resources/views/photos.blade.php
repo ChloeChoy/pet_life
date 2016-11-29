@@ -53,48 +53,65 @@
                     <!-- photo -->
                     <span class="title">Photos</span>
                     <div id="user-photos-gallery">
-                        <div class="photo-item col s6 m4 l2">
-                            <img class="responsive-img" src="{{ URL::to('src/images/boa_hancock_wallpaper_blue_red_by_gian519.png') }}" data-mfp-src="{{ URL::to('src/images/boa_hancock_wallpaper_blue_red_by_gian519.png') }}">
-                        </div>
-                        <div class="photo-item col s6 m4 l2">
-                            <img class="responsive-img" src="{{ URL::to('src/images/default-wall.jpg') }}" data-mfp-src="{{ URL::to('src/images/default-wall.jpg') }}">
-                        </div>
-                        <div class="photo-item col s6 m4 l2">
-                            <img class="responsive-img" src="{{ URL::to('src/images/default-1.jpg') }}" data-mfp-src="{{ URL::to('src/images/default-1.jpg') }}">
-                        </div>
-                        <div class="photo-item col s6 m4 l2">
-                            <img class="responsive-img" src="{{ URL::to('src/images/default-2.jpg') }}" data-mfp-src="{{ URL::to('src/images/default-2.jpg') }}">
-                        </div>
-                        <div class="photo-item col s6 m4 l2">
-                            <img class="responsive-img" src="{{ URL::to('src/images/default-3.png') }}" data-mfp-src="{{ URL::to('src/images/default-3.png') }}">
-                        </div>
-                        <div class="photo-item col s6 m4 l2">
-                            <img class="responsive-img" src="{{ URL::to('src/images/default-4.jpg') }}" data-mfp-src="{{ URL::to('src/images/default-4.jpg') }}">
-                        </div>
+                    @if($user->avatar)
+                        <!-- avatar/cover image -->
+                        <!-- <?php if (Storage::disk('local')->has($user->avatar) && $user->avatar): ?> -->
+                            <div class="photo-item col s6 m4 l2">
+                                <img src="{{ route('account.image', ['filename' => $user->avatar]) }}" alt="" class="resposive-img" data-mfp-src="{{ route('account.image', ['filename' => $user->avatar]) }}">
+                            </div>
+                        <!-- @endif -->
+
+                        <?php if(Storage::disk('local')->has($user->cover_photo) && $user->cover_photo): ?>
+                            <div class="photo-item col s6 m4 l2">
+                                <img src="{{ route('account.image', ['filename' => $user->cover_photo]) }}" alt="" class="resposive-img">
+                            </div>
+                        @endif
+                        <!-- end avatar/cover image -->
+                    @endif
+                        <!-- post photo -->
+
+                        @foreach($posts as $post)
+                            <?php if($post->user_id == Auth::user()->id && $post->filename != ''): ?>
+                                @if(strpos($post->mime, 'image') !== false)
+                                    <?php 
+                                        $postImg = explode(',', $post->filename);
+                                    ?>
+                                   
+                                    @for($i = 0; $i < count($postImg); $i++)
+                                        @if($postImg[$i] != '')
+                                            <div class="photo-item col s6 m4 l2">
+                                                <img src="{{ route('account.image', ['filename' => $postImg[$i]]) }}" alt="image" class="responsive-img" data-mfp-src="{{ route('account.image', ['filename' => $postImg[$i]]) }}">
+                                            </div>
+                                        @endif
+                                    @endfor
+                                @endif
+                            <?php endif;?>
+                        @endforeach
+                        <!-- end post photo -->
                     </div>
                     <!-- end photos -->
 
                     <!-- videos -->
                     <span class="title videos">Videos</span>
                     <div id="user-videos-gallery">
-                        <div class="photo-item col s6 m4 l2">
-                            <img class="responsive-img" src="{{ URL::to('src/images/boa_hancock_wallpaper_blue_red_by_gian519.png') }}" data-mfp-src="{{ URL::to('src/images/boa_hancock_wallpaper_blue_red_by_gian519.png') }}">
-                        </div>
-                        <div class="photo-item col s6 m4 l2">
-                            <img class="responsive-img" src="{{ URL::to('src/images/default-wall.jpg') }}" data-mfp-src="{{ URL::to('src/images/default-wall.jpg') }}">
-                        </div>
-                        <div class="photo-item col s6 m4 l2">
-                            <img class="responsive-img" src="{{ URL::to('src/images/default-1.jpg') }}" data-mfp-src="{{ URL::to('src/images/default-1.jpg') }}">
-                        </div>
-                        <div class="photo-item col s6 m4 l2">
-                            <img class="responsive-img" src="{{ URL::to('src/images/default-2.jpg') }}" data-mfp-src="{{ URL::to('src/images/default-2.jpg') }}">
-                        </div>
-                        <div class="photo-item col s6 m4 l2">
-                            <img class="responsive-img" src="{{ URL::to('src/images/default-3.png') }}" data-mfp-src="{{ URL::to('src/images/default-3.png') }}">
-                        </div>
-                        <div class="photo-item col s6 m4 l2">
-                            <img class="responsive-img" src="{{ URL::to('src/images/default-4.jpg') }}" data-mfp-src="{{ URL::to('src/images/default-4.jpg') }}">
-                        </div>
+                        @foreach($posts as $post)
+                            <?php if($post->user_id == Auth::user()->id && $post->filename != ''): ?>
+                                @if(strpos($post->mime, 'video') !== false)
+                                    <?php
+                                        $postVideo = explode(',', $post->filename);
+                                    ?>
+                                    @for($i = 0; $i < count($postVideo); $i++)
+                                        @if($postVideo[$i] != '')
+                                        <div class="video-item col s12 m6 l4">
+                                            <video class="responsive-video" controls>
+                                                <source src="{{ route('account.image', ['filename' =>   $postVideo[$i]]) }}" type="video/mp4">
+                                            </video>
+                                        </div>
+                                        @endif
+                                    @endfor
+                                @endif
+                            <?php endif;?>
+                        @endforeach
                     </div>
                     <!-- end video -->
                 </div>
