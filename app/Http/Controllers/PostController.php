@@ -50,6 +50,7 @@ class PostController extends Controller
                 array_push($trendPosts, $trendPost);
             }
         }
+        // var_dump($trendPosts);die();
 
         return view('dashboard', ['posts' => $posts, 'postLikes' => $postLikes, 'user' => Auth::user(), 'trendPosts' => $trendPosts]);
     }
@@ -63,9 +64,13 @@ class PostController extends Controller
         $user = Auth::user();
         $file = $request->file('att_files');
         if($file[0] != null){
+            $path = public_path() .'/post-images/';
+            if(!file_exists($path)){
+                mkdir($path);
+            }
             for ($i=0; $i < count($file); $i++) { 
                 $extension = $file[$i]->getClientOriginalExtension();
-                Storage::disk('local')->put($file[$i]->getFilename().'.'.$extension,  File::get($file[$i]));
+                move_uploaded_file($file[$i], $path . $file[$i]->getClientOriginalName());
                 $post->mime .= $file[$i]->getClientMimeType();
                 $post->original_filename .= $file[$i]->getClientOriginalName() .',';
                 $post->filename .= $file[$i]->getFilename().'.'.$extension .',';   
@@ -110,12 +115,31 @@ class PostController extends Controller
             'body' => 'required'
         ]);
         $post = Post::find($request['postId']);
+        $removeImg = $request['removeImg'] != '' ? explode(',', $request['removeImg']) : '';
         if (Auth::user() != $post->user) {
             return redirect()->back();
         }
+
         $post->body = $request['body'];
+        $oldImg = ((strpos($post->mime, 'image') !== false) && ($post->filename != '')) ? explode(',', $post->filename) : '';
+        
+        $newImg = '';
+        if(($oldImg != '') && ($removeImg != '')){
+            for ($i=0; $i < count($oldImg); $i++) { 
+                for ($j=0; $j < count($removeImg); $j++) { 
+                    if($oldImg[$i] == $removeImg[$j]){
+                        array_splice($oldImg, $i, 1);
+                        $i--;
+                        break;
+                    }
+                }  
+            }
+            $post->filename = implode(',', $oldImg);
+            $newImg = $post->filename;
+        }
+
         $post->update();
-        return response()->json(['new_body' => $post->body], 200);
+        return response()->json(['new_body' => $post->body, 'new_img' => $newImg], 200);
     }
 
     public function postLikePost(Request $request)

@@ -16,7 +16,7 @@ function editPost(){
                 var imgs = arr.split(',')
                 for(var i = 0; i < imgs.length; i++){
                     if(imgs[i] != ''){
-                        $('#preview-img-post').append('<div class="preview-item"><img class="responsive-img" src="//localhost/pet_life/public/userimage/'+ imgs[i] +'" name="'+ imgs[i] +'"><a class="del-post-img">Delete</a></div>');
+                        $('#preview-img-post').append('<div class="preview-item"><img class="responsive-img" src="//localhost/pet_life/public/post-images/'+ imgs[i] +'" name="'+ imgs[i] +'"><a class="del-post-img">Delete</a></div>');
                         removeOldImg();
                     }
                 }
@@ -32,10 +32,27 @@ function editPost(){
         $.ajax({
                 method: 'POST',
                 url: urlEdit,
-                data: {body: $('#post-body').val(), postId: postId, _token: token},
+                data: {
+                    body: $('#post-body').val(),
+                    removeImg: $('#rm-old-img').val(),
+                    postId: postId,
+                    _token: token
+                }
             })
             .done(function (msg) {
                 $(postBodyElement).text(msg['new_body']);
+                if(msg['new_img'] != ''){
+                    $('#post-media'+ postId + ' img').remove();
+                    var img = msg['new_img'].split(',');
+                    var count = 0;
+                    for(var i = 0; i < img.length; i++){
+                        if(img[i] != ''){
+                            $('#post-media'+ postId).append('<img src="http://localhost/pet_life/public/userimage/'+ img[i] +'" alt="image" class="responsive-img" data-mfp-src="http://localhost/pet_life/public/userimage/'+ img[i] +'">');
+                            count++;                            
+                        }
+                    }
+                    $('#post-media'+ postId + ' span').text(count + '+');
+                }
                 $('#edit-modal').modal('hide');
             });
     });

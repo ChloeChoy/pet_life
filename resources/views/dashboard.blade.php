@@ -33,7 +33,7 @@
                             <a class="att-btn"><i class="material-icons">videocam</i> Upload videos</a>
                             <a class="att-btn att-image"><i class="material-icons">image</i> Upload images</a>
                             <div style='display: none'>
-                                <input id="att-files" type="file" name="att_files[]" multiple onchange="previewFiles('att-files')"/>
+                                <input id="att-files" type="file" name="att_files[]" multiple onchange="previewFiles('att-files', 'preview')"/>
                             </div>
                         </div>
                         <div class="input-field col s12">
@@ -62,7 +62,7 @@
                                 </div>
                                 <div class="user-post">
                                     <span class="post-username"><a href="#">{{ $post->user->name }}</a></span>
-                                    <span class="post-on">Posted on {{  date_format($post->created_at, 'D M Y') }}</span>
+                                    <span class="post-on">Posted on {{  date_format($post->created_at, 'd M Y') }}</span>
                                 </div>
                                 @if(Auth::user() == $post->user)
                                 <div class="post-act">
@@ -79,14 +79,14 @@
 
                                 @if(strpos($post->mime, 'image') !== false)
                                     <?php 
-                                        $postImg = explode(',', $post->filename);
+                                        $postImg = explode(',', $post->original_filename);
                                         $numOfPostMedia = 0;
                                     ?>
                                     @if(count($postImg) > 2)
                                     <div class="post-media post-img multi-medias" id="post-media{{$post->id}}">
                                         @for($i = 0; $i < count($postImg); $i++)
                                             @if($postImg[$i] != '')
-                                                    <img src="{{ route('account.image', ['filename' => $postImg[$i]]) }}" alt="image" class="responsive-img" data-mfp-src="{{ route('account.image', ['filename' => $postImg[$i]]) }}">
+                                                    <img src="{{URL::to('post-images/'.$postImg[$i])}}" alt="image" class="responsive-img" data-mfp-src="{{URL::to('post-images/'.$postImg[$i])}}">
                                                     <?php $numOfPostMedia++;?>
                                             @endif
                                         @endfor
@@ -96,13 +96,14 @@
                                     <div class="post-media post-img" id="post-media{{$post->id}}">
                                         @for($i = 0; $i < count($postImg); $i++)
                                             @if($postImg[$i] != '')
-                                                    <img src="{{ route('account.image', ['filename' => $postImg[$i]]) }}" alt="image" class="responsive-img" data-mfp-src="{{ route('account.image', ['filename' => $postImg[$i]]) }}">
+                                                    <img src="{{URL::to('post-images/'.$postImg[$i])}}" alt="image" class="responsive-img" data-mfp-src="{{URL::to('post-images/'.$postImg[$i])}}">
                                             @endif
                                         @endfor
                                     </div>
                                     @endif
 
-                                    <input id="post-img{{$post->id}}" type="hidden" name="post-img" value="{{$post->filename}}">
+                                    <!-- post images's name -->
+                                    <input id="post-img{{$post->id}}" type="hidden" name="post-img" value="{{$post->original_filename}}">
 
                                     <script type="text/javascript">
                                             $('#post-media'+ {{$post->id}}).magnificPopup({
@@ -116,7 +117,14 @@
 
                                                 // Class that is added to popup wrapper and background
                                                 // make it unique to apply your CSS animations just to this exact popup
-                                                mainClass: 'mfp-fade'
+                                                mainClass: 'mfp-fade',
+                                                zoom: {
+                                                    enabled: true,
+                                                    duration: 300, // don't foget to change the duration also in CSS
+                                                    opener: function(element) {
+                                                      return element.find('img');
+                                                    }
+                                                  }
                                             });
                                     </script>
 
@@ -124,13 +132,13 @@
 
                                 @if(strpos($post->mime, 'video') !== false)
                                 <?php
-                                    $postVideo = explode(',', $post->filename);
+                                    $postVideo = explode(',', $post->original_filename);
                                 ?>
                                 <div class="post-media">
                                     @for($i = 0; $i < count($postVideo); $i++)
                                         @if($postVideo[$i] != '')
                                         <video class="responsive-video" controls>
-                                          <source src="{{ route('account.image', ['filename' => $postVideo[$i]]) }}" type="video/mp4">
+                                          <source src="{{URL::to('post-images/'.$postVideo[$i])}}" type="video/mp4">
                                         </video>
                                         @endif
                                     @endfor
@@ -156,12 +164,13 @@
                     <!-- end post -->
 
                 </div>
-                @if($trendPosts)
+                @if(count($trendPosts))
                     <div class="col l3 trending hide-on-med-and-down">
                         <!-- trending post -->
                         <h5 class="title">Trending posts</h5>
                         <div class="posts">
                             @foreach($trendPosts as $trendPost)
+                            @if($trendPost != null)
                             <a class="trend-row" href='{{route("post.view",["post_id" => $trendPost->id])}}' data-postid="{{ $trendPost->id }}">
                                 <div class="post-info">
                                     <div class="user-avatar">
@@ -177,7 +186,7 @@
                                     <!-- image -->
                                     @if(strpos($trendPost->mime, 'image') !== false)
                                         <?php
-                                            $postImg = explode(',', $trendPost->filename);
+                                            $postImg = explode(',', $trendPost->original_filename);
                                             $numOfImg = 0;
                                         ?>
                                         @if(count($postImg) > 2)
@@ -185,7 +194,7 @@
                                             @for($i = 0; $i < count($postImg); $i++)
                                                 @if($postImg[$i] != '')
                                                     <?php $numOfImg++; ?>
-                                                    <img src="{{ route('account.image', ['filename' => $postImg[$i]]) }}" alt="image" class="responsive-img" data-mfp-src="{{ route('account.image', ['filename' => $postImg[$i]]) }}">
+                                                    <img src="{{URL::to('post-images/'.$postImg[$i])}}" alt="image" class="responsive-img" data-mfp-src="{{URL::to('post-images/'.$postImg[$i])}}">
                                                 @endif
                                             @endfor
                                             <span class="num-of-img">{{$numOfImg - 1}}+</span>
@@ -194,7 +203,7 @@
                                         <div class="trend-img" id="post-media{{$trendPost->id}}">
                                             @for($i = 0; $i < count($postImg); $i++)
                                                 @if($postImg[$i] != '')
-                                                    <img src="{{ route('account.image', ['filename' => $postImg[$i]]) }}" alt="image" class="responsive-img" data-mfp-src="{{ route('account.image', ['filename' => $postImg[$i]]) }}">
+                                                    <img src="{{URL::to('post-images/'.$postImg[$i])}}" alt="image" class="responsive-img" data-mfp-src="{{URL::to('post-images/'.$postImg[$i])}}">
                                                 @endif
                                             @endfor
                                         </div>
@@ -205,13 +214,13 @@
                                     <!-- video -->
                                     @if(strpos($trendPost->mime, 'video') !== false)
                                     <?php
-                                        $postVideo = explode(',', $trendPost->filename);
+                                        $postVideo = explode(',', $trendPost->original_filename);
                                     ?>
                                     <div class="post-media">
                                         @for($i = 0; $i < count($postVideo); $i++)
                                             @if($postVideo[$i] != '')
                                             <video class="responsive-video">
-                                              <source src="{{ route('account.image', ['filename' => $postVideo[$i]]) }}" type="video/mp4">
+                                              <source src="{{URL::to('post-images/'.$postVideo[$i])}}" type="video/mp4">
                                             </video>
                                             @endif
                                         @endfor
@@ -221,6 +230,7 @@
 
                                 </div>
                             </a>
+                            @endif
                             @endforeach
                         </div>
                     </div>
@@ -242,14 +252,11 @@
                   <h4 class="modal-title">Edit post</h4>
                 </div>
                 <div class="modal-body">
-                    <form>
-                        <div class="input-field">
-                            <button class="btn edit-media"><i class="material-icons">image</i> Add Photo</button>
-                        </div>
+                    <form action="{{route('edit')}}" method="post">
                         <div class="input-field col s12">
                             <textarea id="post-body" class="materialize-textarea"  name="body" autofocus></textarea>
                         </div>
-                        <input id="media-edit" type="file" name="media_edit" style="display:none" onchange="previewFiles('media-edit')">
+                        <!-- <input id="media-edit" type="file" name="media_edit" style="display:none" onchange="previewFiles('media-edit', 'preview-img-post')"> -->
                         <input id="rm-old-img" type="hidden" name="rm_old-img" value="">
                         <div id="preview-img-post"></div>
                     </form>
@@ -273,16 +280,5 @@
         var routeDropzone = '{{ URL::to('src/images') }}';
         
     </script>
-    <script type="text/javascript">
-         // function getFile(){
-         //   document.getElementById("image").click();
-         // }
-         // function sub(obj){
-         //    var file = obj.value;
-         //    var fileName = file.split("\\");
-         //    document.getElementById("yourBtn").innerHTML = fileName[fileName.length-1];
-         //    document.myForm.submit();
-         //    event.preventDefault();
-         //  }
-    </script>
+    
 @endsection

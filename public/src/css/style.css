@@ -536,22 +536,17 @@ div#preview {
     padding: 0 40px 30px;
     width: 100%;
 }
-#preview a{
-    position: relative;
-    top: 20px;
-    left: -70px;
-    color: blue;
-    cursor: pointer;
-}
+
 #preview img{
-    margin-top: 30px;
+    margin-top: 10px;
     border-radius: 30px;
     width: 95px;
 }
-.multi-medias .material-placeholder {
-    display: inline-block;
+.multi-medias img {
+    height: 250px !important;
+    overflow: hidden;
     width: 48%;
-    text-align: center;
+    cursor: pointer;
 }
 .trend-img {
     height: 100px;
@@ -600,7 +595,7 @@ div#preview {
     background: #777;
     margin-right: 10px !important;
 }
-#preview-img-post .preview-item {
+.preview-item {
     width: 100px;
     height: 130px;
     display: inline-block;
@@ -615,7 +610,17 @@ div#preview {
     height: 100px !important;
     width: 100px;
 }
-
+a.btn.edit-media{
+    line-height: 31px;
+}
+a.btn.edit-media i {
+    top: 3px;
+    position: relative;
+}
+.trend-row .post-media {
+    height: 100px;
+    overflow: hidden;
+}
 
 /* end style home page*/
 

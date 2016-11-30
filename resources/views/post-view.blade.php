@@ -51,12 +51,12 @@
                             <p>{{ $post->body }}</p>
                             
                             @if(strpos($post->mime, 'image') !== false)
-                                <?php $postImg = explode(',', $post->filename);?>
+                                <?php $postImg = explode(',', $post->original_filename);?>
                                 @if(count($postImg) > 2)
-                                <div class="multi-medias">
+                                <div class="multi-medias" id="post-media{{$post->id}}">
                                     @for($i = 0; $i < count($postImg); $i++)
                                         @if($postImg[$i] != '')
-                                                <img src="{{ route('account.image', ['filename' => $postImg[$i]]) }}" alt="image" class="responsive-img materialboxed">
+                                            <img src="{{URL::to('post-images/'.$postImg[$i])}}" alt="image" class="responsive-img" data-mfp-src="{{URL::to('post-images/'.$postImg[$i])}}">
                                         @endif
                                     @endfor
                                 </div>
@@ -64,22 +64,44 @@
                                 <div class="post-media" id="post-media{{$post->id}}">
                                     @for($i = 0; $i < count($postImg); $i++)
                                         @if($postImg[$i] != '')
-                                                <img src="{{ route('account.image', ['filename' => $postImg[$i]]) }}" alt="image" class="responsive-img materialboxed">
+                                            <img src="{{URL::to('post-images/'.$postImg[$i])}}" alt="image" class="responsive-img" data-mfp-src="{{URL::to('post-images/'.$postImg[$i])}}">
                                         @endif
                                     @endfor
                                 </div>
                                 @endif
+                                <script type="text/javascript">
+                                            $('#post-media'+ {{$post->id}}).magnificPopup({
+                                                delegate: 'img',
+                                                type: 'image',
+                                                // other options
+                                                gallery: {
+                                                      enabled:true
+                                                },
+                                                removalDelay: 300,
+
+                                                // Class that is added to popup wrapper and background
+                                                // make it unique to apply your CSS animations just to this exact popup
+                                                mainClass: 'mfp-fade',
+                                                zoom: {
+                                                    enabled: true,
+                                                    duration: 300, // don't foget to change the duration also in CSS
+                                                    opener: function(element) {
+                                                      return element.find('img');
+                                                    }
+                                                  }
+                                            });
+                                    </script>
                             @endif
 
                             @if(strpos($post->mime, 'video') !== false)
                                 <?php
-                                    $postVideo = explode(',', $post->filename);
+                                    $postVideo = explode(',', $post->original_filename);
                                 ?>
                                 <div class="post-media">
                                     @for($i = 0; $i < count($postVideo); $i++)
                                         @if($postVideo[$i] != '')
                                         <video class="responsive-video" controls>
-                                          <source src="{{ route('account.image', ['filename' => $postVideo[$i]]) }}" type="video/mp4">
+                                          <source src="{{URL::to('post-images/'.$postVideo[$i])}}" type="video/mp4">
                                         </video>
                                         @endif
                                     @endfor

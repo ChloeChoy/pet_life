@@ -51,8 +51,8 @@
  
 
     <script type="text/javascript">
-        function previewFiles(fileId) {
-          var preview = document.querySelector('#preview');
+        function previewFiles(fileId, previewId) {
+          var preview = document.querySelector('#' + previewId);
           var files   = document.querySelector('#' + fileId).files;
 
           function readAndPreview(file) {
@@ -62,18 +62,22 @@
               var reader = new FileReader();
 
               reader.addEventListener("load", function () {
+                var previewItem = document.createElement("div");
+                previewItem.className = "preview-item";
                 var image = new Image();
                 image.height = 100;
                 image.name = file.name;
                 image.src = this.result;
-                preview.appendChild( image );
+                previewItem.appendChild( image );
                 var para = document.createElement("a");
                 var node = document.createTextNode("Delete");
                 para.appendChild(node);
-                preview.appendChild( para );
+                previewItem.appendChild( para );
+                preview.appendChild(previewItem);
                 para.addEventListener("click", function(){
-                    this.previousElementSibling.remove();
-                    this.remove();
+                    this.parentNode.remove();
+                    // this.previousElementSibling.remove();
+                    // this.remove();
                 });
               }, false);
 
