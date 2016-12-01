@@ -177,4 +177,13 @@ class UserController extends Controller
         return view('photos', ['user' => Auth::user(), 'posts' => $posts]);   
     }
 
+    /**
+    *   return other user's profile page
+    */
+    public function getOtherAccount($otherUser){
+        $user = User::find($otherUser);
+        $posts = Post::where('user_id', $otherUser)->orderBy('created_at', 'desc')->get();
+        return view('friend-account', ['user' => $user, 'posts' => $posts]);
+    }
+
 }

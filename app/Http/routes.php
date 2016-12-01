@@ -178,3 +178,12 @@ Route::post('/profile-post',
         'middleware' => 'auth'
     ]
 );
+
+//route to view other user's frofile page
+Route::get('/account/{otherUser}',
+    [
+        'uses'  => 'UserController@getOtherAccount',
+        'as'    => 'other.profile',
+        'middleware' => 'auth'
+    ]
+);
