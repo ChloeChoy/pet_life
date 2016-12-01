@@ -183,7 +183,11 @@ class UserController extends Controller
     public function getOtherAccount($otherUser){
         $user = User::find($otherUser);
         $posts = Post::where('user_id', $otherUser)->orderBy('created_at', 'desc')->get();
-        return view('friend-account', ['user' => $user, 'posts' => $posts]);
+        $postLikes = \DB::table('likes')->select('post_id', \DB::raw("count(likes.like) as total"))
+                ->where('user_id', Auth::user()->id)
+                ->groupBy('post_id')->orderBy('total', 'DESC')
+                ->get();
+        return view('friend-account', ['user' => $user, 'posts' => $posts, 'postLikes' => $postLikes]);
     }
 
 }

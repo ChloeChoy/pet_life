@@ -19,8 +19,6 @@
                         @else
                             <img class="responsive-img" src="{{ URL::to('src/images/default-wall.jpg') }}">
                         @endif
-                        
-                        <a class="edit-wall-img" data-toggle="modal" href="#modal-upload-images"><i class="material-icons">photo_camera</i> Change cover photo</a>
                     @endif
 
                     </div>
@@ -33,7 +31,6 @@
                         @else
                             <img class="responsive-img" src="{{ URL::to('src/images/boa_hancock_wallpaper_blue_red_by_gian519.png') }}">
                         @endif
-                        <a class="edit-avatar" data-toggle="modal" href="#modal-upload-images"><i class="material-icons">photo_camera</i></a>
                     @endif
                     </div>
                     <div class="profile-menu">
