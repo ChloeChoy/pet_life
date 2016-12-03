@@ -25,7 +25,7 @@ class PostController extends Controller
                 $temp    = array(
                     'desc'  => $item->email,
                     'value' => $item->name,
-                    'image' => $item->avatar ? route('account.image', ['filename' => $item->avatar]) : '/pet_life/public/src/images/boa_hancock_wallpaper_blue_red_by_gian519.png'    // user avatar
+                    'image' => $item->avatar ? \URL::to('post-images/'.$item->avatar) : '/pet_life/public/src/images/boa_hancock_wallpaper_blue_red_by_gian519.png'    // user avatar
                 );
                 array_push($productList, $temp);
             }
@@ -76,23 +76,12 @@ class PostController extends Controller
                 $post->filename .= $file[$i]->getFilename().'.'.$extension .',';   
             }
         }
-        
-        $post->body = $request['body'];
+
+        $post->body = ($request['embed_video'] != '') ? $request['body'] .', '. $request['embed_video'] : $request['body'];
         $token = $request['_token'];
         $message = '';
         if ($request->user()->posts()->save($post)) {
             return redirect()->route('dashboard');
-            // return response()->json(
-            //     [
-            //         'post_id'   => $post->id,
-            //         'post_user' => $post->user->first_name,
-            //         'post_body' => $post->body,
-            //         'create_at' => date_format(date_create($post->created_at), 'D M Y'),
-            //         'file_name' => $post->filename
-            //     ],
-            //     200
-            // );
-            // $message = 'Post successfully created!';
         }else{
             $message = 'An error occur when create post. Please try again!';
         }
@@ -121,7 +110,7 @@ class PostController extends Controller
         }
 
         $post->body = $request['body'];
-        $oldImg = ((strpos($post->mime, 'image') !== false) && ($post->filename != '')) ? explode(',', $post->filename) : '';
+        $oldImg = ((strpos($post->mime, 'image') !== false) && ($post->original_filename != '')) ? explode(',', $post->original_filename) : '';
         
         $newImg = '';
         if(($oldImg != '') && ($removeImg != '')){
@@ -134,8 +123,8 @@ class PostController extends Controller
                     }
                 }  
             }
-            $post->filename = implode(',', $oldImg);
-            $newImg = $post->filename;
+            $post->original_filename = implode(',', $oldImg);
+            $newImg = $post->original_filename;
         }
 
         $post->update();
@@ -183,7 +172,7 @@ class PostController extends Controller
                 ->where('post_id', $post_id)
                 ->groupBy('post_id')->orderBy('total', 'DESC')
                 ->get();
-        $numLike = $like[0]->total ? $like[0]->total : '';
+        $numLike = ($like && $like[0]->total) ? $like[0]->total : '';
         return view('post-view', ['post' => $post, 'like' => $numLike, 'user' => Auth::user()]);
     }
 
@@ -192,7 +181,7 @@ class PostController extends Controller
     */
     public function getPostNews(){
         $user = User::orderBy('created_at', 'desc')->get();
-        $posts = Post::orderBy('created_at', 'desc')->get();
+        $posts = Post::orderBy('created_at', 'desc')->limit(2)->get();
         $postLikes = \DB::table('likes') ->select('post_id', \DB::raw("count(likes.like) as total"))
                  ->groupBy('post_id')->orderBy('total', 'DESC')
                  ->get();

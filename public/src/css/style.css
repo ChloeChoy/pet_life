@@ -26,6 +26,9 @@ ul#sub-menu-account {
 li#link-sub-menu:hover ul#sub-menu-account{
     display: block;
 }
+img#side-nav-cover {
+    width: 300px;
+}
 
 /* end header */
 
@@ -580,6 +583,8 @@ div#preview {
 .post-media.multi-medias img:first-child{
     display: block;
     cursor: pointer;
+    width: 95% !important;
+    height: auto !important;
 }
 .multi-medias span.num-of-img {
     position: absolute;
@@ -620,6 +625,19 @@ a.btn.edit-media i {
 .trend-row .post-media {
     height: 100px;
     overflow: hidden;
+}
+a.embedded-video {
+    display: inline-block;
+    margin-left: 20px;
+    margin-bottom: 10px;
+    cursor: pointer;
+    color: #777;
+}
+.input-url {
+    padding: 0 20px;
+}
+.post-row iframe {
+    border: none;
 }
 
 /* end style home page*/
@@ -1097,6 +1115,7 @@ div#user-videos-gallery {
 }
 a.user-link img {
     height: 100% !important;
+    width: 50px;
 }
 .result-item .add-friend {
     float: right;

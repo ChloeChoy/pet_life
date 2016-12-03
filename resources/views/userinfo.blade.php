@@ -1,7 +1,7 @@
 @extends('layouts.content-layout')
 
 @section('title')
-    Account
+    User information
 @endsection
 
 @section('content')
@@ -13,10 +13,8 @@
                 <div class="col s12 wall">
                     <div class="cover-img">
                     @if($user)
-                        @if(Auth::user()->cover_photo)
-                            @if (Storage::disk('local')->has(Auth::user()->cover_photo))
-                                <img src="{{ route('account.image', ['filename' => $user->cover_photo]) }}" alt="" class="responsive-img">
-                            @endif
+                        @if($user->cover_photo)
+                            <img src="{{URL::to('post-images/'.$user->cover_photo)}}" alt="" class="responsive-img">
                         @else
                             <img class="responsive-img" src="{{ URL::to('src/images/default-wall.jpg') }}">
                         @endif
@@ -28,9 +26,7 @@
                     <div class="account-avatar">
                     @if($user)
                         @if($user->avatar)
-                            @if (Storage::disk('local')->has($user->avatar))
-                                <img src="{{ route('account.image', ['filename' => $user->avatar]) }}" alt="" class="responsive-img">
-                            @endif
+                            <img src="{{URL::to('post-images/'.$user->avatar)}}" alt="" class="responsive-img">
                         @else
                             <img class="responsive-img" src="{{ URL::to('src/images/boa_hancock_wallpaper_blue_red_by_gian519.png') }}">
                         @endif
@@ -178,18 +174,19 @@
                   <h4 class="modal-title">Upload photos</h4>
                 </div>
                 <div class="modal-body">
-                    <form class="upload-photos"  method="post" enctype="multipart/form-data">
+                    <form id="form-upload-photos" action="{{ route('upload.photo') }}"  method="post" enctype="multipart/form-data">
                         <div class="input-field col s12">
                             <a class="change-user-photos btn"><i class="material-icons">image</i> Upload images</a>
-                            <input id="profile-img" type="file" name="cover_img" style="display:none;">
+                            <input id="profile-img" type="file" name="cover_img" onchange="previewFiles('profile-img')" style="display:none;">
                         </div>
+                        <div id="preview"></div>
+                        <div class="form-btn">
+                            <a class="btn" data-dismiss="modal">Cancel</a>
+                            <button id="modal-save" type="submit" class="btn btn-default">Save</button>
+                        </div>
+                        <input id="post-token" type="hidden" value="{{ Session::token() }}" name="_token">
                     </form>
                 </div>
-            <div class="modal-footer">
-                <a class="btn" data-dismiss="modal">Cancel</a>
-                <button id="modal-save" type="button" class="btn btn-default" data-dismiss="modal">Save</button>
-                </div>
-            </div>
         </div>
     </div>
     <!-- end form change cover/profile images -->

@@ -19,7 +19,7 @@
                         <li id="link-sub-menu" class="main-menu-items">
                             <a href="#">
                                 @if(Auth::user()->avatar)
-                                <img class="responsive-img" alt="avatar" src="{{ route('account.image', ['filename' => Auth::user()->avatar]) }}">
+                                <img class="responsive-img" alt="avatar" src="{{URL::to('post-images/'.Auth::user()->avatar)}}">
                                 @else
                                 <img class="responsive-img" alt="avatar" src="{{ URL::to('src/images/boa_hancock_wallpaper_blue_red_by_gian519.png') }}">
                                 @endif
@@ -44,12 +44,18 @@
                             <div class="userView">
                               <div class="background">
                                 @if(Auth::user()->cover_photo)
-                                <img id="side-nav-cover" src="{{ route('account.image', ['filename' => Auth::user()->cover_photo]) }}">
+                                <img id="side-nav-cover" src="{{URL::to('post-images/'.Auth::user()->cover_photo)}}">
                                 @else
-                                <img id="side-nav-cover" src="{{ URL::to('src/images/default-1.jpg') }}">
+                                <img id="side-nav-cover" src="{{ URL::to('src/images/default-wall.jpg') }}">
                                 @endif
                               </div>
-                              <a href="#!user"><img class="circle" src="{{ URL::to('src/images/boa_hancock_wallpaper_blue_red_by_gian519.png') }}"></a>
+                              <a href="{{route('account')}}">
+                                @if(Auth::user()->avatar)
+                                    <img class="circle" src="{{URL::to('post-images/'.Auth::user()->avatar)}}">
+                                @else
+                                    <img class="circle" src="{{ URL::to('src/images/boa_hancock_wallpaper_blue_red_by_gian519.png') }}">
+                                @endif
+                                </a>
                               <a href="{{route('account')}}"><span class="white-text name">{{ Auth::user()->name }}</span></a>
                             </div>
                         </li>

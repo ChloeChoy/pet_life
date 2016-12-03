@@ -12,7 +12,7 @@
                 <div class="col l2 col-left-link">
                     <div class="link-profile">
                         @if(Auth::user()->avatar)
-                        <img class="responsive-img" alt="avatar" src="{{ route('account.image', ['filename' => Auth::user()->avatar]) }}">
+                        <img class="responsive-img" alt="avatar" src="{{URL::to('post-images/'.Auth::user()->avatar)}}">
                         @else
                         <img class="responsive-img" alt="avatar" src="{{ URL::to('src/images/boa_hancock_wallpaper_blue_red_by_gian519.png') }}">
                         @endif
@@ -31,7 +31,13 @@
 					<div class="post-row" data-postid="{{ $post->id }}" style="margin-top: 0;">
                         <div class="post-info">
                             <div class="user-avatar">
-                                <a href="#"><img alt="avatar" src="{{ URL::to('src/images/boa_hancock_wallpaper_blue_red_by_gian519.png') }}" class="responsive-img"></a>
+                                <a href="#">
+                                    @if($post->user->avatar)
+                                    <img class="user-avatar" alt="avatar" src="{{URL::to('post-images/'.$post->user->avatar)}}" class="responsive-img">
+                                    @else
+                                    <img class="user-avatar" alt="avatar" src="{{ URL::to('src/images/boa_hancock_wallpaper_blue_red_by_gian519.png') }}" class="responsive-img">
+                                    @endif
+                                </a>
                             </div>
                             <div class="user-post">
                                 <span class="post-username"><a href="#">{{ $post->user->name }}</a></span>
@@ -48,7 +54,11 @@
                             @endif
                         </div>
                         <div class="post-content">
-                            <p>{{ $post->body }}</p>
+                            <p>
+                            <?php
+                                echo preg_replace('/(https?|ssh|ftp):\/\/[^\s"]+/', '<div class="video-container"><iframe src="$0" height="400" width="400" allowfullscreen>$0</iframe></div>', $post->body)
+                            ?>
+                            </p>
                             
                             @if(strpos($post->mime, 'image') !== false)
                                 <?php $postImg = explode(',', $post->original_filename);?>
@@ -110,7 +120,11 @@
                             
                         </div>
                         <div class="interaction">
-                            <span class="num-of-like">{{$like . ' likes'}}</span>
+                            <span class="num-of-like">
+                                @if($like != '')
+                                    {{$like . ' likes'}}
+                                @endif
+                            </span>
                             <a class="like"><i class="material-icons">thumb_up</i> Like</a>
                             <a class="share-post"><i class="material-icons">share</i> Share</a>
                             <span class="islike" style="display:none">0</span>

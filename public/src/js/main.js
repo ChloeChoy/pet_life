@@ -133,6 +133,12 @@ $(document).ready(function(){
 		var id = $(this).parent().parent().attr('data-postid');
 		$(this).attr('href', 'post/' + id);
 	});
+
+	//show input url
+	$('.embedded-video').click(function(){
+		$('.input-url').show();
+		$('#emb-video').focus();
+	});
 	
 });
 

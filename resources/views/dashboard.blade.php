@@ -5,6 +5,13 @@
 
 @section('content')
     <!-- @include('includes.message-block') -->
+    <?php
+//         <iframe width="420" height="345" src="https://www.youtube.com/embed/XGSy3_Czz8k?controls=1">
+// </iframe>
+    // $string = preg_replace('/(https?|ssh|ftp):\/\/[^\s"]+/', '<iframe src="$0" height="400" width="400" allowfullscreen>$0</iframe>', 'https://www.youtube.com/embed/jKaQ0-fsnKE');
+    // echo $string;
+
+    ?>
 
     <section class="main-content">
         <div class="container">
@@ -12,7 +19,7 @@
                 <div class="col l2 col-left-link">
                     <div class="link-profile">
                         @if(Auth::user()->avatar)
-                        <img class="responsive-img" alt="avatar" src="{{ route('account.image', ['filename' => Auth::user()->avatar]) }}">
+                        <img class="responsive-img" alt="avatar" src="{{URL::to('post-images/'.Auth::user()->avatar)}}">
                         @else
                         <img class="responsive-img" alt="avatar" src="{{ URL::to('src/images/boa_hancock_wallpaper_blue_red_by_gian519.png') }}">
                         @endif
@@ -30,7 +37,7 @@
                 <div class="col m12 s12 l7">
                     <form class="post-form" action="{{ route('post.create') }}" method="post" enctype="multipart/form-data">
                         <div class="attach-files">
-                            <a class="att-btn"><i class="material-icons">videocam</i> Upload videos</a>
+                            <a class="att-btn" id="att-video"><i class="material-icons">videocam</i> Upload videos</a>
                             <a class="att-btn att-image"><i class="material-icons">image</i> Upload images</a>
                             <div style='display: none'>
                                 <input id="att-files" type="file" name="att_files[]" multiple onchange="previewFiles('att-files', 'preview')"/>
@@ -41,7 +48,11 @@
                             <label for="textarea1">What's your status</label>
                         </div>
                         <div id="preview"></div>
+                        <div class="input-field input-url" style="display:none">
+                            <input id="emb-video" type="text" name="embed_video">
+                        </div>
                         <div class="field-submit">
+                            <a class="embedded-video"><i class="material-icons">attachment</i></a>
                             <button id="create-post" type="submit" class="waves-effect waves-light btn">Post</button>
                         </div>
                         <input id="post-token" type="hidden" value="{{ Session::token() }}" name="_token">
@@ -54,7 +65,7 @@
                                 <div class="user-avatar">
                                     <a href="#">
                                         @if($post->user->avatar)
-                                        <img class="user-avatar" alt="avatar" src="{{route('account.image', ['filename' => $post->user->avatar])}}" class="responsive-img">
+                                        <img class="user-avatar" alt="avatar" src="{{URL::to('post-images/'.$post->user->avatar)}}" class="responsive-img">
                                         @else
                                         <img class="user-avatar" alt="avatar" src="{{ URL::to('src/images/boa_hancock_wallpaper_blue_red_by_gian519.png') }}" class="responsive-img">
                                         @endif
@@ -75,7 +86,11 @@
                                 @endif
                             </div>
                             <div class="post-content">
-                                <p>{{ $post->body }}</p>
+                                <p>
+                                <?php
+                                    echo preg_replace('/(https?|ssh|ftp):\/\/[^\s"]+/', '<div class="video-container"><iframe src="$0" height="400" width="400" allowfullscreen>$0</iframe></div>', $post->body)
+                                ?>
+                                </p>
 
                                 @if(strpos($post->mime, 'image') !== false)
                                     <?php 
@@ -157,7 +172,6 @@
                                 <a class="share-post"><i class="material-icons">share</i> Share</a>
                                 <span class="islike" style="display:none">0</span>
                                 <a class="comment-post">Comment</a>
-                                
                             </div>
                         </div>
                     @endforeach
@@ -174,14 +188,22 @@
                             <a class="trend-row" href='{{route("post.view",["post_id" => $trendPost->id])}}' data-postid="{{ $trendPost->id }}">
                                 <div class="post-info">
                                     <div class="user-avatar">
-                                        <img alt="avatar" src="{{ URL::to('src/images/boa_hancock_wallpaper_blue_red_by_gian519.png') }}" class="responsive-img">
+                                        @if($trendPost->user->avatar)
+                                        <img class="user-avatar" alt="avatar" src="{{URL::to('post-images/'.$trendPost->user->avatar)}}" class="responsive-img">
+                                        @else
+                                        <img class="user-avatar" alt="avatar" src="{{ URL::to('src/images/boa_hancock_wallpaper_blue_red_by_gian519.png') }}" class="responsive-img">
+                                        @endif
                                     </div>
                                     <div class="user-post">
                                         <span class="post-username">{{ $trendPost->user->name }}</span>
                                     </div>
                                 </div>
                                 <div class="post-content">
-                                    <p>{{ $trendPost->body }}</p>
+                                    <p>
+                                    <?php
+                                        echo preg_replace('/(https?|ssh|ftp):\/\/[^\s"]+/', '<div class="video-container"><iframe src="$0" frameborder="0" height="400" width="400">$0</iframe></div>', $trendPost->body);
+                                    ?>                                    
+                                    </p>
 
                                     <!-- image -->
                                     @if(strpos($trendPost->mime, 'image') !== false)

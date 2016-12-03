@@ -15,11 +15,11 @@
 	            		@foreach($users as $user)
 	            		<div class="result-item">
             				<a class="user-link" href="#">
-            					@if (Storage::disk('local')->has($user->name . '-' . $user->id . '.jpg'))
-		                            <img src="{{ route('account.image', ['filename' => $user->name . '-' . $user->id . '.jpg']) }}" alt="" class="responsive-img">
-		                        @else
-		                            <img class="responsive-img" src="{{ URL::to('src/images/boa_hancock_wallpaper_blue_red_by_gian519.png') }}">
-		                        @endif
+            					@if($user->avatar)
+                                <img alt="avatar" src="{{URL::to('post-images/'.$user->avatar)}}" class="responsive-img">
+                                @else
+                                <img alt="avatar" src="{{ URL::to('src/images/boa_hancock_wallpaper_blue_red_by_gian519.png') }}" class="responsive-img">
+                                @endif
             					<span class="user-name">{{ $user->name }}</span>
             				</a>
 	            			<a class="btn add-friend">Add friend</a>

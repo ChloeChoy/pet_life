@@ -42,16 +42,16 @@ function editPost(){
             .done(function (msg) {
                 $(postBodyElement).text(msg['new_body']);
                 if(msg['new_img'] != ''){
-                    $('#post-media'+ postId + ' img').remove();
+                    $('#post-media'+ postId).empty();
                     var img = msg['new_img'].split(',');
                     var count = 0;
                     for(var i = 0; i < img.length; i++){
                         if(img[i] != ''){
-                            $('#post-media'+ postId).append('<img src="http://localhost/pet_life/public/userimage/'+ img[i] +'" alt="image" class="responsive-img" data-mfp-src="http://localhost/pet_life/public/userimage/'+ img[i] +'">');
+                            $('#post-media'+ postId).append('<img src="http://localhost/pet_life/public/post-images/'+ img[i] +'" alt="image" class="responsive-img" data-mfp-src="http://localhost/pet_life/public/post-images/'+ img[i] +'">');
                             count++;                            
                         }
                     }
-                    $('#post-media'+ postId + ' span').text(count + '+');
+                    $('#post-media'+ postId).append('<span class="num-of-img">'+ (count - 1).toString() +'+</span>');
                 }
                 $('#edit-modal').modal('hide');
             });
