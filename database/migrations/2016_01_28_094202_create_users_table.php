@@ -18,6 +18,9 @@ class CreateUsersTable extends Migration
             $table->string('email');
             $table->string('name');
             $table->string('password');
+            $table->string('address');
+            $table->string('job');
+            $table->string('birthday');
             $table->integer('gender');
             $table->string('avatar');
             $table->string('cover_photo');

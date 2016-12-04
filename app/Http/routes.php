@@ -102,6 +102,35 @@ Route::get('/userinfo',
     ]
 );
 
+//route to post address in userinfo
+Route::post('/updateaddress', [
+    'uses' => 'UserController@postAddress',
+    'as' => 'post.address'
+    ]
+);
+
+//route to post job in userinfo
+Route::post('/updatejob', [
+    'uses' => 'UserController@postJob',
+    'as' => 'post.job'
+    ]
+);
+
+//route to post birthday in userinfo
+Route::post('/updatebirthday', [
+    'uses' => 'UserController@postBirthday',
+    'as' => 'post.birthday'
+    ]
+);
+
+//route to post gender in userinfo
+Route::post('/updategender', [
+    'uses' => 'UserController@postGender',
+    'as' => 'post.gender'
+    ]
+);
+
+
 //route to user photos
 Route::get('/photos', 
     [
@@ -184,6 +213,14 @@ Route::get('/account/{otherUser}',
     [
         'uses'  => 'UserController@getOtherAccount',
         'as'    => 'other.profile',
+        'middleware' => 'auth'
+    ]
+);
+
+Route::get('/userinfo/{otherUser}',
+    [
+        'uses'  => 'UserController@getOtherUserInfo',
+        'as'    => 'other.user.info',
         'middleware' => 'auth'
     ]
 );

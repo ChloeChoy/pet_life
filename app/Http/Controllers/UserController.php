@@ -114,15 +114,15 @@ class UserController extends Controller
         $user = Auth::user();
         $file = $request->file('cover_img') ? $request->file('cover_img') : $request->file('profile_img');
         $extension = $file->getClientOriginalExtension();
-        move_uploaded_file($file, public_path() .'/post-images/' . $file->getClientOriginalName());
+        Storage::disk('local')->put($file->getFilename().'.'.$extension,  File::get($file));
         
         if($request->file('cover_img')){
-            $user->cover_photo = $file->getClientOriginalName();
+            $user->cover_photo = $file->getFilename().'.'.$extension;
             $user->update();
         }
 
         if($request->file('profile_img')){
-            $user->avatar = $file->getClientOriginalName();
+            $user->avatar = $file->getFilename().'.'.$extension;
             $user->update();
         }
         return redirect()->route('account');
@@ -143,24 +143,20 @@ class UserController extends Controller
         $user = Auth::user();
         $file = $request->file('att_files');
         if($file[0] != null){
-            $path = public_path() .'/post-images/';
-            if(!file_exists($path)){
-                mkdir($path);
-            }
             for ($i=0; $i < count($file); $i++) { 
                 $extension = $file[$i]->getClientOriginalExtension();
-                move_uploaded_file($file[$i], $path . $file[$i]->getClientOriginalName());
+                Storage::disk('local')->put($file[$i]->getFilename().'.'.$extension,  File::get($file[$i]));
                 $post->mime .= $file[$i]->getClientMimeType();
                 $post->original_filename .= $file[$i]->getClientOriginalName() .',';
                 $post->filename .= $file[$i]->getFilename().'.'.$extension .',';   
             }
         }
-
-        $post->body = ($request['embed_video'] != '') ? $request['body'] .', '. $request['embed_video'] : $request['body'];
+        
+        $post->body = $request['body'];
         $token = $request['_token'];
         $request->user()->posts()->save($post);
         
-        return redirect()->route('account');
+        return view('account');
     }
 
     /**
@@ -168,6 +164,46 @@ class UserController extends Controller
     */
     public function userInfo(){
         return view('userinfo', ['user' => Auth::user()]);
+    }
+
+    /**
+    * user change address in userinfo
+    */
+    public function postAddress(Request $request){
+        $user = Auth::user();
+        $user->address = $request['address'];
+        $user->update();
+        return redirect()->route('userinfo');
+    }
+
+    /**
+    * user change job in userinfo
+    */
+    public function postJob(Request $request){
+        $user = Auth::user();
+        $user->job = $request['job'];
+        $user->update();
+        return redirect()->route('userinfo');
+    }
+
+    /**
+    * user change birthday in userinfo
+    */
+    public function postBirthday(Request $request){
+        $user = Auth::user();
+        $user->birthday = $request['birthday'];
+        $user->update();
+        return redirect()->route('userinfo');
+    }
+
+    /**
+    * user change gender in userinfo
+    */
+    public function postGender(Request $request){
+        $user = Auth::user();
+        $user->gender = $request['gender'];
+        $user->update();
+        return redirect()->route('userinfo');
     }
 
     /**
@@ -192,6 +228,14 @@ class UserController extends Controller
                 ->groupBy('post_id')->orderBy('total', 'DESC')
                 ->get();
         return view('friend-account', ['user' => $user, 'posts' => $posts, 'postLikes' => $postLikes]);
+    }
+
+    /**
+    * other user info page
+    */
+    public function getOtherUserInfo($otherUser){
+        $user = User::find($otherUser);
+        return view('friend-userinfo', ['user' => $user]);
     }
 
 }

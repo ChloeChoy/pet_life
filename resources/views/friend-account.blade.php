@@ -35,7 +35,7 @@
                     </div>
                     <div class="profile-menu">
                         <a href="{{ route('account') }}">Timeline</a>
-                        <a href="{{ route('userinfo') }}">Info</a>
+                        <a href="{{ route('other.user.info', ['otherUser' => $user->id]) }}">Info</a>
                         <a href="#">Friends</a>
                         <a href="{{ route('photos') }}">Media</a>
                     </div>
