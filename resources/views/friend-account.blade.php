@@ -34,10 +34,10 @@
                     @endif
                     </div>
                     <div class="profile-menu">
-                        <a href="{{ route('account') }}">Timeline</a>
+                        <a href="{{ route('other.profile', ['otherUser' => $user->id]) }}">Timeline</a>
                         <a href="{{ route('other.user.info', ['otherUser' => $user->id]) }}">Info</a>
                         <a href="#">Friends</a>
-                        <a href="{{ route('photos') }}">Media</a>
+                        <a href="{{ route('photos', ['otherUser' => $user->id]) }}">Media</a>
                     </div>
                 </div>
             </div>
@@ -49,28 +49,40 @@
                         <div class="live info">
                             <span>
                                 <i class="material-icons">home</i>
-                                Living:  &nbsp;No information
+                                Living:  &nbsp;
+                                @if($user->address)
+                                    {{ $user->address }}
+                                @else
+                                    No information
+                                @endif
                             </span>
                             <a class="edit-user-info" title="Edit" href="{{ route('userinfo')}}">
-                                <i class="material-icons">mode_edit</i>
                             </a>
                         </div>
                         <div class="work info">
                             <span>
                                 <i class="material-icons">work</i>
-                                Works at:  &nbsp;No information
+                                Works at:  &nbsp;
+                                @if($user->job)
+                                    {{ $user->job }}
+                                @else
+                                    No information
+                                @endif
                             </span>
                             <a class="edit-user-info" title="Edit" href="{{ route('userinfo')}}">
-                                <i class="material-icons">mode_edit</i>
                             </a>
                         </div>
                         <div class="birthday info">
                             <span>
                                 <i class="material-icons">date_range</i>
-                                Birthday:  &nbsp;No information
+                                Birthday:  &nbsp;
+                                @if($user->birthday)
+                                    {{ $user->birthday }}
+                                @else
+                                    No information
+                                @endif
                             </span>
                             <a class="edit-user-info" title="Edit" href="{{ route('userinfo')}}">
-                                <i class="material-icons">mode_edit</i>
                             </a>
                         </div>
                     </div>

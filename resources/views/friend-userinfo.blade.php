@@ -40,7 +40,7 @@
                         <a class="edit-avatar" data-toggle="modal" href="#modal-upload-images"><i class="material-icons">photo_camera</i></a>
                     </div>
                     <div class="profile-menu">
-                        <a href="{{ route('account') }}">Timeline</a>
+                        <a href="{{ route('other.profile', ['otherUser' => $user->id]) }}">Timeline</a>
                         <a href="{{ route('other.user.info', ['otherUser' => $user->id]) }}">Info</a>
                         <a href="#">Friends</a>
                         <a href="{{ route('photos') }}">Media</a>
