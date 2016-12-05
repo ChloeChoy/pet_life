@@ -228,3 +228,12 @@ Route::get('/userinfo/{otherUser}',
         'middleware' => 'auth'
     ]
 );
+
+//route to trending page
+Route::get('trending',
+    [
+        'uses'  => 'PostController@getTrendingPost',
+        'as'    => 'trending',
+        'middleware' => 'auth'
+    ]
+);

@@ -19,7 +19,7 @@
                         <a href="{{ route('account')}}"><i class="material-icons">mode_edit</i> {{ $user->name }}</a>
                     </div>
                     <ul class="menu-left">
-                        <li><a href="{{route('post.news')}}"><i class="material-icons">wallpaper</i> News</a></li>
+                        <li><a href="{{route('post.news')}}"><i class="material-icons">rss_feed</i> News</a></li>
                         <li><a href="#"><i class="material-icons">message</i> Messages</a></li>
                         <li><a href="#"><i class="fa fa-globe" aria-hidden="true"></i> Notifications</a></li>
                         <li><a href="{{route('photos')}}"><i class="material-icons">photo_library</i> Photos</a></li>

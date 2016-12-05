@@ -60,6 +60,8 @@
                             </div>
                         </li>
                         <li><a href="{{ route('dashboard') }}"><i class="material-icons">home</i>Home</a></li>
+                        <li><a href="{{route('post.news')}}"><i class="material-icons">rss_feed</i>News</a></li>
+                        <li><a href="{{route('trending')}}"><i class="material-icons">trending_up</i>Trending</a></li>
                         <li><a href="{{ route('photos') }}"><i class="material-icons">photo_library</i>Media</a></li>
                         <li><div class="divider"></div></li>
                         <li><a href="#"><i class="material-icons">chat</i>Chat</a></li>

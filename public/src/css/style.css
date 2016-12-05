@@ -1299,3 +1299,31 @@ a.user-link img {
 }
 
 /* end modal bootstrap */
+
+.trending-content span.title {
+    display: block;
+    background: #fff;
+    height: 35px;
+    line-height: 35px;
+    padding-left: 10px;
+    border-radius: 2px;
+    box-shadow: 0 0px 0px 0 rgba(0,0,0,0.16),0 2px 10px 0 rgba(0,0,0,0.12);
+    font-size: 18px;
+    color: #757575;
+}
+a#status-emoji {
+    display: inline-block;
+    margin-left: 10px;
+    margin-bottom: 10px;
+    cursor: pointer;
+    color: #777;
+}
+input#emoji_btn_1 {
+    margin-left: 15px;
+    top: 0 !important;
+    left: 0 !important;
+    position: relative;
+}
+div#emoji_container_1 {
+    z-index: 9;
+}

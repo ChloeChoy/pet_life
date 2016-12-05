@@ -7,9 +7,12 @@
     <link rel="stylesheet" href="{{ URL::to('src/css/font-awesome.min.css') }}">
     <link rel="stylesheet" href="{{ URL::to('src/css/magnific-popup.css') }}">
     <link rel="stylesheet" href="{{ URL::to('src/css/search.css') }}">
+    <link rel="stylesheet" href="{{ URL::to('src/css/jquery.emoji.css') }}">
     <script src="{{ URL::to('src/js/Chart.bundle.js') }}"></script>
     <script src="{{ URL::to('src/js/jquery-3.0.0.min.js') }}"></script>
     <script src="{{ URL::to('src/js/jquery.magnific-popup.js') }}"></script>
+    <script src="{{ URL::to('src/js/jquery.mCustomScrollbar.min.js') }}"></script>
+    <script src="{{ URL::to('src/js/jquery.emoji.js') }}"></script>
 </head>
 <body>
     <div id="fb-root"></div>
@@ -100,6 +103,7 @@
     <script src="{{ URL::to('src/js/main.js') }}"></script>
     <script src="{{ URL::to('src/js/jquery.autocomplete.js') }}"></script>
     <script src="{{ URL::to('users.js') }}"></script>
+    
 
     <!-- Go to www.addthis.com/dashboard to customize your tools --> 
     <script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-582f0bca1f9d7459"></script> 
@@ -132,5 +136,76 @@
         // };
     </script>
     <!-- Search scrift end --> 
+
+    <!-- emoji -->
+    <script type="text/javascript">
+        
+            $("#new-post").emoji({
+                showTab: true,
+                animation: 'fade',
+                icons: [{
+                    name: "Emoji",
+                    path: "dist/img/tieba/",
+                    maxNum: 50,
+                    file: ".jpg",
+                    placeholder: ":{alias}:",
+                    alias: {
+                        1: "hehe",
+                        2: "haha",
+                        3: "tushe",
+                        4: "a",
+                        5: "ku",
+                        6: "lu",
+                        7: "kaixin",
+                        8: "han",
+                        9: "lei",
+                        10: "heixian",
+                        11: "bishi",
+                        12: "bugaoxing",
+                        13: "zhenbang",
+                        14: "qian",
+                        15: "yiwen",
+                        16: "yinxian",
+                        17: "tu",
+                        18: "yi",
+                        19: "weiqu",
+                        20: "huaxin",
+                        21: "hu",
+                        22: "xiaonian",
+                        23: "neng",
+                        24: "taikaixin",
+                        25: "huaji",
+                        26: "mianqiang",
+                        27: "kuanghan",
+                        28: "guai",
+                        29: "shuijiao",
+                        30: "jinku",
+                        31: "shengqi",
+                        32: "jinya",
+                        33: "pen",
+                        34: "aixin",
+                        35: "xinsui",
+                        36: "meigui",
+                        37: "liwu",
+                        38: "caihong",
+                        39: "xxyl",
+                        40: "taiyang",
+                        41: "qianbi",
+                        42: "dnegpao",
+                        43: "chabei",
+                        44: "dangao",
+                        45: "yinyue",
+                        46: "haha2",
+                        47: "shenli",
+                        48: "damuzhi",
+                        49: "ruo",
+                        50: "OK"
+                    },
+                }]
+            });
+        
+    </script>
+    <!-- end emoji -->
+
 </body>
 </html>

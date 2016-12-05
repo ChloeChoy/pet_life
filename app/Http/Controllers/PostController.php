@@ -21,7 +21,7 @@ class PostController extends Controller
         $productList    = array();
         $user = User::orderBy('created_at', 'desc')->get();
         foreach ($user as $item ) {
-            if ($item->name) {
+            if ($item->name && $item->id != Auth::user()->id) {
                 $temp    = array(
                     'desc'  => $item->email,
                     'value' => $item->name,
@@ -207,5 +207,29 @@ class PostController extends Controller
     public function getSearchUsers(Request $request){
         $users = User::where('name', 'like', '%' . $request['q'] . '%')->get();
         return view('search', ['users' => $users]);
+    }
+
+    /**
+    * get trending post
+    */
+    public function getTrendingPost(){
+        $postLikes = \DB::table('likes') ->select('post_id', \DB::raw("count(likes.like) as total"))
+                 ->groupBy('post_id')->orderBy('total', 'DESC')
+                 ->get();
+        $trendPosts = array();
+        if($postLikes) {
+            $count = 0;
+            foreach ($postLikes as $key => $value) {
+                $count++;
+                if($count > 5)
+                    break;
+                $temp = $value->post_id;
+                $trendPost = Post::select('*')->where('id',  $temp)->get()->first();
+                array_push($trendPosts, $trendPost);
+            }
+        }
+
+        return view('trending', ['postLikes' => $postLikes, 'posts' => $trendPosts]);
+
     }
 }
