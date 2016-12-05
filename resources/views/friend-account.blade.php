@@ -12,22 +12,19 @@
                 <div class="col s12 wall">
                     <div class="cover-img">
                     @if($user)
-                        @if(Auth::user()->cover_photo)
-                            @if (Storage::disk('local')->has(Auth::user()->cover_photo))
-                                <img src="{{ route('account.image', ['filename' => $user->cover_photo]) }}" alt="" class="responsive-img">
-                            @endif
+                        @if($user->cover_photo)
+                            <img src="{{URL::to('post-images/'.$user->cover_photo)}}" alt="" class="responsive-img">
                         @else
                             <img class="responsive-img" src="{{ URL::to('src/images/default-wall.jpg') }}">
                         @endif
+                        
                     @endif
-
                     </div>
+
                     <div class="account-avatar">
                     @if($user)
                         @if($user->avatar)
-                            @if (Storage::disk('local')->has($user->avatar))
-                                <img src="{{ route('account.image', ['filename' => $user->avatar]) }}" alt="" class="responsive-img">
-                            @endif
+                            <img src="{{URL::to('post-images/'.$user->avatar)}}" alt="" class="responsive-img">
                         @else
                             <img class="responsive-img" src="{{ URL::to('src/images/boa_hancock_wallpaper_blue_red_by_gian519.png') }}">
                         @endif
@@ -91,22 +88,22 @@
                         <div class="photo thumnail">
                     @if($user)
                         <!-- avatar/cover image -->
-                        <?php if (Storage::disk('local')->has($user->avatar) && $user->avatar): ?>
-                            <img src="{{ route('account.image', ['filename' => $user->avatar]) }}" alt="" class="resposive-img">
+                        @if($user->avatar)
+                            <img src="{{URL::to('post-images/'.$user->avatar)}}" alt="" class="resposive-img">
                         @endif
 
-                        <?php if(Storage::disk('local')->has($user->cover_photo) && $user->cover_photo): ?>
-                            <img src="{{ route('account.image', ['filename' => $user->cover_photo]) }}" alt="" class="resposive-img">
+                        @if($user->cover_photo)
+                            <img src="{{URL::to('post-images/'.$user->cover_photo)}}" alt="" class="resposive-img">
                         @endif
                         <!-- end avatar/cover image -->
 
                         <!-- post photo -->
 
                         @foreach($posts as $post)
-                            <?php if($post->user_id == Auth::user()->id && $post->filename != ''): ?>
+                            <?php if($post->user_id == $user->id && $post->original_filename != ''): ?>
                                 @if(strpos($post->mime, 'image') !== false)
                                     <?php 
-                                        $postImg = explode(',', $post->filename);
+                                        $postImg = explode(',', $post->original_filename);
                                         $numOfPostMedia = 0;
                                     ?>
                                    
@@ -114,7 +111,7 @@
                                         <?php if($numOfPostMedia > 5){break;} ?>
                                         @if($postImg[$i] != '')
                                             <?php $numOfPostMedia++; ?>
-                                            <img src="{{ route('account.image', ['filename' => $postImg[$i]]) }}" alt="image" class="responsive-img" data-mfp-src="{{ route('account.image', ['filename' => $postImg[$i]]) }}">
+                                            <img src="{{ URL::to('post-images/'.$postImg[$i]) }}" alt="image" class="responsive-img" data-mfp-src="{{URL::to('post-images/'.$postImg[$i]) }}">
                                         @endif
                                     @endfor
                                 @endif
@@ -129,10 +126,10 @@
                         <span class="title-info">Videos</span>
                         <div class="video thumnail">
                             @foreach($posts as $post)
-                                <?php if($post->user_id == Auth::user()->id && $post->filename != ''): ?>
+                                <?php if($post->user_id == $user->id && $post->original_filename != ''): ?>
                                     @if(strpos($post->mime, 'video') !== false)
                                     <?php
-                                        $postVideo = explode(',', $post->filename);
+                                        $postVideo = explode(',', $post->original_filename);
                                         $countVideo = 0;
                                     ?>
                                     @for($i = 0; $i < count($postVideo); $i++)
@@ -141,7 +138,7 @@
                                         @if($postVideo[$i] != '')
                                         <?php $countVideo++; ?>
                                         <video class="responsive-video">
-                                          <source src="{{ route('account.image', ['filename' => $postVideo[$i]]) }}" type="video/mp4">
+                                          <source src="{{URL::to('post-images/'.$postVideo[$i]) }}" type="video/mp4">
                                         </video>
                                         @endif
                                     @endfor
@@ -154,13 +151,14 @@
                 <div class="col l8 s12 col-user-post">
   
                     <!-- post -->
+                    @if(count($posts))
                     @foreach($posts as $post)
                         <div class="post-row" data-postid="{{ $post->id }}">
                             <div class="post-info">
                                 <div class="user-avatar">
                                     <a href="#">
                                         @if($post->user->avatar)
-                                        <img class="user-avatar" alt="avatar" src="{{route('account.image', ['filename' => $post->user->avatar])}}" class="responsive-img">
+                                        <img class="user-avatar" alt="avatar" src="{{URL::to('post-images/'.$post->user->avatar)}}" class="responsive-img">
                                         @else
                                         <img class="user-avatar" alt="avatar" src="{{ URL::to('src/images/boa_hancock_wallpaper_blue_red_by_gian519.png') }}" class="responsive-img">
                                         @endif
@@ -170,29 +168,24 @@
                                     <span class="post-username"><a href="#">{{ $post->user->name }}</a></span>
                                     <span class="post-on">Posted on {{  date_format($post->created_at, 'D M Y') }}</span>
                                 </div>
-                                @if(Auth::user() == $post->user)
-                                <div class="post-act">
-                                    <a class="popup-post-menu"><i class="material-icons"><i class="material-icons">keyboard_arrow_down</i></i></a>
-                                    <div class="post-menu-act" style="display:none;">
-                                        <a class="edit-post" data-toggle="modal" href="#modal-edit-post"><i class="material-icons">mode_edit</i> Edit</a>
-                                        <a class="delete-post"><i class="material-icons">delete</i> Delete</a>
-                                    </div>
-                                </div>
-                                @endif
                             </div>
                             <div class="post-content">
-                                <p>{{ $post->body }}</p>
+                                <p>
+                                <?php
+                                    echo preg_replace('/(https?|ssh|ftp):\/\/[^\s"]+/', '<div class="video-container"><iframe src="$0" height="400" width="400" allowfullscreen>$0</iframe></div>', $post->body)
+                                ?>
+                                </p>
 
                                 @if(strpos($post->mime, 'image') !== false)
                                     <?php 
-                                        $postImg = explode(',', $post->filename);
+                                        $postImg = explode(',', $post->original_filename);
                                         $numOfPostMedia = 0;
                                     ?>
                                     @if(count($postImg) > 2)
                                     <div class="post-media multi-medias" id="post-media{{$post->id}}">
                                         @for($i = 0; $i < count($postImg); $i++)
                                             @if($postImg[$i] != '')
-                                                    <img src="{{ route('account.image', ['filename' => $postImg[$i]]) }}" alt="image" class="responsive-img" data-mfp-src="{{ route('account.image', ['filename' => $postImg[$i]]) }}">
+                                                    <img src="{{URL::to('post-images/'.$postImg[$i]) }}" alt="image" class="responsive-img" data-mfp-src="{{URL::to('post-images/'.$postImg[$i]) }}">
                                                     <?php $numOfPostMedia++;?>
                                             @endif
                                         @endfor
@@ -202,7 +195,7 @@
                                     <div class="post-media" id="post-media{{$post->id}}">
                                         @for($i = 0; $i < count($postImg); $i++)
                                             @if($postImg[$i] != '')
-                                                    <img src="{{ route('account.image', ['filename' => $postImg[$i]]) }}" alt="image" class="responsive-img" data-mfp-src="{{ route('account.image', ['filename' => $postImg[$i]]) }}">
+                                                    <img src="{{URL::to('post-images/'.$postImg[$i]) }}" alt="image" class="responsive-img" data-mfp-src="{{URL::to('post-images/'.$postImg[$i]) }}">
                                             @endif
                                         @endfor
                                     </div>
@@ -220,7 +213,14 @@
 
                                                 // Class that is added to popup wrapper and background
                                                 // make it unique to apply your CSS animations just to this exact popup
-                                                mainClass: 'mfp-fade'
+                                                mainClass: 'mfp-fade',
+                                                zoom: {
+                                                    enabled: true,
+                                                    duration: 300, // don't foget to change the duration also in CSS
+                                                    opener: function(element) {
+                                                      return element.find('img');
+                                                    }
+                                                  }
                                             });
                                     </script>
 
@@ -228,13 +228,13 @@
 
                                 @if(strpos($post->mime, 'video') !== false)
                                 <?php
-                                    $postVideo = explode(',', $post->filename);
+                                    $postVideo = explode(',', $post->original_filename);
                                 ?>
                                 <div class="post-media">
                                     @for($i = 0; $i < count($postVideo); $i++)
                                         @if($postVideo[$i] != '')
                                         <video class="responsive-video" controls>
-                                          <source src="{{ route('account.image', ['filename' => $postVideo[$i]]) }}" type="video/mp4">
+                                          <source src="{{URL::to('post-images/'.$postVideo[$i]) }}" type="video/mp4">
                                         </video>
                                         @endif
                                     @endfor
@@ -257,6 +257,9 @@
                             </div>
                         </div>
                     @endforeach
+                    @else
+                        <div class="post-row" style="margin-top: 0;"><h5>This user has no post.</h5></div>
+                    @endif
                     <!-- end post -->
                 </div>
             </div>

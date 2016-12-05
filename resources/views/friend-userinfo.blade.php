@@ -13,39 +13,32 @@
                 <div class="col s12 wall">
                     <div class="cover-img">
                     @if($user)
-                   
-                        {{$user->name}}
-                    
-                        @if(Auth::user()->cover_photo)
-                            @if (Storage::disk('local')->has(Auth::user()->cover_photo))
-                                <img src="{{ route('account.image', ['filename' => $user->cover_photo]) }}" alt="" class="responsive-img">
-                            @endif
+                        @if($user->cover_photo)
+                            <img src="{{URL::to('post-images/'.$user->cover_photo)}}" alt="" class="responsive-img">
                         @else
                             <img class="responsive-img" src="{{ URL::to('src/images/default-wall.jpg') }}">
                         @endif
                         
-                        <a class="edit-wall-img" data-toggle="modal" href="#modal-upload-images"><i class="material-icons">photo_camera</i> Change cover photo</a>
                     @endif
-
                     </div>
-                    @if($user)
+
                     <div class="account-avatar">
+                    @if($user)
                         @if($user->avatar)
-                            @if (Storage::disk('local')->has($user->avatar))
-                                <img src="{{ route('account.image', ['filename' => $user->avatar]) }}" alt="" class="responsive-img">
-                            @endif
+                            <img src="{{URL::to('post-images/'.$user->avatar)}}" alt="" class="responsive-img">
                         @else
                             <img class="responsive-img" src="{{ URL::to('src/images/boa_hancock_wallpaper_blue_red_by_gian519.png') }}">
                         @endif
-                        <a class="edit-avatar" data-toggle="modal" href="#modal-upload-images"><i class="material-icons">photo_camera</i></a>
+                    @endif
                     </div>
+
                     <div class="profile-menu">
                         <a href="{{ route('other.profile', ['otherUser' => $user->id]) }}">Timeline</a>
                         <a href="{{ route('other.user.info', ['otherUser' => $user->id]) }}">Info</a>
                         <a href="#">Friends</a>
                         <a href="{{ route('photos') }}">Media</a>
                     </div>
-                    @endif
+                    
                 </div>
             </div>
             <!-- end wall images -->
@@ -80,7 +73,7 @@
                                         @if($user->address)
                                             {{ $user->address }}
                                         @else
-                                            Add location
+                                            No location
                                         @endif
 							      	</div>
 							    </li>
@@ -95,7 +88,7 @@
                                         @if($user->job)
                                             {{ $user->job }}
                                         @else
-                                            Add a workplace
+                                            No workplace
                                         @endif
 							      	</div>
 							    </li>
@@ -110,7 +103,7 @@
                                         @if($user->birthday)
                                             {{ $user->birthday }}
                                         @else
-                                            Add your birthday
+                                            No birthday
                                         @endif
 							      	</div>
 							    </li>
@@ -129,7 +122,7 @@
                                             Female
                                         @endif
                                         @if(!$user->gender)
-                                            Add gender information
+                                            No information
                                         @endif
                                     </div>
                                 </li>

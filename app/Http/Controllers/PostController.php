@@ -25,7 +25,8 @@ class PostController extends Controller
                 $temp    = array(
                     'desc'  => $item->email,
                     'value' => $item->name,
-                    'image' => $item->avatar ? \URL::to('post-images/'.$item->avatar) : '/pet_life/public/src/images/boa_hancock_wallpaper_blue_red_by_gian519.png'    // user avatar
+                    'image' => $item->avatar ? \URL::to('post-images/'.$item->avatar) : '/pet_life/public/src/images/boa_hancock_wallpaper_blue_red_by_gian519.png',    // user avatar
+                    'url'   => route('other.profile', ['otherUser' => $item->id])
                 );
                 array_push($productList, $temp);
             }

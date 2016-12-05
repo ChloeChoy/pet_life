@@ -114,15 +114,15 @@ class UserController extends Controller
         $user = Auth::user();
         $file = $request->file('cover_img') ? $request->file('cover_img') : $request->file('profile_img');
         $extension = $file->getClientOriginalExtension();
-        Storage::disk('local')->put($file->getFilename().'.'.$extension,  File::get($file));
+        move_uploaded_file($file, public_path() .'/post-images/' . $file->getClientOriginalName());
         
         if($request->file('cover_img')){
-            $user->cover_photo = $file->getFilename().'.'.$extension;
+            $user->cover_photo = $file->getClientOriginalName();
             $user->update();
         }
 
         if($request->file('profile_img')){
-            $user->avatar = $file->getFilename().'.'.$extension;
+            $user->avatar = $file->getClientOriginalName();
             $user->update();
         }
         return redirect()->route('account');
@@ -143,20 +143,24 @@ class UserController extends Controller
         $user = Auth::user();
         $file = $request->file('att_files');
         if($file[0] != null){
+            $path = public_path() .'/post-images/';
+            if(!file_exists($path)){
+                mkdir($path);
+            }
             for ($i=0; $i < count($file); $i++) { 
                 $extension = $file[$i]->getClientOriginalExtension();
-                Storage::disk('local')->put($file[$i]->getFilename().'.'.$extension,  File::get($file[$i]));
+                move_uploaded_file($file[$i], $path . $file[$i]->getClientOriginalName());
                 $post->mime .= $file[$i]->getClientMimeType();
                 $post->original_filename .= $file[$i]->getClientOriginalName() .',';
                 $post->filename .= $file[$i]->getFilename().'.'.$extension .',';   
             }
         }
-        
-        $post->body = $request['body'];
+
+        $post->body = ($request['embed_video'] != '') ? $request['body'] .', '. $request['embed_video'] : $request['body'];
         $token = $request['_token'];
         $request->user()->posts()->save($post);
         
-        return view('account');
+        return redirect()->route('account');
     }
 
     /**
@@ -164,46 +168,6 @@ class UserController extends Controller
     */
     public function userInfo(){
         return view('userinfo', ['user' => Auth::user()]);
-    }
-
-    /**
-    * user change address in userinfo
-    */
-    public function postAddress(Request $request){
-        $user = Auth::user();
-        $user->address = $request['address'];
-        $user->update();
-        return redirect()->route('userinfo');
-    }
-
-    /**
-    * user change job in userinfo
-    */
-    public function postJob(Request $request){
-        $user = Auth::user();
-        $user->job = $request['job'];
-        $user->update();
-        return redirect()->route('userinfo');
-    }
-
-    /**
-    * user change birthday in userinfo
-    */
-    public function postBirthday(Request $request){
-        $user = Auth::user();
-        $user->birthday = $request['birthday'];
-        $user->update();
-        return redirect()->route('userinfo');
-    }
-
-    /**
-    * user change gender in userinfo
-    */
-    public function postGender(Request $request){
-        $user = Auth::user();
-        $user->gender = $request['gender'];
-        $user->update();
-        return redirect()->route('userinfo');
     }
 
     /**
@@ -228,6 +192,43 @@ class UserController extends Controller
                 ->groupBy('post_id')->orderBy('total', 'DESC')
                 ->get();
         return view('friend-account', ['user' => $user, 'posts' => $posts, 'postLikes' => $postLikes]);
+    }
+
+    /**
+    * user change address in userinfo
+    */
+    public function postAddress(Request $request){
+        $user = Auth::user();
+        $user->address = $request['address'];
+        $user->update();
+        return redirect()->route('userinfo');
+    }
+    /**
+    * user change job in userinfo
+    */
+    public function postJob(Request $request){
+        $user = Auth::user();
+        $user->job = $request['job'];
+        $user->update();
+        return redirect()->route('userinfo');
+    }
+    /**
+    * user change birthday in userinfo
+    */
+    public function postBirthday(Request $request){
+        $user = Auth::user();
+        $user->birthday = $request['birthday'];
+        $user->update();
+        return redirect()->route('userinfo');
+    }
+    /**
+    * user change gender in userinfo
+    */
+    public function postGender(Request $request){
+        $user = Auth::user();
+        $user->gender = $request['gender'];
+        $user->update();
+        return redirect()->route('userinfo');
     }
 
     /**

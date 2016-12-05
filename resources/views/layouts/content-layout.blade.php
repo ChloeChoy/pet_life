@@ -123,7 +123,7 @@
                 //          window.location.href = suggestion.productUrl;
                 //      },
                 formatResult: function (suggestion, currentValue) {
-                    return ("<a href='" + '' + "'><div class='suggestion-left'><img class='responsive-img' src='" + ( visibleImage == 1 ? suggestion.image : '') + "' alt='user avatar'" + "/></div>" + "<div class='suggestion-right'><div class='product-line product-name'>" + suggestion.value + "</div></div></a>");
+                    return ("<a href='" + suggestion.url + "'><div class='suggestion-left'><img class='responsive-img' src='" + ( visibleImage == 1 ? suggestion.image : '') + "' alt='user avatar'" + "/></div>" + "<div class='suggestion-right'><div class='product-line product-name'>" + suggestion.value + "</div></div></a>");
                 },
                 onSearchComplete: function (query, suggestion) {
                     $('.autocomplete-suggestions').append("<div id='view_all'><a href='{{ route('search') }}?q="+$('#pl-search').val()+"'>View all</a></div>");

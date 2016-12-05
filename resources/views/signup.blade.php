@@ -49,7 +49,7 @@
                                     <label for="male">Male</label>
                                 </p>
                                 <p>
-                                    <input class="with-gap" name="gender" type="radio" id="female" value="0" />
+                                    <input class="with-gap" name="gender" type="radio" id="female" value="2" />
                                     <label for="female">Female</label>
                                 </p>
                             </div>

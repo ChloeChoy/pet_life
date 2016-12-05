@@ -33,7 +33,7 @@ class AdminController extends Controller
 		for($i = 0; $i < count($users); $i++){
 			if($users[$i]['gender'] == 1)
 				$male += 1;
-			if($users[$i]['gender'] == 0)
+			if($users[$i]['gender'] == 2)
 				$female += 1;
 		}
 		
