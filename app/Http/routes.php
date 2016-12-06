@@ -228,6 +228,13 @@ Route::get('/userinfo/{otherUser}',
         'middleware' => 'auth'
     ]
 );
+Route::get('/user-media/{id}',
+    [
+        'uses'  => 'UserController@getOtherUserMedia',
+        'as'    => 'user.media',
+        'middleware' => 'auth'
+    ]
+);
 
 //route to trending page
 Route::get('trending',

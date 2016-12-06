@@ -34,7 +34,7 @@
                         <a href="{{ route('other.profile', ['otherUser' => $user->id]) }}">Timeline</a>
                         <a href="{{ route('other.user.info', ['otherUser' => $user->id]) }}">Info</a>
                         <a href="#">Friends</a>
-                        <a href="{{ route('photos', ['otherUser' => $user->id]) }}">Media</a>
+                        <a href="{{ route('user.media', ['id' => $user->id]) }}">Media</a>
                     </div>
                 </div>
             </div>

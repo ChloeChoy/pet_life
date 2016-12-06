@@ -139,6 +139,9 @@ $(document).ready(function(){
 		$('.input-url').show();
 		$('#emb-video').focus();
 	});
+
+	//position of emoji button
+	$('#emoji_btn_1').css({'top': ($('.embedded-video').position().top + 30).toString() + 'px !important', 'left' : ($('.embedded-video').position().left).toString() + 'px !important'});
 	
 });
 

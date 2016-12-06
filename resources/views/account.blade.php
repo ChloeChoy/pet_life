@@ -191,11 +191,72 @@
                                 @endif
                             </div>
                             <div class="post-content">
-                                <p>
+                                <p class="post-text">
                                 <?php
                                     echo preg_replace('/(https?|ssh|ftp):\/\/[^\s"]+/', '<div class="video-container"><iframe src="$0" height="400" width="400" allowfullscreen>$0</iframe></div>', $post->body)
                                 ?>
                                 </p>
+                                <script type="text/javascript">
+                                    $(".post-text").emojiParse({
+                                        icons: [{
+                                            path: "dist/img/tieba/",
+                                            file: ".jpg",
+                                            placeholder: ":{alias}:",
+                                            alias: {
+                                                1: "hehe",
+                                                2: "haha",
+                                                3: "tushe",
+                                                4: "a",
+                                                5: "ku",
+                                                6: "lu",
+                                                7: "kaixin",
+                                                8: "han",
+                                                9: "lei",
+                                                10: "heixian",
+                                                11: "bishi",
+                                                12: "bugaoxing",
+                                                13: "zhenbang",
+                                                14: "qian",
+                                                15: "yiwen",
+                                                16: "yinxian",
+                                                17: "tu",
+                                                18: "yi",
+                                                19: "weiqu",
+                                                20: "huaxin",
+                                                21: "hu",
+                                                22: "xiaonian",
+                                                23: "neng",
+                                                24: "taikaixin",
+                                                25: "huaji",
+                                                26: "mianqiang",
+                                                27: "kuanghan",
+                                                28: "guai",
+                                                29: "shuijiao",
+                                                30: "jinku",
+                                                31: "shengqi",
+                                                32: "jinya",
+                                                33: "pen",
+                                                34: "aixin",
+                                                35: "xinsui",
+                                                36: "meigui",
+                                                37: "liwu",
+                                                38: "caihong",
+                                                39: "xxyl",
+                                                40: "taiyang",
+                                                41: "qianbi",
+                                                42: "dnegpao",
+                                                43: "chabei",
+                                                44: "dangao",
+                                                45: "yinyue",
+                                                46: "haha2",
+                                                47: "shenli",
+                                                48: "damuzhi",
+                                                49: "ruo",
+                                                50: "OK"
+                                            }
+                                        }]
+                                    });
+                                </script>
 
                                 @if(strpos($post->mime, 'image') !== false)
                                     <?php 
@@ -325,9 +386,9 @@
                     <form id="form-upload-photos" action="{{ route('upload.photo') }}"  method="post" enctype="multipart/form-data">
                         <div class="input-field col s12">
                             <a class="change-user-photos btn"><i class="material-icons">image</i> Upload images</a>
-                            <input id="profile-img" type="file" name="cover_img" onchange="previewFiles('profile-img')" style="display:none;">
+                            <input id="profile-img" type="file" name="cover_img" onchange="previewFiles('profile-img', 'preview-avatar')" style="display:none;">
                         </div>
-                        <div id="preview"></div>
+                        <div id="preview-avatar"></div>
                         <div class="form-btn">
                             <a class="btn" data-dismiss="modal">Cancel</a>
                             <button id="modal-save" type="submit" class="btn btn-default">Save</button>
@@ -349,4 +410,7 @@
 
         var routeDropzone = '{{ URL::to('src/images') }}';
     </script>
+
+    <!-- <input type="image" class="emoji_btn" id="emoji_btn_1" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABkAAAAZBAMAAAA2x5hQAAAABGdBTUEAALGPC/xhBQAAAAFzUkdCAK7OHOkAAAAkUExURUxpcfTGAPTGAPTGAPTGAPTGAPTGAPTGAPTGAPTGAPTGAPTGAOfx6yUAAAALdFJOUwAzbVQOoYrzwdwkAoU+0gAAAM1JREFUGNN9kK0PQWEUxl8fM24iCYopwi0muuVuzGyKwATFZpJIU01RUG/RBMnHxfz+Oef9uNM84d1+23nO+zxHKVG2WWupRJkdcAwtpCK0lpbqWE01pB0QayonREMoIp7AawQrWSgGGb4pn6dSeSh68FAVXqHqy3wKrkJiDGDTg3dnp//w+WnwlwIOJauF+C7sXRVfdha4O4oIJfTbtdSxs2uqhs585A0ko8iLTMEcDE1n65A+29pYAlr72nz9dKu7GuNTcsL2fDQzB/wCPVJ69nZGb3gAAAAASUVORK5CYII="> -->
+
 @endsection

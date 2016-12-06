@@ -188,7 +188,7 @@ class UserController extends Controller
         $user = User::find($otherUser);
         $posts = Post::where('user_id', $otherUser)->orderBy('created_at', 'desc')->get();
         $postLikes = \DB::table('likes')->select('post_id', \DB::raw("count(likes.like) as total"))
-                ->where('user_id', Auth::user()->id)
+                // ->where('user_id', $otherUser)
                 ->groupBy('post_id')->orderBy('total', 'DESC')
                 ->get();
         return view('friend-account', ['user' => $user, 'posts' => $posts, 'postLikes' => $postLikes]);
@@ -237,6 +237,15 @@ class UserController extends Controller
     public function getOtherUserInfo($otherUser){
         $user = User::find($otherUser);
         return view('friend-userinfo', ['user' => $user]);
+    }
+
+    /**
+    * get user media
+    */
+    public function getOtherUserMedia($id){
+        $user = User::find($id);
+        $posts = Post::where('user_id', $id)->orderBy('created_at', 'desc')->get();
+        return view('user-media', ['user' => $user, 'posts' => $posts]);
     }
 
 }

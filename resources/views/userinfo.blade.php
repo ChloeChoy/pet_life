@@ -208,9 +208,9 @@
                     <form id="form-upload-photos" action="{{ route('upload.photo') }}"  method="post" enctype="multipart/form-data">
                         <div class="input-field col s12">
                             <a class="change-user-photos btn"><i class="material-icons">image</i> Upload images</a>
-                            <input id="profile-img" type="file" name="cover_img" onchange="previewFiles('profile-img')" style="display:none;">
+                            <input id="profile-img" type="file" name="cover_img" onchange="previewFiles('profile-img', 'preview-avatar')" style="display:none;">
                         </div>
-                        <div id="preview"></div>
+                        <div id="preview-avatar"></div>
                         <div class="form-btn">
                             <a class="btn" data-dismiss="modal">Cancel</a>
                             <button id="modal-save" type="submit" class="btn btn-default">Save</button>
